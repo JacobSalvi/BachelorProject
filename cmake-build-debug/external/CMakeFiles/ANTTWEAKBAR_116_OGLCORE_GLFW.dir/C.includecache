@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../external/AntTweakBar-1.16/include/AntTweakBar.h
+stddef.h
+-
+string
+-
+string
+-
+
+../external/AntTweakBar-1.16/src/MiniGLFW.h
+
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/AntTweakBar-ObjectiveC/TwEventGLFW.m
+MiniGLFW.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/AntTweakBar-ObjectiveC/MiniGLFW.h
+AntTweakBar.h
+-
+
