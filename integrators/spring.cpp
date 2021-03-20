@@ -6,3 +6,7 @@ spring::spring( float l0, float ks, float kd, particle * part1, particle * part2
 spring::~spring() {
 }
 
+void spring::setKs(float ks) {
+    spring::ks = ks;
+}
+

@@ -785,6 +785,8 @@ shaders/controls.hpp
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/controls.hpp
 integrators/net.h
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/net.h
+shaders/texture.hpp
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/texture.hpp
 thread
 -
 functional
@@ -795,4 +797,6 @@ functional
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/net.h
 
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/shader.hpp
+
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/texture.hpp
 

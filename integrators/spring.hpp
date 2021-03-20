@@ -23,6 +23,8 @@ public:
         p2=&part2;
     }
 
+    void setKs(float ks);
+
     void printExtremes(){
         std::cout<<"p1 is: "<<p1->getId()<<std::endl;
         std::cout<<"p2 is: "<<p2->getId()<<std::endl;

@@ -23,6 +23,7 @@ using namespace glm;
 #include "shaders/shader.hpp"
 #include "shaders/controls.hpp"
 #include "integrators/net.h"
+#include "shaders/texture.hpp"
 #include <thread>
 #include <functional>
 
@@ -74,6 +75,106 @@ void timer_start(unsigned int interval, const std::vector<helperStruct *>& list)
     sim.detach();
 }
 
+//culture
+void culture(std::vector<helperStruct *> *list, glm::vec3 tr){
+    net * tmp = new net(1.0f, 3,7, 0, glm::vec3(2.0f,0.0f,0.0f), -1.0f);
+
+    //my wisdom knows no limit
+    // = 12*(row-1)(col-1)
+    float uv[144];
+
+    int pos = 0;
+    for(int i=0; i<6; ++i){
+        for(int j=0; j<2; ++j){
+            //first triangle first vertex
+
+            uv[pos++]=float(j)/2.0f;
+            uv[pos++]=1.0f-float(i)/6.0f;
+
+            //first triangle second vertex
+            uv[pos++]=float(j)/2.0f;
+            uv[pos++]=1.0f-float(i+1)/6.0f;
+
+            //first triangle third vertex
+            uv[pos++]=float(j+1)/2.0f;
+            uv[pos++]=1.0f-float(i+1)/6.0f;
+
+            //second triangle first vertex
+            uv[pos++]=float(j)/2.0f;
+            uv[pos++]=1.0f-float(i)/6.0f;
+
+            //second triangle second vertex
+            uv[pos++]=float(j+1)/2.0f;
+            uv[pos++]=1.0f-float(i+1)/6.0f;
+
+            //second triangle third vertex
+            uv[pos++]=float(j+1)/2.0f;
+            uv[pos++]=1.0f-float(i)/6.0f;
+        }
+    }
+
+    GLuint vertexbuffer;
+    glGenBuffers(1, &vertexbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+    glBufferData(GL_ARRAY_BUFFER, tmp->getSize(), tmp->getVertexBuffer(), GL_DYNAMIC_DRAW);
+
+    GLuint uvbuffer;
+    glGenBuffers(1, &uvbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_DYNAMIC_DRAW);
+
+    auto * str = new helperStruct;
+    str->cloth=tmp;
+    str->vertex=vertexbuffer;
+    str->color=uvbuffer;
+    str->tr=tr;
+    list->push_back(str);
+}
+
+void drawCulture(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint MatrixID, helperStruct* obj, GLuint texture, GLuint textureId, GLuint program){
+    glUseProgram(program);
+    glm::mat4 ModelMatrix = glm::mat4(1.0);
+    ModelMatrix=glm::translate(ModelMatrix, obj->tr);
+    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+
+    // Bind our texture in Texture Unit 0
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    // Set our "myTextureSampler" sampler to use Texture Unit 0
+    glUniform1i(textureId, 0);
+
+    // 1rst attribute buffer : vertices
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, obj->vertex);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, obj->cloth->getSize(), obj->cloth->getVertexBuffer());
+    glVertexAttribPointer(
+            0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
+            3,                  // size
+            GL_FLOAT,           // type
+            GL_FALSE,           // normalized?
+            0,                  // stride
+            (void*)0            // array buffer offset
+    );
+
+    // 2nd attribute buffer : UVs
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, obj->color);
+    glVertexAttribPointer(
+            1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
+            2,                                // size : U+V => 2
+            GL_FLOAT,                         // type
+            GL_FALSE,                         // normalized?
+            0,                                // stride
+            (void*)0                          // array buffer offset
+    );
+
+    // Draw the triangle !
+    glDrawArrays(GL_TRIANGLES, 0, obj->cloth->getNumberOfVertices()); // 12*3 indices starting at 0 -> 12 triangles
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+}
 
 //testing whether I can manage to dynamically create and show a net
 void addCloth(std::vector<helperStruct *> *list, int col, int row, int in, glm::vec3 colour, glm::vec3 tr){
@@ -190,9 +291,9 @@ int main() {
     //This is likely not gonna work
     //nvm, it worked
     std::vector<helperStruct *> objectList;
-    addCloth(&objectList, 2, 8, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
-    addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
-    addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(4.0f,0.0f,0.0f));
+//    addCloth(&objectList, 3, 9, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
+//    addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
+//    addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(4.0f,0.0f,0.0f));
 
 
     GLuint VertexArrayID;
@@ -205,6 +306,22 @@ int main() {
     // Get a handle for our "MVP" uniform
     GLuint triangleMatrixID = glGetUniformLocation(triangleProgramID, "MVP");
 
+
+    //infinite wisdom
+    GLuint programId = LoadShaders("shaders/vertexShader.vertexshader", "shaders/fragmentShader.fragmentshader");
+    GLuint matrixId = glGetUniformLocation(programId, "MVP");
+    GLuint texture = loadDDS("shaders/idk.DDS");
+    GLuint textureId = glGetUniformLocation(programId, "myTextureSampler");
+    GLuint texture2 = loadDDS("shaders/dak2.DDS");
+    GLuint textureId2 = glGetUniformLocation(programId, "myTextureSampler");
+    GLuint texture3 = loadDDS("shaders/dak3.DDS");
+    GLuint textureId3 = glGetUniformLocation(programId, "myTextureSampler");
+
+    std::vector<helperStruct *> cultureList;
+    culture(&objectList, glm::vec3(-8.0f, 0.0f,0.0f));
+    culture(&objectList, glm::vec3(0.0f, 0.0f,0.0f));
+    culture(&objectList, glm::vec3(8.0f, 0.0f,0.0f));
+
     //glfwSetKeyCallback(window, key_callback);
     std::cout << "about to enter while loop" << std::endl;
 
@@ -215,9 +332,10 @@ int main() {
     static int azimuthal = 90;
     static int polar = 90;
     static int distance = 10;
-    static float wind[3]= {0.0f,0.0f,0.0f};
+    static float wind[3]= {0.0f,0.0f,-1.0f};
     static float mass =1.0f;
     static float gravity = -1.0f;
+    static float ks = 40.0f;
 
     do {
         // Clear the screen
@@ -236,6 +354,7 @@ int main() {
             ImGui::InputInt("Distance", &distance);
             ImGui::InputFloat3("Wind", wind);
             ImGui::InputFloat("Mass", &mass);
+            ImGui::InputFloat("Spring stiffness", &ks);
             ImGui::InputFloat("Gravity", &gravity);
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             if(ImGui::Button("Begin Simulation") && shouldSimulate){
@@ -251,6 +370,11 @@ int main() {
             if(ImGui::Button("Set mass")){
                 for(auto i: objectList) {
                     i->cloth->setMass(mass);
+                }
+            }
+            if(ImGui::Button("Set stiffness")){
+                for(auto i: objectList){
+                    i->cloth->setStiffness(ks);
                 }
             }
             if(ImGui::Button("Set gravity")) {
@@ -280,8 +404,20 @@ int main() {
         glDisable(GL_CULL_FACE);
 
         //drawing all of the objects
-        for(auto i : objectList){
-            drawCloth(ProjectionMatrix, ViewMatrix, triangleMatrixID,i);
+        for(int i=0; i<objectList.size();++i){
+            if(i==0){
+                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture, textureId, programId);
+            }else if(i==1){
+                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture2, textureId2, programId);
+            }else{
+                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture3, textureId3, programId);
+            }
+//            if(i==objectList.size()-1){
+//                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture, textureId, programId);
+//            }else{
+//                drawCloth(ProjectionMatrix, ViewMatrix, triangleMatrixID,objectList[i]);
+//            }
+
         }
         //gui stuff
         ImGui::Render();

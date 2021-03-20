@@ -370,6 +370,7 @@ CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../integrators/spring.hpp
 CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../main.cpp
 CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../shaders/controls.hpp
 CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../shaders/shader.hpp
+CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../shaders/texture.hpp
 
 CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.o: ../external/glfw-3.1.2/include/GLFW/glfw3.h
 CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.o: ../external/glm-0.9.7.1/glm/common.hpp

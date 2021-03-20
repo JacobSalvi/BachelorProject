@@ -81,17 +81,17 @@ row(row), col(col), gravity(gravity), integrator(integrator){
             if(j-1>=0){
                 //TODO choose initial spring coefficient that make sense
                 spring * toAdd = new spring(1.0f, coeff,1.0f, particles[i*col+j-1],tmp);
-                springs.push_back(*toAdd);
+                springs.push_back(toAdd);
             }
             //vertical springs
             if(i-1>=0){
                 spring * toAdd = new spring(1.0f, coeff,1.0f, particles[i*col+j-col],tmp);
-                springs.push_back(*toAdd);
+                springs.push_back(toAdd);
             }
             //diagonal springs
             if(i>0&&j>0){
                 spring * toAdd = new spring(sqrt(2), coeff,1.0f, particles[i*col+j-(col+1)], tmp);
-                springs.push_back(*toAdd);
+                springs.push_back(toAdd);
             }
         }
     }
@@ -112,7 +112,7 @@ void net::explicitEuler(float timeDelta) {
     //springs elongation/compression
     for(int i=0; i<springs.size(); ++i){
         //update both particles
-        springs[i].updateParticlesForce();
+        springs[i]->updateParticlesForce();
     }
 
 //    for(int i=0;i<particles.size();++i){
@@ -170,7 +170,7 @@ void net::rungeKutta(float timeDelta){
     //springs elongation/compression
     for(int i=0; i<springs.size(); ++i){
         //update both particles
-        springs[i].updateParticlesForce();
+        springs[i]->updateParticlesForce();
     }
 
     for(int i=0; i<particles.size();++i){
@@ -184,9 +184,9 @@ void net::rungeKutta(float timeDelta){
 
     for(int i=0; i<springs.size(); ++i){
         //indices of the particles
-        int part1 = springs[i].getPart1Id();
-        int part2 = springs[i].getPart2Id();
-        springs[i].rungeKuttaHelper((timeDelta/2.0f)*a1[part1], (timeDelta/2.0f)*a1[part2]);
+        int part1 = springs[i]->getPart1Id();
+        int part2 = springs[i]->getPart2Id();
+        springs[i]->rungeKuttaHelper((timeDelta/2.0f)*a1[part1], (timeDelta/2.0f)*a1[part2]);
     }
 
     for(int i=0; i<particles.size(); ++i){
@@ -341,5 +341,11 @@ void net::setMass(float mass) {
 
 void net::setGravity(const float newGravity) {
     net::gravity=newGravity;
+}
+
+void net::setStiffness(float stiffness) {
+    for(auto i : net::springs){
+        i->setKs(stiffness);
+    }
 }
 

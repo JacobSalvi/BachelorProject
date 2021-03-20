@@ -20,7 +20,7 @@ private:
     //list of particles
     std::vector<particle* > particles;
     //list of springs
-    std::vector<spring> springs;
+    std::vector<spring *> springs;
 
     //buffer needed for OpenGl
     //vertex and color buffers
@@ -102,6 +102,8 @@ public:
     void reset();
 
     void setMass(float mass);
+
+    void setStiffness(float stiffness);
 
 };
 
