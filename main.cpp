@@ -24,6 +24,9 @@ using namespace glm;
 #include "shaders/controls.hpp"
 #include "integrators/net.h"
 #include "shaders/texture.hpp"
+#include "Collidables/Sphere.h"
+#include "Collidables/cube.h"
+#include "Collidables/plane.h"
 #include <thread>
 #include <functional>
 
@@ -233,6 +236,79 @@ void drawCloth(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangle
     glDisableVertexAttribArray(1);
 }
 
+//create and add sphere
+//type 0->sphere, 1->cube, 2 plane
+void addColl(std::vector<collidable *> * list, int type){
+    collidable * coll;
+    glm::mat4 model = glm::mat4(1.0f);
+    switch(type){
+        //sphere
+        case 0:
+            coll = new sphere(100, glm::mat4(1),glm::vec3(1.0f,0.0f,0.0f));
+            break;
+        //cube
+        case 1:
+            model = glm::translate(model, glm::vec3(0.0f,0.0f,2.0f));
+            coll = new cube(model,glm::vec3(0.0f,0.0f,1.0f));
+            break;
+        //plane
+        case 2:
+            glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,-2.0f,0.0f));
+            model = glm::scale(translate, glm::vec3(5.0f,5.0f,5.0f));
+            coll = new plane(3.0f,1.0f, model, glm::vec3(0.0f,1.0f,0.0f));
+            break;
+
+    }
+
+    GLuint collVertex;
+    glGenBuffers(1, &collVertex);
+    glBindBuffer(GL_ARRAY_BUFFER, collVertex);
+    glBufferData(GL_ARRAY_BUFFER, coll->getSize(), coll->getVertexBuffer(), GL_DYNAMIC_DRAW);
+
+    GLuint collColour;
+    glGenBuffers(1, &collColour);
+    glBindBuffer(GL_ARRAY_BUFFER, collColour);
+    glBufferData(GL_ARRAY_BUFFER, coll->getSize(), coll->getColorBuffer(), GL_STATIC_DRAW);
+
+    coll->setCollVertex(collVertex);
+    coll->setCollColour(collColour);
+
+    list->push_back(coll);
+}
+
+//render collidable objects
+void drawColl(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, collidable* obj){
+    glm::mat4 mvp = ProjectionMatrix * ViewMatrix * obj->getModel();
+
+    glUniformMatrix4fv(triangleMatrixID, 1, GL_FALSE, &mvp[0][0]);
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, obj->getCollVertex());
+    glBufferSubData(GL_ARRAY_BUFFER, 0, obj->getSize(), obj->getVertexBuffer());
+    glVertexAttribPointer(
+            0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
+            3,                  // size
+            GL_FLOAT,           // type
+            GL_FALSE,           // normalized?
+            0,                  // stride
+            (void *) nullptr            // array buffer offset
+    );
+
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, obj->getCollColour());
+    glVertexAttribPointer(
+            1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
+            3,                                // size
+            GL_FLOAT,                         // type
+            GL_FALSE,                         // normalized?
+            0,                                // stride
+            (void *) nullptr                          // array buffer offset
+    );
+
+    glDrawArrays(GL_TRIANGLES, 0, obj->getNumberOfVertices());
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+}
 
 int main() {
     // Initialise GLFW
@@ -291,9 +367,9 @@ int main() {
     //This is likely not gonna work
     //nvm, it worked
     std::vector<helperStruct *> objectList;
-//    addCloth(&objectList, 3, 9, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
-//    addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
-//    addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(4.0f,0.0f,0.0f));
+    addCloth(&objectList, 3, 9, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
+    addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
+    addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(4.0f,0.0f,0.0f));
 
 
     GLuint VertexArrayID;
@@ -318,12 +394,17 @@ int main() {
     GLuint textureId3 = glGetUniformLocation(programId, "myTextureSampler");
 
     std::vector<helperStruct *> cultureList;
-    culture(&objectList, glm::vec3(-8.0f, 0.0f,0.0f));
-    culture(&objectList, glm::vec3(0.0f, 0.0f,0.0f));
-    culture(&objectList, glm::vec3(8.0f, 0.0f,0.0f));
+//    culture(&objectList, glm::vec3(-8.0f, 0.0f,0.0f));
+//    culture(&objectList, glm::vec3(0.0f, 0.0f,0.0f));
+//    culture(&objectList, glm::vec3(8.0f, 0.0f,0.0f));
 
     //glfwSetKeyCallback(window, key_callback);
     std::cout << "about to enter while loop" << std::endl;
+
+    //Collidables
+    std::vector<collidable *> collObjects;
+    addColl(&collObjects, 2);
+    std::cout<<"init succeful"<<std::endl;
 
     //gui stuff
     ImGui::CreateContext();
@@ -405,20 +486,18 @@ int main() {
 
         //drawing all of the objects
         for(int i=0; i<objectList.size();++i){
-            if(i==0){
-                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture, textureId, programId);
-            }else if(i==1){
-                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture2, textureId2, programId);
-            }else{
-                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture3, textureId3, programId);
-            }
-//            if(i==objectList.size()-1){
+//            if(i==0){
 //                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture, textureId, programId);
+//            }else if(i==1){
+//                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture2, textureId2, programId);
 //            }else{
-//                drawCloth(ProjectionMatrix, ViewMatrix, triangleMatrixID,objectList[i]);
+//                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture3, textureId3, programId);
 //            }
-
+            drawCloth(ProjectionMatrix, ViewMatrix, triangleMatrixID,objectList[i]);
         }
+
+        drawColl(ProjectionMatrix, ViewMatrix, triangleMatrixID, collObjects[0]);
+
         //gui stuff
         ImGui::Render();
         ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
@@ -442,6 +521,11 @@ int main() {
     for(auto & i : objectList){
         glDeleteBuffers(1, &i->vertex);
         glDeleteBuffers(1, &i->color);
+        delete(i);
+    }
+
+    //clean up
+    for(auto &i : collObjects){
         delete(i);
     }
 

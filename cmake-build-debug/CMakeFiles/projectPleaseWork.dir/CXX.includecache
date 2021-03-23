@@ -718,6 +718,26 @@ detail/type_vec4.hpp
 detail/func_vector_relational.hpp
 ../external/glm-0.9.7.1/glm/detail/func_vector_relational.hpp
 
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
+glm/glm.hpp
+-
+collidable.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/collidable.h
+
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/collidable.h
+glm/glm.hpp
+-
+GL/glew.h
+-
+
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.h
+collidable.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/collidable.h
+
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.h
+collidable.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/collidable.h
+
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imconfig.h
 
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imgui.h
@@ -787,6 +807,12 @@ integrators/net.h
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/net.h
 shaders/texture.hpp
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/texture.hpp
+Collidables/Sphere.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
+Collidables/cube.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.h
+Collidables/plane.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.h
 thread
 -
 functional

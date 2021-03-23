@@ -1,4 +1,8 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o"
+  "CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.o"
+  "CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.o"
+  "CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/imgui/imgui.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/imgui/imgui_demo.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/imgui/imgui_draw.cpp.o"

@@ -13,7 +13,7 @@
 // X--X--X
 // | \| \|
 // X--X--X
-class net {
+class net{
 private:
     int col;
     int row;

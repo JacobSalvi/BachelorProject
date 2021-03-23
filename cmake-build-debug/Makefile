@@ -618,6 +618,114 @@ LinearMath/fast:
 	$(MAKE) $(MAKESILENT) -f external/bullet-2.81-rev2613/src/LinearMath/CMakeFiles/LinearMath.dir/build.make external/bullet-2.81-rev2613/src/LinearMath/CMakeFiles/LinearMath.dir/build
 .PHONY : LinearMath/fast
 
+Collidables/Sphere.o: Collidables/Sphere.cpp.o
+
+.PHONY : Collidables/Sphere.o
+
+# target to build an object file
+Collidables/Sphere.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o
+.PHONY : Collidables/Sphere.cpp.o
+
+Collidables/Sphere.i: Collidables/Sphere.cpp.i
+
+.PHONY : Collidables/Sphere.i
+
+# target to preprocess a source file
+Collidables/Sphere.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.i
+.PHONY : Collidables/Sphere.cpp.i
+
+Collidables/Sphere.s: Collidables/Sphere.cpp.s
+
+.PHONY : Collidables/Sphere.s
+
+# target to generate assembly for a file
+Collidables/Sphere.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.s
+.PHONY : Collidables/Sphere.cpp.s
+
+Collidables/collidable.o: Collidables/collidable.cpp.o
+
+.PHONY : Collidables/collidable.o
+
+# target to build an object file
+Collidables/collidable.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.o
+.PHONY : Collidables/collidable.cpp.o
+
+Collidables/collidable.i: Collidables/collidable.cpp.i
+
+.PHONY : Collidables/collidable.i
+
+# target to preprocess a source file
+Collidables/collidable.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.i
+.PHONY : Collidables/collidable.cpp.i
+
+Collidables/collidable.s: Collidables/collidable.cpp.s
+
+.PHONY : Collidables/collidable.s
+
+# target to generate assembly for a file
+Collidables/collidable.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.s
+.PHONY : Collidables/collidable.cpp.s
+
+Collidables/cube.o: Collidables/cube.cpp.o
+
+.PHONY : Collidables/cube.o
+
+# target to build an object file
+Collidables/cube.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.o
+.PHONY : Collidables/cube.cpp.o
+
+Collidables/cube.i: Collidables/cube.cpp.i
+
+.PHONY : Collidables/cube.i
+
+# target to preprocess a source file
+Collidables/cube.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.i
+.PHONY : Collidables/cube.cpp.i
+
+Collidables/cube.s: Collidables/cube.cpp.s
+
+.PHONY : Collidables/cube.s
+
+# target to generate assembly for a file
+Collidables/cube.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.s
+.PHONY : Collidables/cube.cpp.s
+
+Collidables/plane.o: Collidables/plane.cpp.o
+
+.PHONY : Collidables/plane.o
+
+# target to build an object file
+Collidables/plane.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.o
+.PHONY : Collidables/plane.cpp.o
+
+Collidables/plane.i: Collidables/plane.cpp.i
+
+.PHONY : Collidables/plane.i
+
+# target to preprocess a source file
+Collidables/plane.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.i
+.PHONY : Collidables/plane.cpp.i
+
+Collidables/plane.s: Collidables/plane.cpp.s
+
+.PHONY : Collidables/plane.s
+
+# target to generate assembly for a file
+Collidables/plane.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.s
+.PHONY : Collidables/plane.cpp.s
+
 imgui/imgui.o: imgui/imgui.cpp.o
 
 .PHONY : imgui/imgui.o
@@ -961,6 +1069,18 @@ help:
 	@echo "... wave"
 	@echo "... windows"
 	@echo "... zlib"
+	@echo "... Collidables/Sphere.o"
+	@echo "... Collidables/Sphere.i"
+	@echo "... Collidables/Sphere.s"
+	@echo "... Collidables/collidable.o"
+	@echo "... Collidables/collidable.i"
+	@echo "... Collidables/collidable.s"
+	@echo "... Collidables/cube.o"
+	@echo "... Collidables/cube.i"
+	@echo "... Collidables/cube.s"
+	@echo "... Collidables/plane.o"
+	@echo "... Collidables/plane.i"
+	@echo "... Collidables/plane.s"
 	@echo "... imgui/imgui.o"
 	@echo "... imgui/imgui.i"
 	@echo "... imgui/imgui.s"

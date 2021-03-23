@@ -4,6 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o"
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/collidable.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.o"
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.o"
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imgui.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/imgui/imgui.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imgui_demo.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/imgui/imgui_demo.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imgui_draw.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/imgui/imgui_draw.cpp.o"
