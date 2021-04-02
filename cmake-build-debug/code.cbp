@@ -4429,6 +4429,15 @@
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/controls.hpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperFunctions.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperFunctions.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/shader.cpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>

@@ -1,7 +1,3 @@
-//
-// Created by Jacob Salvi on 23.03.21.
-//
-
 #include "Sphere.h"
 #include <cmath>
 #include <iostream>
@@ -19,23 +15,23 @@ sphere::sphere(int size, glm::mat4 model, glm::vec3 colour) : collidable(colour,
    for(int i =0; i<size; ++i){
        float v = 0.0f;
        for(int j=0; j<size; ++j){
-           float t = sin(M_PI*v);
-           float x1 = t*cos(2*M_PI*u);
-           float z1 = t*sin(2*M_PI*u);
-           float y1 = cos(M_PI*v);
+           double t = sin(M_PI*v);
+           double x1 = t*cos(2*M_PI*u);
+           double z1 = t*sin(2*M_PI*u);
+           double y1 = cos(M_PI*v);
 
-           float x4 = t*cos(2*M_PI*(u+step));
-           float z4 = t*sin(2*M_PI*(u+step));
-           float y4 = cos(M_PI*v);
+           double x4 = t*cos(2*M_PI*(u+step));
+           double z4 = t*sin(2*M_PI*(u+step));
+           double y4 = cos(M_PI*v);
 
            t = sin(M_PI*(v+step));
-           float x2 = t*cos(2*M_PI*u);
-           float z2 = t*sin(2*M_PI*u);
-           float y2 = cos(M_PI*(v+step));
+           double x2 = t*cos(2*M_PI*u);
+           double z2 = t*sin(2*M_PI*u);
+           double y2 = cos(M_PI*(v+step));
 
-           float x3 = t*cos(2*M_PI*(u+step));
-           float z3 = t*sin(2*M_PI*(u+step));
-           float y3 = cos(M_PI*(v+step));
+           double x3 = t*cos(2*M_PI*(u+step));
+           double z3 = t*sin(2*M_PI*(u+step));
+           double y3 = cos(M_PI*(v+step));
 
            vertexBuffer[vertPos++]=x1;
            vertexBuffer[vertPos++]=y1;
@@ -71,8 +67,9 @@ sphere::sphere(int size, glm::mat4 model, glm::vec3 colour) : collidable(colour,
        u+=step;
    }
 
-   for(int i=0; i<6;++i){
-       std::cout<<"colour is: "<<colorBuffer[i]<<std::endl;
+   //unit sphere
+   for(int i=0; i<size*size*18;++i){
+       vertexBuffer[i]=vertexBuffer[i]/2.0f;
    }
 }
 

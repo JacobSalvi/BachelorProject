@@ -17,6 +17,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/spring.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/main.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/main.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/controls.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.o"
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperFunctions.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/shader.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/shaders/shader.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/texture.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/shaders/texture.cpp.o"
   )

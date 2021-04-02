@@ -19,12 +19,20 @@ void collidable::setCollColour(GLuint collColour) {
     collidable::collColour = collColour;
 }
 
+void collidable::setCollNormal(GLuint collNormal) {
+    collidable::collNormal = collNormal;
+}
+
 GLuint collidable::getCollVertex() const {
     return collVertex;
 }
 
 GLuint collidable::getCollColour() const {
     return collColour;
+}
+
+GLuint collidable::getCollNormal() const {
+    return collNormal;
 }
 
 const glm::mat4 &collidable::getModel() const {
@@ -37,5 +45,17 @@ int collidable::getSize() {
 
 int collidable::getNumberOfVertices() {
     return 0;
+}
+
+float *collidable::getNormalBuffer() const {
+    return normalBuffer;
+}
+
+void collidable::handleCollision(collidable *b) {
+
+}
+
+bool collidable::isHovered(glm::vec3 origin, glm::vec3 direction) {
+    return false;
 }
 

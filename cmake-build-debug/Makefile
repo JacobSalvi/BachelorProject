@@ -969,6 +969,33 @@ shaders/controls.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.s
 .PHONY : shaders/controls.cpp.s
 
+shaders/helperFunctions.o: shaders/helperFunctions.cpp.o
+
+.PHONY : shaders/helperFunctions.o
+
+# target to build an object file
+shaders/helperFunctions.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o
+.PHONY : shaders/helperFunctions.cpp.o
+
+shaders/helperFunctions.i: shaders/helperFunctions.cpp.i
+
+.PHONY : shaders/helperFunctions.i
+
+# target to preprocess a source file
+shaders/helperFunctions.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.i
+.PHONY : shaders/helperFunctions.cpp.i
+
+shaders/helperFunctions.s: shaders/helperFunctions.cpp.s
+
+.PHONY : shaders/helperFunctions.s
+
+# target to generate assembly for a file
+shaders/helperFunctions.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.s
+.PHONY : shaders/helperFunctions.cpp.s
+
 shaders/shader.o: shaders/shader.cpp.o
 
 .PHONY : shaders/shader.o
@@ -1108,6 +1135,9 @@ help:
 	@echo "... shaders/controls.o"
 	@echo "... shaders/controls.i"
 	@echo "... shaders/controls.s"
+	@echo "... shaders/helperFunctions.o"
+	@echo "... shaders/helperFunctions.i"
+	@echo "... shaders/helperFunctions.s"
 	@echo "... shaders/shader.o"
 	@echo "... shaders/shader.i"
 	@echo "... shaders/shader.s"

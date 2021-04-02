@@ -25,23 +25,21 @@ using namespace glm;
 #include "integrators/net.h"
 #include "shaders/texture.hpp"
 #include "Collidables/Sphere.h"
-#include "Collidables/cube.h"
-#include "Collidables/plane.h"
 #include <thread>
 #include <functional>
 
+#include "shaders/helperStruct.h"
+#include "shaders/helperFunctions.h"
+
 void timer_start(unsigned int interval);
 
-//helper struct because I couldn't figure out any better way to do this
-struct helperStruct{     
-    net * cloth;
-    GLuint vertex;
-    GLuint color;
-    glm::vec3 tr;
-};
+void dragMouse();
 
 bool shouldSimulate = true;
 std::thread sim;
+
+bool dragThreadShouldLive = false;
+std::thread dragThread;
 
 #if 0
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
@@ -56,8 +54,8 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 #endif
 
 static bool threadShouldLive = true;
-void timer_start(unsigned int interval, const std::vector<helperStruct *>& list) {
-    sim = std::thread([interval, list]() {
+void timer_start(unsigned int interval, const std::vector<helperStruct *>& list, const std::vector<collidable *> &collList) {
+    sim = std::thread([interval, list, collList]() {
         static int counter = 0;
         while (threadShouldLive) {
             for(auto i : list){
@@ -69,6 +67,12 @@ void timer_start(unsigned int interval, const std::vector<helperStruct *>& list)
                 for(auto i : list){
                     i->cloth->updateBuffer();
                 }
+
+                for(int i=0; i<collList.size();++i){
+                    for(int j=i+1; j<collList.size(); ++j){
+                        collList[i]->handleCollision(collList[j]);
+                    }
+                }
                 counter=0;
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(interval));
@@ -78,236 +82,15 @@ void timer_start(unsigned int interval, const std::vector<helperStruct *>& list)
     sim.detach();
 }
 
-//culture
-void culture(std::vector<helperStruct *> *list, glm::vec3 tr){
-    net * tmp = new net(1.0f, 3,7, 0, glm::vec3(2.0f,0.0f,0.0f), -1.0f);
-
-    //my wisdom knows no limit
-    // = 12*(row-1)(col-1)
-    float uv[144];
-
-    int pos = 0;
-    for(int i=0; i<6; ++i){
-        for(int j=0; j<2; ++j){
-            //first triangle first vertex
-
-            uv[pos++]=float(j)/2.0f;
-            uv[pos++]=1.0f-float(i)/6.0f;
-
-            //first triangle second vertex
-            uv[pos++]=float(j)/2.0f;
-            uv[pos++]=1.0f-float(i+1)/6.0f;
-
-            //first triangle third vertex
-            uv[pos++]=float(j+1)/2.0f;
-            uv[pos++]=1.0f-float(i+1)/6.0f;
-
-            //second triangle first vertex
-            uv[pos++]=float(j)/2.0f;
-            uv[pos++]=1.0f-float(i)/6.0f;
-
-            //second triangle second vertex
-            uv[pos++]=float(j+1)/2.0f;
-            uv[pos++]=1.0f-float(i+1)/6.0f;
-
-            //second triangle third vertex
-            uv[pos++]=float(j+1)/2.0f;
-            uv[pos++]=1.0f-float(i)/6.0f;
+void dragMouse(){
+    dragThread = std::thread([](){
+        while(dragThreadShouldLive){
+            ImVec2 tmp = ImGui::GetMousePos();
+            //std::cout<<tmp[0]<<" "<<tmp[1]<<std::endl;
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         }
-    }
-
-    GLuint vertexbuffer;
-    glGenBuffers(1, &vertexbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glBufferData(GL_ARRAY_BUFFER, tmp->getSize(), tmp->getVertexBuffer(), GL_DYNAMIC_DRAW);
-
-    GLuint uvbuffer;
-    glGenBuffers(1, &uvbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_DYNAMIC_DRAW);
-
-    auto * str = new helperStruct;
-    str->cloth=tmp;
-    str->vertex=vertexbuffer;
-    str->color=uvbuffer;
-    str->tr=tr;
-    list->push_back(str);
-}
-
-void drawCulture(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint MatrixID, helperStruct* obj, GLuint texture, GLuint textureId, GLuint program){
-    glUseProgram(program);
-    glm::mat4 ModelMatrix = glm::mat4(1.0);
-    ModelMatrix=glm::translate(ModelMatrix, obj->tr);
-    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
-    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-
-    // Bind our texture in Texture Unit 0
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    // Set our "myTextureSampler" sampler to use Texture Unit 0
-    glUniform1i(textureId, 0);
-
-    // 1rst attribute buffer : vertices
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, obj->vertex);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, obj->cloth->getSize(), obj->cloth->getVertexBuffer());
-    glVertexAttribPointer(
-            0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void*)0            // array buffer offset
-    );
-
-    // 2nd attribute buffer : UVs
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, obj->color);
-    glVertexAttribPointer(
-            1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-            2,                                // size : U+V => 2
-            GL_FLOAT,                         // type
-            GL_FALSE,                         // normalized?
-            0,                                // stride
-            (void*)0                          // array buffer offset
-    );
-
-    // Draw the triangle !
-    glDrawArrays(GL_TRIANGLES, 0, obj->cloth->getNumberOfVertices()); // 12*3 indices starting at 0 -> 12 triangles
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-}
-
-//testing whether I can manage to dynamically create and show a net
-void addCloth(std::vector<helperStruct *> *list, int col, int row, int in, glm::vec3 colour, glm::vec3 tr){
-    net * clothNew = new net(1.0f, col, row, in, colour, -1.0f);
-    GLuint netVertex;
-    glGenBuffers(1, &netVertex);
-    glBindBuffer(GL_ARRAY_BUFFER, netVertex);
-    glBufferData(GL_ARRAY_BUFFER, clothNew->getSize(), clothNew->getVertexBuffer(), GL_DYNAMIC_DRAW);
-
-    GLuint netColor;
-    glGenBuffers(1, &netColor);
-    glBindBuffer(GL_ARRAY_BUFFER, netColor);
-    glBufferData(GL_ARRAY_BUFFER, clothNew->getSize(), clothNew->getColorBuffer(), GL_STATIC_DRAW);
-
-    auto * tmp = new helperStruct;
-    tmp->cloth=clothNew;
-    tmp->color=netColor;
-    tmp->vertex=netVertex;
-    tmp->tr=tr;
-    list->push_back(tmp);
-}
-
-
-void drawCloth(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, helperStruct* obj){
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, obj->tr);
-    glm::mat4 mvp = ProjectionMatrix * ViewMatrix * model;
-
-    glUniformMatrix4fv(triangleMatrixID, 1, GL_FALSE, &mvp[0][0]);
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, obj->vertex);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, obj->cloth->getSize(), obj->cloth->getVertexBuffer());
-    glVertexAttribPointer(
-            0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void *) nullptr            // array buffer offset
-    );
-
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, obj->color);
-    glVertexAttribPointer(
-            1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-            3,                                // size
-            GL_FLOAT,                         // type
-            GL_FALSE,                         // normalized?
-            0,                                // stride
-            (void *) nullptr                          // array buffer offset
-    );
-
-    glDrawArrays(GL_TRIANGLES, 0, obj->cloth->getNumberOfVertices());
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-}
-
-//create and add sphere
-//type 0->sphere, 1->cube, 2 plane
-void addColl(std::vector<collidable *> * list, int type){
-    collidable * coll;
-    glm::mat4 model = glm::mat4(1.0f);
-    switch(type){
-        //sphere
-        case 0:
-            coll = new sphere(100, glm::mat4(1),glm::vec3(1.0f,0.0f,0.0f));
-            break;
-        //cube
-        case 1:
-            model = glm::translate(model, glm::vec3(0.0f,0.0f,2.0f));
-            coll = new cube(model,glm::vec3(0.0f,0.0f,1.0f));
-            break;
-        //plane
-        case 2:
-            glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,-2.0f,0.0f));
-            model = glm::scale(translate, glm::vec3(5.0f,5.0f,5.0f));
-            coll = new plane(3.0f,1.0f, model, glm::vec3(0.0f,1.0f,0.0f));
-            break;
-
-    }
-
-    GLuint collVertex;
-    glGenBuffers(1, &collVertex);
-    glBindBuffer(GL_ARRAY_BUFFER, collVertex);
-    glBufferData(GL_ARRAY_BUFFER, coll->getSize(), coll->getVertexBuffer(), GL_DYNAMIC_DRAW);
-
-    GLuint collColour;
-    glGenBuffers(1, &collColour);
-    glBindBuffer(GL_ARRAY_BUFFER, collColour);
-    glBufferData(GL_ARRAY_BUFFER, coll->getSize(), coll->getColorBuffer(), GL_STATIC_DRAW);
-
-    coll->setCollVertex(collVertex);
-    coll->setCollColour(collColour);
-
-    list->push_back(coll);
-}
-
-//render collidable objects
-void drawColl(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, collidable* obj){
-    glm::mat4 mvp = ProjectionMatrix * ViewMatrix * obj->getModel();
-
-    glUniformMatrix4fv(triangleMatrixID, 1, GL_FALSE, &mvp[0][0]);
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, obj->getCollVertex());
-    glBufferSubData(GL_ARRAY_BUFFER, 0, obj->getSize(), obj->getVertexBuffer());
-    glVertexAttribPointer(
-            0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void *) nullptr            // array buffer offset
-    );
-
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, obj->getCollColour());
-    glVertexAttribPointer(
-            1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-            3,                                // size
-            GL_FLOAT,                         // type
-            GL_FALSE,                         // normalized?
-            0,                                // stride
-            (void *) nullptr                          // array buffer offset
-    );
-
-    glDrawArrays(GL_TRIANGLES, 0, obj->getNumberOfVertices());
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
+    });
+    dragThread.detach();
 }
 
 int main() {
@@ -325,7 +108,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Open a window and create its OpenGL context
-    window = glfwCreateWindow(1024, 768, "Tutorial 06 - Keyboard and Mouse", nullptr, nullptr);
+    window = glfwCreateWindow(1024, 768, "Please God Work", nullptr, nullptr);
     if (window == nullptr) {
         fprintf(stderr,
                 "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
@@ -369,7 +152,7 @@ int main() {
     std::vector<helperStruct *> objectList;
     addCloth(&objectList, 3, 9, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
     addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
-    addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(4.0f,0.0f,0.0f));
+    addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f));
 
 
     GLuint VertexArrayID;
@@ -398,13 +181,20 @@ int main() {
 //    culture(&objectList, glm::vec3(0.0f, 0.0f,0.0f));
 //    culture(&objectList, glm::vec3(8.0f, 0.0f,0.0f));
 
+
+    //phong lighting system
+    //GLuint lightSysId = LoadShaders("shaders/shadowVert.vertexshader", "shaders/shadowFrag.fragmentshader");
+    //glm::vec3 lightPosition(0.0f, 3.0f, 5.0f);
+
     //glfwSetKeyCallback(window, key_callback);
     std::cout << "about to enter while loop" << std::endl;
 
     //Collidables
     std::vector<collidable *> collObjects;
     addColl(&collObjects, 2);
-    std::cout<<"init succeful"<<std::endl;
+    addColl(&collObjects, 0);
+    addColl(&collObjects,1);
+    std::cout<<"init successful"<<std::endl;
 
     //gui stuff
     ImGui::CreateContext();
@@ -412,12 +202,14 @@ int main() {
     ImGui::StyleColorsDark();
     static int azimuthal = 90;
     static int polar = 90;
-    static int distance = 10;
+    static float distance = 10.0f;
     static float wind[3]= {0.0f,0.0f,-1.0f};
     static float mass =1.0f;
     static float gravity = -1.0f;
     static float ks = 40.0f;
 
+
+    int idk =0;
     do {
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -432,7 +224,7 @@ int main() {
             ImGui::Text("Please god work");
             ImGui::SliderInt("Azimuthal angle", &azimuthal, 0, 360);
             ImGui::SliderInt("Polar angle", &polar, 0, 180);
-            ImGui::InputInt("Distance", &distance);
+            ImGui::InputFloat("Distance", &distance);
             ImGui::InputFloat3("Wind", wind);
             ImGui::InputFloat("Mass", &mass);
             ImGui::InputFloat("Spring stiffness", &ks);
@@ -441,7 +233,7 @@ int main() {
             if(ImGui::Button("Begin Simulation") && shouldSimulate){
                 threadShouldLive=true;
                 shouldSimulate=false;
-                timer_start(1, objectList);
+                timer_start(1, objectList, collObjects);
             }
             if(ImGui::Button("Set wind")){
                 for(auto i: objectList) {
@@ -473,6 +265,22 @@ int main() {
             }
         }
 
+        if(ImGui::IsMouseClicked(0) && !dragThreadShouldLive){
+            dragThreadShouldLive=true;
+            glm::vec3 origin(0.0f,0.0f,10.0f);
+            glm::vec3 pixelRay = getMouseRay(ImGui::GetMousePos());
+            glm::vec3 pos(0.0f,0.0f, 0);
+            collidable * tmp = isMouseOverObject(getCameraPosition(), pixelRay, &collObjects);
+//            if(tmp !=NULL){
+//                std::cout<< "not null" <<std::endl;
+//            }else{
+//                std::cout<<"Null" <<std::endl;
+//            }
+            dragMouse();
+        }
+        if(ImGui::IsMouseReleased(0)){
+            dragThreadShouldLive =false;
+        }
         // Compute the MVP matrix from keyboard and mouse input
         //computeMatricesFromInputs();
         computeMatricesFromInputs(&azimuthal, &polar, distance);
@@ -496,12 +304,12 @@ int main() {
             drawCloth(ProjectionMatrix, ViewMatrix, triangleMatrixID,objectList[i]);
         }
 
-        drawColl(ProjectionMatrix, ViewMatrix, triangleMatrixID, collObjects[0]);
-
+        for(auto i : collObjects){
+            drawColl(ProjectionMatrix, ViewMatrix, triangleMatrixID, i);
+        }
         //gui stuff
         ImGui::Render();
         ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
-
 
         // Swap buffers
         glfwSwapBuffers(window);

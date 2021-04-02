@@ -8,12 +8,15 @@ extern GLFWwindow* window; // The "extern" keyword here is to access the variabl
 // Include GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <imgui.h>
+
 using namespace glm;
 
 #include "controls.hpp"
 
 glm::mat4 ViewMatrix;
 glm::mat4 ProjectionMatrix;
+glm::vec3 cameraPosition;
 
 glm::mat4 getViewMatrix(){
     return ViewMatrix;
@@ -22,9 +25,12 @@ glm::mat4 getProjectionMatrix(){
     return ProjectionMatrix;
 }
 
+glm::vec3 getCameraPosition(){
+    return cameraPosition;
+}
 
 // Initial position : on +Z
-glm::vec3 position = glm::vec3( 0, 0, 5 );
+glm::vec3 position = glm::vec3( 0, 0, 50);
 // Initial horizontal angle : toward -Z
 float horizontalAngle = 3.14f;
 // Initial vertical angle : none
@@ -112,7 +118,7 @@ void computeMatricesFromInputs(){
 
 //compute viewMatrix and projectionMatrix based on the input
 //this code might or might not be inspired from last year code
-void computeMatricesFromInputs(int * azimuthal, int* polar, int distance){
+void computeMatricesFromInputs(int * azimuthal, int* polar, float distance){
     //compute angles
     float az = ((float) *azimuthal) /360.0f*2.0f*M_PI;
     float po = ((float)*polar)/360.0f*2.0f*M_PI;
@@ -121,6 +127,8 @@ void computeMatricesFromInputs(int * azimuthal, int* polar, int distance){
     float x = distance*sin(po)*cos(az);
     float y = distance*cos(po);
     float z = distance*sin(po)*sin(az);
+
+    cameraPosition = glm::vec3(x,y,z);
 
     ViewMatrix= glm::lookAt(glm::vec3(x,y,z), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,1.0f,0.0f));
 
@@ -132,3 +140,26 @@ void setWind(net * net, float wind[]){
     net->setWind(glm::vec3(wind[0],wind[1], wind[2]));
 }
 
+//check whether the mouse touches an object
+glm::vec3 getMouseRay(ImVec2 mousePosition){
+    //step 1
+    float x = (2.0f*mousePosition[0])/1024.0f-1.0f;
+    float y = 1.0f -(2.0f*mousePosition[1])/768.0f;
+    float z = 1.0f;
+    glm::vec3 ray_nds(x,y,z);
+
+    //step2
+    glm::vec4 ray_clip(x, y, -1.0f, 1.0f);
+
+    //step3
+    glm::vec4 ray_eye = glm::inverse(ProjectionMatrix)*ray_clip;
+    ray_eye.z=-1.0f;
+    ray_eye.w=0.0f;
+
+    //step4
+    glm::vec4 tmp = (glm::inverse(ViewMatrix)*ray_eye);
+    glm::vec3 ray_wor(tmp.x,tmp.y,tmp.z);
+    ray_wor = glm::normalize(ray_wor);
+
+    return ray_wor;
+}

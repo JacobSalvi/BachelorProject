@@ -33,7 +33,10 @@ add_executable(projectPleaseWork
         integrators/particle.h
         imgui/imgui_internal.h imgui/imgui.h imgui/imconfig.h imgui/imgui_impl_glfw_gl3.h
         imgui/stb_rect_pack.h imgui/stb_textedit.h imgui/stb_truetype.h
-        imgui/imgui_draw.cpp imgui/imgui.cpp imgui/imgui_demo.cpp imgui/imgui_impl_glfw_gl3.cpp Collidables/collidable.cpp Collidables/collidable.h Collidables/Sphere.cpp Collidables/Sphere.h Collidables/cube.cpp Collidables/cube.h Collidables/plane.cpp Collidables/plane.h)
+        imgui/imgui_draw.cpp imgui/imgui.cpp imgui/imgui_demo.cpp imgui/imgui_impl_glfw_gl3.cpp Collidables/collidable.cpp
+        Collidables/collidable.h Collidables/Sphere.cpp Collidables/Sphere.h Collidables/cube.cpp Collidables/cube.h
+        Collidables/plane.cpp Collidables/plane.h
+        shaders/helperFunctions.cpp shaders/helperStruct.h shaders/helperFunctions.h)
 
 target_link_libraries(projectPleaseWork
         ${ALL_LIBS}

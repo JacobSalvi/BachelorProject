@@ -2,7 +2,7 @@
 #define CODE_COLLIDABLE_H
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-
+#include <imgui.h>
 
 
 //Simply a super class for every sub class that can be collided with
@@ -13,9 +13,11 @@ protected:
 
     float * vertexBuffer;
     float * colorBuffer;
+    float * normalBuffer;
 
     GLuint collVertex;
     GLuint collColour;
+    GLuint collNormal;
 
 public:
     collidable(glm::vec3 colour, glm::mat4 model);
@@ -26,17 +28,27 @@ public:
 
     GLuint getCollColour() const;
 
+    GLuint getCollNormal() const;
+
     void setCollVertex(GLuint collVertex);
 
     void setCollColour(GLuint collColour);
+
+    void setCollNormal(GLuint collNormal);
 
     float *getVertexBuffer() const;
 
     float *getColorBuffer() const;
 
+    float *getNormalBuffer() const;
+
     const glm::mat4 &getModel() const;
 
     virtual int getNumberOfVertices();
+
+    void handleCollision(collidable * b);
+
+    virtual bool isHovered(glm::vec3 origin, glm::vec3 direction);
 };
 
 

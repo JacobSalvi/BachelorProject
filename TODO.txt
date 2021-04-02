@@ -1,3 +1,5 @@
 make function to add an arbitrary number of cloths, done...or at least I think
 make a reset button, DONE ... kinda
 add mouse dragging functionality
+
+add lights, 'cos it is quite ugly like this

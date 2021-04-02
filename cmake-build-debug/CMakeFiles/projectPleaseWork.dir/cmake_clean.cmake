@@ -12,6 +12,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/main.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.o"
+  "CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/shaders/shader.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/shaders/texture.cpp.o"
   "projectPleaseWork"
