@@ -13,7 +13,15 @@ public:
 
     int getNumberOfVertices() override;
 
-    bool isHovered(glm::vec3 origin, glm::vec3 direction) override{
+    void getName() override{
+        std::cout<<"plane"<<std::endl;
+    }
+
+    mouseIntersectStruct isHovered(glm::vec3 origin, glm::vec3 direction) override{
+        //struct to return
+        mouseIntersectStruct toReturn;
+        toReturn.isMouseOver=false;
+
         glm::mat4 M_ = glm::inverse(getModel());
         glm::vec4 orHelper = M_*glm::vec4(origin,1.0f);
         glm::vec3 origin_(orHelper.x, orHelper.y, orHelper.z);
@@ -47,10 +55,13 @@ public:
 
         if (intersect){
             std::cout<<"plane intersection"<<std::endl;
+            toReturn.isMouseOver=true;
+            toReturn.point=glm::vec3(getModel()*glm::vec4(p_,1.0f));
+            return toReturn;
         }else{
             std::cout<<"no plane intersection"<<std::endl;
+            return toReturn;
         }
-        return false;
     }
 };
 

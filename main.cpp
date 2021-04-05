@@ -30,10 +30,11 @@ using namespace glm;
 
 #include "shaders/helperStruct.h"
 #include "shaders/helperFunctions.h"
+#include "Collidables/mouseIntersectStruct.h"
 
 void timer_start(unsigned int interval);
 
-void dragMouse();
+void dragMouse(mouseIntersectStruct obj);
 
 bool shouldSimulate = true;
 std::thread sim;
@@ -82,13 +83,55 @@ void timer_start(unsigned int interval, const std::vector<helperStruct *>& list,
     sim.detach();
 }
 
-void dragMouse(){
-    dragThread = std::thread([](){
+
+//TODO: not the most accurate results, must improve this, remove shaky effect
+void dragMouse(mouseIntersectStruct obj){
+    dragThread = std::thread([obj](){
+        glm::vec3 helper = obj.point;
         while(dragThreadShouldLive){
-            ImVec2 tmp = ImGui::GetMousePos();
-            //std::cout<<tmp[0]<<" "<<tmp[1]<<std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+//this piece of code is a crime against humanity and honestly it brings shame
+//on my family
+#if 0
+            glm::vec3 pixelRay = getMouseRay(ImGui::GetMousePos());
+            glm::vec3 rayOrigin = getCameraPosition();
+            glm::vec3 planeNormal = glm::normalize(rayOrigin);
+            glm::vec3 p1 = planeVectorIntersection(rayOrigin, pixelRay, planeNormal, glm::vec3(0.0,0.0,0.0));
+
+            //get object pos
+            glm::mat4 tmp = obj.object->getModel();
+            glm::vec3 p2 = planeVectorIntersection(rayOrigin, glm::normalize(helper-rayOrigin), planeNormal, glm::vec3(0.0,0.0,0.0));
+
+            //translating the object accordingly
+            glm::vec3 translation = p1-p2;
+            tmp[3][0]+=translation[0];
+            tmp[3][1]+=translation[1];
+            tmp[3][2]+=translation[2];
+
+            std::cout<<"translation: "<<translation[0]<<" ";
+            std::cout<<translation[1]<<" ";
+            std::cout<<translation[2]<<std::endl;
+
+            //updating obj
+            obj.object->setModel(tmp);
+            helper+=translation;
+#endif
+            //this code also brings shame upon my family, but less
+            glm::vec3 pixelRay = getMouseRay(ImGui::GetMousePos());
+            glm::vec3 rayOrigin = getCameraPosition();
+            glm::vec3 planeNormal = glm::normalize(rayOrigin);
+            glm::vec3 p1 = planeVectorIntersection(rayOrigin, pixelRay, planeNormal, helper);
+
+            glm::vec3 translation = p1-helper;
+            glm::mat4 tmp = obj.object->getModel();
+            tmp[3][0]+=translation[0];
+            tmp[3][1]+=translation[1];
+            tmp[3][2]+=translation[2];
+            obj.object->setModel(tmp);
+            helper+=translation;
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
+        std::cout<<"Drag thread should be dead now"<<std::endl;
     });
     dragThread.detach();
 }
@@ -265,18 +308,13 @@ int main() {
             }
         }
 
-        if(ImGui::IsMouseClicked(0) && !dragThreadShouldLive){
+        if(ImGui::IsMouseClicked(0) && !dragThreadShouldLive && !ImGui::IsMouseHoveringWindow()){
             dragThreadShouldLive=true;
-            glm::vec3 origin(0.0f,0.0f,10.0f);
             glm::vec3 pixelRay = getMouseRay(ImGui::GetMousePos());
-            glm::vec3 pos(0.0f,0.0f, 0);
-            collidable * tmp = isMouseOverObject(getCameraPosition(), pixelRay, &collObjects);
-//            if(tmp !=NULL){
-//                std::cout<< "not null" <<std::endl;
-//            }else{
-//                std::cout<<"Null" <<std::endl;
-//            }
-            dragMouse();
+            mouseIntersectStruct tmp = isMouseOverObject(getCameraPosition(), pixelRay, &collObjects);
+            if(tmp.isMouseOver){
+                dragMouse(tmp);
+            }
         }
         if(ImGui::IsMouseReleased(0)){
             dragThreadShouldLive =false;

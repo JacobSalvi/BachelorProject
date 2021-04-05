@@ -9,9 +9,6 @@
 
 class sphere : public collidable{
 private:
-    float ray =1.0f;
-    glm::vec3 colour;
-    glm::mat4 model;
     int size;
 public:
     sphere(int size, glm::mat4 model, glm::vec3 colour);
@@ -20,7 +17,15 @@ public:
 
     int getNumberOfVertices() override;
 
-    bool isHovered(glm::vec3 origin, glm::vec3 direction) override{
+    void getName() override{
+        std::cout<<"sphere"<<std::endl;
+    }
+
+    mouseIntersectStruct isHovered(glm::vec3 origin, glm::vec3 direction) override{
+        //return struct
+        mouseIntersectStruct toReturn;
+        toReturn.isMouseOver=false;
+
         //i don't even know
         glm::mat4 whatEven = getModel();
 
@@ -43,7 +48,7 @@ public:
         if(d2>1.0f){
             //no intersection
             std::cout<<"no sphere intersected"<<std::endl;
-            return false;
+            return toReturn;
         }else{
             //intersection
             std::cout<<"sphere intersected"<<std::endl;
@@ -54,10 +59,12 @@ public:
             glm::vec3 p_ = origin_+t1*d_;
             std::cout<<p_.x<<" "<<p_.y<<" "<<p_.z<<std::endl;
 
-            return true;
-        }
+            //savings the intersection data in the struct
+            toReturn.isMouseOver=true;
+            toReturn.point=glm::vec3(whatEven*glm::vec4(p_, 1.0f));
 
-        return false;
+            return toReturn;
+        }
     };
 };
 

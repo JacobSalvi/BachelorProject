@@ -2062,6 +2062,9 @@
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.cpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>

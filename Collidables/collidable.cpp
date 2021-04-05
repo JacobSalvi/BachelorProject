@@ -55,7 +55,16 @@ void collidable::handleCollision(collidable *b) {
 
 }
 
-bool collidable::isHovered(glm::vec3 origin, glm::vec3 direction) {
-    return false;
+mouseIntersectStruct collidable::isHovered(glm::vec3 origin, glm::vec3 direction) {
+    mouseIntersectStruct toReturn;
+    return toReturn;
+}
+
+void collidable::getName() {
+
+}
+
+void collidable::setModel(const glm::mat4 &model) {
+    collidable::model = model;
 }
 

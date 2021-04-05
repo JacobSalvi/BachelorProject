@@ -1,6 +1,7 @@
 //this file needs a better name, I know
 
 #include "helperFunctions.h"
+#include "../Collidables/mouseIntersectStruct.h"
 
 
 
@@ -238,12 +239,35 @@ void drawColl(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleM
 }
 
 //dragging
-collidable * isMouseOverObject(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list){
+mouseIntersectStruct isMouseOverObject(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list){
+    mouseIntersectStruct closestObject;
+    closestObject.isMouseOver=false;
     for(auto i : *list){
-        if(i->isHovered(origin, direction)){
-            std::cout<<"WTF"<<std::endl;
-            return i;
+        mouseIntersectStruct tmp = i->isHovered(origin, direction);
+        //check whether we intersect the object
+        if(tmp.isMouseOver){
+            if(!closestObject.isMouseOver){
+                closestObject = tmp;
+                closestObject.object=i;
+            }else{
+                //check whether this object is closer than the last object we intersected
+                if(glm::length(origin-tmp.point)<glm::length(origin-closestObject.point)){
+                    closestObject=tmp;
+                    closestObject.object=i;
+                }
+            }
         }
     }
-    return nullptr;
+    return closestObject;
+}
+
+//compute the intersection with the plane
+glm::vec3 planeVectorIntersection(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 planeNormal, glm::vec3 planePoint){
+    float t = glm::dot(planePoint-rayOrigin,planeNormal)/glm::dot(rayDirection,planeNormal);
+    return rayOrigin+t*rayDirection;
+}
+
+//compute projection of point onto plane
+glm::vec3 pointPlaneProjection(glm::vec3 point, glm::vec3 planeNormal){
+    return point - glm::dot(point, planeNormal) * planeNormal;
 }

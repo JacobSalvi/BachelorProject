@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 #include <imgui.h>
+#include "mouseIntersectStruct.h"
 
 
 //Simply a super class for every sub class that can be collided with
@@ -48,7 +49,12 @@ public:
 
     void handleCollision(collidable * b);
 
-    virtual bool isHovered(glm::vec3 origin, glm::vec3 direction);
+    virtual mouseIntersectStruct isHovered(glm::vec3 origin, glm::vec3 direction);
+
+    //debugging stuff
+    virtual void getName();
+
+    void setModel(const glm::mat4 &model);
 };
 
 

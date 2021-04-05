@@ -33,6 +33,8 @@ void addColl(std::vector<collidable *> * list, int type);
 void drawColl(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, collidable* obj);
 
 //dragging
-collidable * isMouseOverObject(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list);
+mouseIntersectStruct isMouseOverObject(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list);
+glm::vec3 planeVectorIntersection(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 planeNormal, glm::vec3 planePoint);
+glm::vec3 pointPlaneProjection(glm::vec3 point, glm::vec3 planeNormal);
 
 #endif //CODE_HELPERFUNCTIONS_H
