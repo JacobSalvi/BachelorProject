@@ -1,7 +1,8 @@
 #include "net.h"
+#include "../BVH/sphereBVH.h"
 
 //constructor
-net::net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity) :
+net::net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::vec3 tr) :
 row(row), col(col), gravity(gravity), integrator(integrator){
     //Eureka, finally I understood, took me only 15 hundred year but I did it in the end
     //number of triangles given by
@@ -93,11 +94,20 @@ row(row), col(col), gravity(gravity), integrator(integrator){
                 spring * toAdd = new spring(sqrt(2), coeff,1.0f, particles[i*col+j-(col+1)], tmp);
                 springs.push_back(toAdd);
             }
+            //diagonal spring but in the other direction
+            if(i>0&&j<col-1){
+                spring * toAdd = new spring(sqrt(2), coeff,1.0f, particles[(i-1)*col+j+1], tmp);
+                springs.push_back(toAdd);
+            }
         }
     }
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, tr);
+    net::modelMatrix=model;
+
+    //bounding volume hierarchy
+    net::bvh=new sphereBVH(&model, particles, row);
 }
-
-
 
 //update the particles following the
 //explicit Euler integrator
@@ -347,5 +357,66 @@ void net::setStiffness(float stiffness) {
     for(auto i : net::springs){
         i->setKs(stiffness);
     }
+}
+
+void net::setModelMatrix(const glm::mat4 &modelMatrix) {
+    net::modelMatrix = modelMatrix;
+}
+
+void net::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID) {
+
+    glm::mat4 mvp = ProjectionMatrix * ViewMatrix * getModelMatrix();
+
+    glUniformMatrix4fv(triangleMatrixID, 1, GL_FALSE, &mvp[0][0]);
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, vertex);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, getSize(), getVertexBuffer());
+    glVertexAttribPointer(
+            0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
+            3,                  // size
+            GL_FLOAT,           // type
+            GL_FALSE,           // normalized?
+            0,                  // stride
+            (void *) nullptr            // array buffer offset
+    );
+
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, colour);
+    glVertexAttribPointer(
+            1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
+            3,                                // size
+            GL_FLOAT,                         // type
+            GL_FALSE,                         // normalized?
+            0,                                // stride
+            (void *) nullptr                          // array buffer offset
+    );
+
+    glDrawArrays(GL_TRIANGLES, 0, getNumberOfVertices());
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+
+    //render the vbh
+
+}
+
+const glm::mat4 &net::getModelMatrix() const {
+    return modelMatrix;
+}
+
+GLuint net::getVertex() const {
+    return vertex;
+}
+
+void net::setVertex(GLuint newVert) {
+    net::vertex = newVert;
+}
+
+GLuint net::getColour() const {
+    return colour;
+}
+
+void net::setColour(GLuint newColour) {
+    net::colour = newColour;
 }
 

@@ -2,9 +2,14 @@
 #ifndef CODE_NET_H
 #define CODE_NET_H
 //#include <GL/glew.h>
+#include <GL/glew.h>
+#include <glm/glm.hpp>
 #include "particle.h"
 #include "spring.hpp"
+#include "../BVH/sphereBVH.h"
 #include <vector>
+#include <glm/gtc/matrix_transform.hpp>
+
 
 //simple object made of particles and spring
 //should be quite similar to a net/cloth
@@ -37,13 +42,23 @@ private:
     float gravity;
     glm::vec3 wind;
 
+    //model matrix
+    glm::mat4 modelMatrix;
+
+    //stuff needed for opengl
+    GLuint vertex;
+    GLuint colour;
+
+    //BVH
+    sphereBVH * bvh;
+
 public:
     //assumption:
     //-equal mass particles
     //-equidistant
     //-vertical and horizontal springs have the same properties
     //-diagonal springs have the same properties
-    net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity);
+    net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::vec3 tr);
 
     void setWind(const glm::vec3 &newWind);
     void addWind(const glm::vec3 &windToAdd);
@@ -105,6 +120,19 @@ public:
 
     void setStiffness(float stiffness);
 
+    void setModelMatrix(const glm::mat4 &modelMatrix);
+
+    const glm::mat4 &getModelMatrix() const;
+
+    GLuint getVertex() const;
+
+    void setVertex(GLuint newVert);
+
+    GLuint getColour() const;
+
+    void setColour(GLuint newColour);
+
+    void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID);
 };
 
 

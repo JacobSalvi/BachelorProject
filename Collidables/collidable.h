@@ -55,6 +55,8 @@ public:
     virtual void getName();
 
     void setModel(const glm::mat4 &model);
+
+    void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, bool wireFrame);
 };
 
 

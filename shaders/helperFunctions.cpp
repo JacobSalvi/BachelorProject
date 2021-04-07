@@ -1,13 +1,12 @@
 //this file needs a better name, I know
 
 #include "helperFunctions.h"
-#include "../Collidables/mouseIntersectStruct.h"
 
 
 
 //culture
 void culture(std::vector<helperStruct *> *list, glm::vec3 tr){
-    net * tmp = new net(1.0f, 3,7, 0, glm::vec3(2.0f,0.0f,0.0f), -1.0f);
+    net * tmp = new net(1.0f, 3,7, 0, glm::vec3(2.0f,0.0f,0.0f), -1.0f, tr);
 
     //my wisdom knows no limit
     // = 12*(row-1)(col-1)
@@ -107,8 +106,8 @@ void drawCulture(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint Matrix
 }
 
 
-void addCloth(std::vector<helperStruct *> *list, int col, int row, int in, glm::vec3 colour, glm::vec3 tr){
-    net * clothNew = new net(1.0f, col, row, in, colour, -1.0f);
+void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colour, glm::vec3 tr){
+    net * clothNew = new net(1.0f, col, row, in, colour, -1.0f, tr);
     GLuint netVertex;
     glGenBuffers(1, &netVertex);
     glBindBuffer(GL_ARRAY_BUFFER, netVertex);
@@ -119,12 +118,10 @@ void addCloth(std::vector<helperStruct *> *list, int col, int row, int in, glm::
     glBindBuffer(GL_ARRAY_BUFFER, netColor);
     glBufferData(GL_ARRAY_BUFFER, clothNew->getSize(), clothNew->getColorBuffer(), GL_STATIC_DRAW);
 
-    auto * tmp = new helperStruct;
-    tmp->cloth=clothNew;
-    tmp->color=netColor;
-    tmp->vertex=netVertex;
-    tmp->tr=tr;
-    list->push_back(tmp);
+    clothNew->setVertex(netVertex);
+    clothNew->setColour(netColor);
+
+    list->push_back(clothNew);
 }
 
 
@@ -208,6 +205,8 @@ void addColl(std::vector<collidable *> * list, int type){
 void drawColl(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, collidable* obj){
     glm::mat4 mvp = ProjectionMatrix * ViewMatrix * obj->getModel();
 
+    //for the wireframe
+    //glPolygonMode ( GL_FRONT_AND_BACK, GL_LINE );
     glUniformMatrix4fv(triangleMatrixID, 1, GL_FALSE, &mvp[0][0]);
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, obj->getCollVertex());
@@ -233,6 +232,7 @@ void drawColl(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleM
     );
 
     glDrawArrays(GL_TRIANGLES, 0, obj->getNumberOfVertices());
+    //glPolygonMode ( GL_FRONT_AND_BACK, GL_FILL );
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);

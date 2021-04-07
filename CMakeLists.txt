@@ -36,7 +36,7 @@ add_executable(projectPleaseWork
         imgui/imgui_draw.cpp imgui/imgui.cpp imgui/imgui_demo.cpp imgui/imgui_impl_glfw_gl3.cpp Collidables/collidable.cpp
         Collidables/collidable.h Collidables/Sphere.cpp Collidables/Sphere.h Collidables/cube.cpp Collidables/cube.h
         Collidables/plane.cpp Collidables/plane.h
-        shaders/helperFunctions.cpp shaders/helperStruct.h shaders/helperFunctions.h Collidables/mouseIntersectStruct.h)
+        shaders/helperFunctions.cpp shaders/helperStruct.h shaders/helperFunctions.h Collidables/mouseIntersectStruct.h BVH/BVH.cpp BVH/BVH.h BVH/sphereBVH.cpp BVH/sphereBVH.h BVH/boxBVH.cpp BVH/boxBVH.h)
 
 target_link_libraries(projectPleaseWork
         ${ALL_LIBS}

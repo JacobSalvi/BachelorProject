@@ -31,6 +31,7 @@ using namespace glm;
 #include "shaders/helperStruct.h"
 #include "shaders/helperFunctions.h"
 #include "Collidables/mouseIntersectStruct.h"
+#include "BVH/BVH.h"
 
 void timer_start(unsigned int interval);
 
@@ -42,31 +43,19 @@ std::thread sim;
 bool dragThreadShouldLive = false;
 std::thread dragThread;
 
-#if 0
-void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
-    if (key == GLFW_KEY_O && action == GLFW_PRESS) {
-        std::cout << "Eureka" << std::endl;
-        //timer_start(1);
-    }//else if(key==GLFW_KEY_C && action==GLFW_PRESS){
-//        setWind(cloth);
-//        setWind(clothR);
-//    }
-}
-#endif
-
 static bool threadShouldLive = true;
-void timer_start(unsigned int interval, const std::vector<helperStruct *>& list, const std::vector<collidable *> &collList) {
+void timer_start(unsigned int interval, const std::vector<net *>& list, const std::vector<collidable *> &collList) {
     sim = std::thread([interval, list, collList]() {
         static int counter = 0;
         while (threadShouldLive) {
             for(auto i : list){
-                i->cloth->integrate((float)(interval)/1000.0f);
+                i->integrate((float)(interval)/1000.0f);
             }
             counter++;
             //34 milliseconds ~= 30 frame per second
             if(counter==30){
                 for(auto i : list){
-                    i->cloth->updateBuffer();
+                    i->updateBuffer();
                 }
 
                 for(int i=0; i<collList.size();++i){
@@ -192,10 +181,10 @@ int main() {
 
     //This is likely not gonna work
     //nvm, it worked
-    std::vector<helperStruct *> objectList;
-    addCloth(&objectList, 3, 9, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
-    addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
-    addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f));
+    std::vector<net *> objectList;
+    addCloth(&objectList, 4, 5, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
+    //addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
+    //addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f));
 
 
     GLuint VertexArrayID;
@@ -280,22 +269,22 @@ int main() {
             }
             if(ImGui::Button("Set wind")){
                 for(auto i: objectList) {
-                    setWind(i->cloth, wind);
+                    setWind(i, wind);
                 }
             }
             if(ImGui::Button("Set mass")){
                 for(auto i: objectList) {
-                    i->cloth->setMass(mass);
+                    i->setMass(mass);
                 }
             }
             if(ImGui::Button("Set stiffness")){
                 for(auto i: objectList){
-                    i->cloth->setStiffness(ks);
+                    i->setStiffness(ks);
                 }
             }
             if(ImGui::Button("Set gravity")) {
                 for (auto i: objectList) {
-                    i->cloth->setGravity(gravity);
+                    i->setGravity(gravity);
                 }
             }
                 //reset all object and stop the simulation
@@ -303,7 +292,7 @@ int main() {
                 threadShouldLive=false;
                 shouldSimulate=true;
                 for(auto i: objectList){
-                    i->cloth->reset();
+                    i->reset();
                 }
             }
         }
@@ -339,11 +328,11 @@ int main() {
 //            }else{
 //                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture3, textureId3, programId);
 //            }
-            drawCloth(ProjectionMatrix, ViewMatrix, triangleMatrixID,objectList[i]);
+            objectList[i]->render(ProjectionMatrix, ViewMatrix, triangleMatrixID);
         }
 
         for(auto i : collObjects){
-            drawColl(ProjectionMatrix, ViewMatrix, triangleMatrixID, i);
+            i->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, false);
         }
         //gui stuff
         ImGui::Render();
@@ -365,8 +354,6 @@ int main() {
 
     //clean up the objectList
     for(auto & i : objectList){
-        glDeleteBuffers(1, &i->vertex);
-        glDeleteBuffers(1, &i->color);
         delete(i);
     }
 

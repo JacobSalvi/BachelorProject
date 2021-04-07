@@ -285,6 +285,45 @@ CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperFunctions.cpp -o CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.s
 
+CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
+CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o: ../BVH/BVH.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.cpp
+
+CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.cpp > CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.i
+
+CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.cpp -o CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.s
+
+CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
+CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o: ../BVH/sphereBVH.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.cpp
+
+CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.cpp > CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.i
+
+CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.cpp -o CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.s
+
+CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
+CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.o: ../BVH/boxBVH.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/boxBVH.cpp
+
+CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/boxBVH.cpp > CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.i
+
+CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/boxBVH.cpp -o CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.s
+
 # Object files for target projectPleaseWork
 projectPleaseWork_OBJECTS = \
 "CMakeFiles/projectPleaseWork.dir/main.cpp.o" \
@@ -302,7 +341,10 @@ projectPleaseWork_OBJECTS = \
 "CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.o" \
-"CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o"
+"CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o" \
+"CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o" \
+"CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o" \
+"CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.o"
 
 # External object files for target projectPleaseWork
 projectPleaseWork_EXTERNAL_OBJECTS =
@@ -323,11 +365,14 @@ projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o
+projectPleaseWork: CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o
+projectPleaseWork: CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o
+projectPleaseWork: CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/build.make
 projectPleaseWork: external/glfw-3.1.2/src/libglfw3.a
 projectPleaseWork: external/libGLEW_1130.a
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX executable projectPleaseWork"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Linking CXX executable projectPleaseWork"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/projectPleaseWork.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

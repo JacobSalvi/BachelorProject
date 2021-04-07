@@ -618,6 +618,87 @@ LinearMath/fast:
 	$(MAKE) $(MAKESILENT) -f external/bullet-2.81-rev2613/src/LinearMath/CMakeFiles/LinearMath.dir/build.make external/bullet-2.81-rev2613/src/LinearMath/CMakeFiles/LinearMath.dir/build
 .PHONY : LinearMath/fast
 
+BVH/BVH.o: BVH/BVH.cpp.o
+
+.PHONY : BVH/BVH.o
+
+# target to build an object file
+BVH/BVH.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o
+.PHONY : BVH/BVH.cpp.o
+
+BVH/BVH.i: BVH/BVH.cpp.i
+
+.PHONY : BVH/BVH.i
+
+# target to preprocess a source file
+BVH/BVH.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.i
+.PHONY : BVH/BVH.cpp.i
+
+BVH/BVH.s: BVH/BVH.cpp.s
+
+.PHONY : BVH/BVH.s
+
+# target to generate assembly for a file
+BVH/BVH.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.s
+.PHONY : BVH/BVH.cpp.s
+
+BVH/boxBVH.o: BVH/boxBVH.cpp.o
+
+.PHONY : BVH/boxBVH.o
+
+# target to build an object file
+BVH/boxBVH.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.o
+.PHONY : BVH/boxBVH.cpp.o
+
+BVH/boxBVH.i: BVH/boxBVH.cpp.i
+
+.PHONY : BVH/boxBVH.i
+
+# target to preprocess a source file
+BVH/boxBVH.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.i
+.PHONY : BVH/boxBVH.cpp.i
+
+BVH/boxBVH.s: BVH/boxBVH.cpp.s
+
+.PHONY : BVH/boxBVH.s
+
+# target to generate assembly for a file
+BVH/boxBVH.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.s
+.PHONY : BVH/boxBVH.cpp.s
+
+BVH/sphereBVH.o: BVH/sphereBVH.cpp.o
+
+.PHONY : BVH/sphereBVH.o
+
+# target to build an object file
+BVH/sphereBVH.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o
+.PHONY : BVH/sphereBVH.cpp.o
+
+BVH/sphereBVH.i: BVH/sphereBVH.cpp.i
+
+.PHONY : BVH/sphereBVH.i
+
+# target to preprocess a source file
+BVH/sphereBVH.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.i
+.PHONY : BVH/sphereBVH.cpp.i
+
+BVH/sphereBVH.s: BVH/sphereBVH.cpp.s
+
+.PHONY : BVH/sphereBVH.s
+
+# target to generate assembly for a file
+BVH/sphereBVH.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.s
+.PHONY : BVH/sphereBVH.cpp.s
+
 Collidables/Sphere.o: Collidables/Sphere.cpp.o
 
 .PHONY : Collidables/Sphere.o
@@ -1096,6 +1177,15 @@ help:
 	@echo "... wave"
 	@echo "... windows"
 	@echo "... zlib"
+	@echo "... BVH/BVH.o"
+	@echo "... BVH/BVH.i"
+	@echo "... BVH/BVH.s"
+	@echo "... BVH/boxBVH.o"
+	@echo "... BVH/boxBVH.i"
+	@echo "... BVH/boxBVH.s"
+	@echo "... BVH/sphereBVH.o"
+	@echo "... BVH/sphereBVH.i"
+	@echo "... BVH/sphereBVH.s"
 	@echo "... Collidables/Sphere.o"
 	@echo "... Collidables/Sphere.i"
 	@echo "... Collidables/Sphere.s"
