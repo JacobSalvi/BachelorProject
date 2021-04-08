@@ -428,3 +428,8 @@ sphereBVH *net::getBvh() const {
     return bvh;
 }
 
+helperStruct net::isHovered(glm::vec3 origin, glm::vec3 direction) {
+    helperStruct toReturn = net::bvh->rayIntersect(origin, direction, modelMatrix);
+    return toReturn;
+}
+

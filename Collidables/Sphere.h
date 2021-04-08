@@ -21,6 +21,8 @@ public:
         std::cout<<"sphere"<<std::endl;
     }
 
+    bool rayIntersect(glm::vec3 origin, glm::vec3 direction);
+
     mouseIntersectStruct isHovered(glm::vec3 origin, glm::vec3 direction) override{
         //return struct
         mouseIntersectStruct toReturn;

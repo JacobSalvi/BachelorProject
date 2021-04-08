@@ -501,12 +501,12 @@ external/glfw-3.1.2/src/CMakeFiles/glfw.dir/clean:
 external/glfw-3.1.2/examples/CMakeFiles/heightmap.dir/all: external/glfw-3.1.2/src/CMakeFiles/glfw.dir/all
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/examples/CMakeFiles/heightmap.dir/build.make external/glfw-3.1.2/examples/CMakeFiles/heightmap.dir/depend
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/examples/CMakeFiles/heightmap.dir/build.make external/glfw-3.1.2/examples/CMakeFiles/heightmap.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=82 "Built target heightmap"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num= "Built target heightmap"
 .PHONY : external/glfw-3.1.2/examples/CMakeFiles/heightmap.dir/all
 
 # Build rule for subdir invocation for target.
 external/glfw-3.1.2/examples/CMakeFiles/heightmap.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 external/glfw-3.1.2/examples/CMakeFiles/heightmap.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 0
 .PHONY : external/glfw-3.1.2/examples/CMakeFiles/heightmap.dir/rule
@@ -663,12 +663,12 @@ external/glfw-3.1.2/examples/CMakeFiles/gears.dir/clean:
 external/glfw-3.1.2/examples/CMakeFiles/boing.dir/all: external/glfw-3.1.2/src/CMakeFiles/glfw.dir/all
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/examples/CMakeFiles/boing.dir/build.make external/glfw-3.1.2/examples/CMakeFiles/boing.dir/depend
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/examples/CMakeFiles/boing.dir/build.make external/glfw-3.1.2/examples/CMakeFiles/boing.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=73 "Built target boing"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num= "Built target boing"
 .PHONY : external/glfw-3.1.2/examples/CMakeFiles/boing.dir/all
 
 # Build rule for subdir invocation for target.
 external/glfw-3.1.2/examples/CMakeFiles/boing.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 external/glfw-3.1.2/examples/CMakeFiles/boing.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 0
 .PHONY : external/glfw-3.1.2/examples/CMakeFiles/boing.dir/rule
@@ -798,12 +798,12 @@ external/glfw-3.1.2/tests/CMakeFiles/tearing.dir/clean:
 external/glfw-3.1.2/tests/CMakeFiles/empty.dir/all: external/glfw-3.1.2/src/CMakeFiles/glfw.dir/all
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/tests/CMakeFiles/empty.dir/build.make external/glfw-3.1.2/tests/CMakeFiles/empty.dir/depend
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/tests/CMakeFiles/empty.dir/build.make external/glfw-3.1.2/tests/CMakeFiles/empty.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=75 "Built target empty"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num= "Built target empty"
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/empty.dir/all
 
 # Build rule for subdir invocation for target.
 external/glfw-3.1.2/tests/CMakeFiles/empty.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 external/glfw-3.1.2/tests/CMakeFiles/empty.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 0
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/empty.dir/rule
@@ -825,12 +825,12 @@ external/glfw-3.1.2/tests/CMakeFiles/empty.dir/clean:
 external/glfw-3.1.2/tests/CMakeFiles/glfwinfo.dir/all: external/glfw-3.1.2/src/CMakeFiles/glfw.dir/all
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/tests/CMakeFiles/glfwinfo.dir/build.make external/glfw-3.1.2/tests/CMakeFiles/glfwinfo.dir/depend
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/tests/CMakeFiles/glfwinfo.dir/build.make external/glfw-3.1.2/tests/CMakeFiles/glfwinfo.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num= "Built target glfwinfo"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=82 "Built target glfwinfo"
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/glfwinfo.dir/all
 
 # Build rule for subdir invocation for target.
 external/glfw-3.1.2/tests/CMakeFiles/glfwinfo.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 external/glfw-3.1.2/tests/CMakeFiles/glfwinfo.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 0
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/glfwinfo.dir/rule
@@ -852,12 +852,12 @@ external/glfw-3.1.2/tests/CMakeFiles/glfwinfo.dir/clean:
 external/glfw-3.1.2/tests/CMakeFiles/cursor.dir/all: external/glfw-3.1.2/src/CMakeFiles/glfw.dir/all
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/tests/CMakeFiles/cursor.dir/build.make external/glfw-3.1.2/tests/CMakeFiles/cursor.dir/depend
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/tests/CMakeFiles/cursor.dir/build.make external/glfw-3.1.2/tests/CMakeFiles/cursor.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num= "Built target cursor"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=75 "Built target cursor"
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/cursor.dir/all
 
 # Build rule for subdir invocation for target.
 external/glfw-3.1.2/tests/CMakeFiles/cursor.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 external/glfw-3.1.2/tests/CMakeFiles/cursor.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 0
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/cursor.dir/rule
@@ -879,12 +879,12 @@ external/glfw-3.1.2/tests/CMakeFiles/cursor.dir/clean:
 external/glfw-3.1.2/tests/CMakeFiles/monitors.dir/all: external/glfw-3.1.2/src/CMakeFiles/glfw.dir/all
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/tests/CMakeFiles/monitors.dir/build.make external/glfw-3.1.2/tests/CMakeFiles/monitors.dir/depend
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/tests/CMakeFiles/monitors.dir/build.make external/glfw-3.1.2/tests/CMakeFiles/monitors.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num= "Built target monitors"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=85 "Built target monitors"
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/monitors.dir/all
 
 # Build rule for subdir invocation for target.
 external/glfw-3.1.2/tests/CMakeFiles/monitors.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 external/glfw-3.1.2/tests/CMakeFiles/monitors.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 0
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/monitors.dir/rule
@@ -1068,12 +1068,12 @@ external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/clean:
 external/glfw-3.1.2/tests/CMakeFiles/msaa.dir/all: external/glfw-3.1.2/src/CMakeFiles/glfw.dir/all
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/tests/CMakeFiles/msaa.dir/build.make external/glfw-3.1.2/tests/CMakeFiles/msaa.dir/depend
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/tests/CMakeFiles/msaa.dir/build.make external/glfw-3.1.2/tests/CMakeFiles/msaa.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=85 "Built target msaa"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num= "Built target msaa"
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/msaa.dir/all
 
 # Build rule for subdir invocation for target.
 external/glfw-3.1.2/tests/CMakeFiles/msaa.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 external/glfw-3.1.2/tests/CMakeFiles/msaa.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 0
 .PHONY : external/glfw-3.1.2/tests/CMakeFiles/msaa.dir/rule
@@ -1149,12 +1149,12 @@ external/assimp-3.0.1270/contrib/zlib/CMakeFiles/zlib.dir/clean:
 external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/all: external/assimp-3.0.1270/contrib/zlib/CMakeFiles/zlib.dir/all
 	$(MAKE) $(MAKESILENT) -f external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/build.make external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/depend
 	$(MAKE) $(MAKESILENT) -f external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/build.make external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72 "Built target assimp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73 "Built target assimp"
 .PHONY : external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/all
 
 # Build rule for subdir invocation for target.
 external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 37
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 38
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles 0
 .PHONY : external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/rule

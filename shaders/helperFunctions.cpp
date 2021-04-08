@@ -2,8 +2,8 @@
 
 #include "helperFunctions.h"
 
-
-
+//TODO: rework how to do cultural stuff
+#if 0
 //culture
 void culture(std::vector<helperStruct *> *list, glm::vec3 tr){
     net * tmp = new net(1.0f, 3,7, 0, glm::vec3(2.0f,0.0f,0.0f), -1.0f, tr);
@@ -104,7 +104,7 @@ void drawCulture(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint Matrix
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
 }
-
+#endif
 
 void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colour, glm::vec3 tr){
     net * clothNew = new net(1.0f, col, row, in, colour, -1.0f, tr);
@@ -188,8 +188,12 @@ mouseIntersectStruct isMouseOverColl(glm::vec3 origin, glm::vec3 direction, std:
     return closestObject;
 }
 
-mouseIntersectStruct isMouseOverDeformable(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list){
-    mouseIntersectStruct closestObject;
+helperStruct isMouseOverDeformable(glm::vec3 origin, glm::vec3 direction, std::vector<net *> * list){
+    helperStruct closestObject;
+    closestObject.isMouseOver=false;
+    for(auto i : *list){
+        helperStruct tmp = i->isHovered(origin, direction);
+    }
     return closestObject;
 }
 

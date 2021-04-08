@@ -1,5 +1,10 @@
 make function to add an arbitrary number of cloths, done...or at least I think
 make a reset button, DONE ... kinda
-add mouse dragging functionality
+add mouse dragging functionality. Done for solids, doing now for deformable
 
+//optional but would make the code cleaner
+refactor classes hierarchy
+
+//quality of life stuff
 add lights, 'cos it is quite ugly like this
+also add a skybox

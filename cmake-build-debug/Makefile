@@ -645,33 +645,6 @@ BVH/BVH.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.s
 .PHONY : BVH/BVH.cpp.s
 
-BVH/boxBVH.o: BVH/boxBVH.cpp.o
-
-.PHONY : BVH/boxBVH.o
-
-# target to build an object file
-BVH/boxBVH.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.o
-.PHONY : BVH/boxBVH.cpp.o
-
-BVH/boxBVH.i: BVH/boxBVH.cpp.i
-
-.PHONY : BVH/boxBVH.i
-
-# target to preprocess a source file
-BVH/boxBVH.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.i
-.PHONY : BVH/boxBVH.cpp.i
-
-BVH/boxBVH.s: BVH/boxBVH.cpp.s
-
-.PHONY : BVH/boxBVH.s
-
-# target to generate assembly for a file
-BVH/boxBVH.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.s
-.PHONY : BVH/boxBVH.cpp.s
-
 BVH/sphereBVH.o: BVH/sphereBVH.cpp.o
 
 .PHONY : BVH/sphereBVH.o
@@ -1180,9 +1153,6 @@ help:
 	@echo "... BVH/BVH.o"
 	@echo "... BVH/BVH.i"
 	@echo "... BVH/BVH.s"
-	@echo "... BVH/boxBVH.o"
-	@echo "... BVH/boxBVH.i"
-	@echo "... BVH/boxBVH.s"
 	@echo "... BVH/sphereBVH.o"
 	@echo "... BVH/sphereBVH.i"
 	@echo "... BVH/sphereBVH.s"

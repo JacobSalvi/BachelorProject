@@ -1,5 +1,7 @@
 #include "BVH.h"
 
+#include <utility>
+
 
 
 BVH *BVH::getChild0() const {
@@ -21,8 +23,10 @@ BVH *BVH::getChild3() const {
     return child3;
 }
 
-BVH::BVH() {}
+BVH::BVH(std::vector<particle *> p) :p(std::move(p)){}
 
 void BVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, bool wireFrame, glm::mat4 model) {
 
 }
+
+

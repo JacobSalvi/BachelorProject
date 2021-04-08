@@ -4,11 +4,12 @@
 #include <GLFW/glfw3.h>
 #include "../integrators/net.h"
 
+class net;
+
 struct helperStruct{
-    net * cloth;
-    GLuint vertex;
-    GLuint color;
-    glm::vec3 tr;
+    bool isMouseOver;
+    net * obj;
+    particle * point;
 };
 
 #endif //CODE_HELPERSTRUCT_H

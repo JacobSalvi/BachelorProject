@@ -1,15 +1,17 @@
 
 #ifndef CODE_NET_H
 #define CODE_NET_H
-//#include <GL/glew.h>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include "particle.h"
 #include "spring.hpp"
 #include "../BVH/sphereBVH.h"
+#include "../shaders/helperStruct.h"
 #include <vector>
 #include <glm/gtc/matrix_transform.hpp>
 
+class sphereBVH;
+struct helperStruct;
 
 //simple object made of particles and spring
 //should be quite similar to a net/cloth
@@ -139,6 +141,8 @@ public:
     void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID);
 
     sphereBVH *getBvh() const;
+
+    helperStruct isHovered(glm::vec3 origin, glm::vec3 direction);
 };
 
 

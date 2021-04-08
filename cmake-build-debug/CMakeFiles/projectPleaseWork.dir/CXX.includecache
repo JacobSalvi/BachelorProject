@@ -736,21 +736,37 @@ assert.h
 imgui_user.h
 ../imgui/imgui_user.h
 
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.cpp
+BVH.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.h
+utility
+-
+
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.h
 GL/glew.h
 -
 glm/glm.hpp
 -
-
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
-BVH.h
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.h
-../integrators/particle.h
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/particle.h
 vector
 -
+../integrators/particle.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/particle.h
+../shaders/helperStruct.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
+
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.cpp
+glm/gtc/matrix_transform.hpp
+-
+sphereBVH.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
+
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
 ../Collidables/Sphere.h
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
+../integrators/particle.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/particle.h
+../shaders/helperStruct.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
 
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
 glm/glm.hpp
@@ -827,6 +843,8 @@ spring.hpp
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/spring.hpp
 ../BVH/sphereBVH.h
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
+../shaders/helperStruct.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
 vector
 -
 glm/gtc/matrix_transform.hpp
@@ -887,6 +905,10 @@ Collidables/mouseIntersectStruct.h
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
 BVH/BVH.h
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.h
+
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/controls.cpp
+controls.hpp
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/controls.hpp
 
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/controls.hpp
 GL/glew.h

@@ -1,7 +1,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "sphereBVH.h"
 
-sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : BVH(){
+
+sphereBVH::sphereBVH(std::vector<particle *> particles, int row){
+
+
     //needed information
     glm::vec3 p0=particles[0]->getPosition();
     glm::vec3 direction = particles[particles.size()-1]->getPosition()-p0;
@@ -206,4 +209,99 @@ void sphereBVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint 
 
 sphere *sphereBVH::getSphereShown() const {
     return sphereShown;
+}
+
+helperStruct sphereBVH::rayIntersect(glm::vec3 origin, glm::vec3 direction, glm::mat4 model) {
+    //to make the compiler happy while I code
+    helperStruct toReturn;
+    toReturn.isMouseOver=false;
+
+    //do we intersect the sphere?
+    if(sphereBVH::sphereShown->rayIntersect(origin, direction)){
+        //are we a leaf?
+        if(child0==NULL){
+            //do we intersect the part of the net inside the sphere?
+            //find normal
+            glm::vec3 normal = glm::cross(p[0]->getPosition()-p[1]->getPosition(), p[2]->getPosition()-p[3]->getPosition());
+            normal = glm::normalize(normal);
+
+            //parallel, no intersection
+            if(glm::dot(direction,normal)==0){
+                return toReturn;
+            }
+
+            //point plane intersection
+            glm::vec3 diff = origin-p[0]->getPosition();
+            float prod1= glm::dot(diff,normal);
+            float prod2= glm::dot(direction,normal);
+            float prod3 = prod1/prod2;
+            glm::vec3 inter=origin-direction*prod3;
+
+            //divide the face in two triangles
+            //first triangle is V1 V2 V4
+            glm::vec3 n=glm::cross(p[1]->getPosition()-p[0]->getPosition(), p[3]->getPosition()-p[0]->getPosition());
+            //calculate the 3 signed area for the first triangle
+            glm::vec3 n1=glm::cross(p[1]->getPosition()-inter,p[3]->getPosition()-inter);
+            glm::vec3 n2=glm::cross(p[3]->getPosition()-inter,p[0]->getPosition()-inter);
+            glm::vec3 n3=glm::cross(p[0]->getPosition()-inter,p[1]->getPosition()-inter);
+            //check if the intersection point lays inside the first triangle
+            if(glm::dot(n1,n)>=0&& glm::dot(n2,n)>=0&& glm::dot(n3,n)>=0){
+                //find closest particle
+                particle * closest = p[0];
+                if(glm::length(p[1]->getPosition()-inter)<glm::length(p[0]->getPosition()-inter)){
+                    closest=p[1];
+                }
+                if(glm::length(p[3]->getPosition()-inter)<glm::length(closest->getPosition()-inter)){
+                    closest=p[3];
+                }
+                toReturn.isMouseOver= true;
+                toReturn.point=closest;
+                return toReturn;
+            }
+
+            //calculate the 3 signed area for the second triangle
+            n=glm::cross(p[2]->getPosition()-p[1]->getPosition(),p[3]->getPosition()-p[1]->getPosition());
+            n1=glm::cross(p[2]->getPosition()-inter,p[3]->getPosition()-inter);
+            n2=glm::cross(p[3]->getPosition()-inter, p[1]->getPosition()-inter);
+            n3=glm::cross(p[1]->getPosition()-inter, p[2]->getPosition()-inter);
+            if(glm::dot(n1,n)>=0 && glm::dot(n2,n)>=0 && glm::dot(n3,n)>=0){
+                //find closest particle
+                particle * closest = p[1];
+                if(glm::length(p[2]->getPosition()-inter)<glm::length(p[1]->getPosition()-inter)){
+                    closest=p[2];
+                }
+                if(glm::length(p[3]->getPosition()-inter)<glm::length(closest->getPosition()-inter)){
+                    closest=p[3];
+                }
+                toReturn.isMouseOver= true;
+                toReturn.point=closest;
+                return toReturn;
+            }
+        }else{
+            //recursive call on children
+            helperStruct tmp = child0->rayIntersect(origin, direction, model);
+            if(tmp.isMouseOver){
+                return tmp;
+            }
+            if(child1!=NULL){
+                tmp= child1->rayIntersect(origin, direction, model);
+                if(tmp.isMouseOver){
+                    return tmp;
+                }
+            }
+            if(child2!=NULL){
+                tmp= child2->rayIntersect(origin, direction, model);
+                if(tmp.isMouseOver){
+                    return tmp;
+                }
+            }
+            if(child3!=NULL){
+                tmp= child3->rayIntersect(origin, direction, model);
+                if(tmp.isMouseOver){
+                    return tmp;
+                }
+            }
+        }
+    }
+    return toReturn;
 }

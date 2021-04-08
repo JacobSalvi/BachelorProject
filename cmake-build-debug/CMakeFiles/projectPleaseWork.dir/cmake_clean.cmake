@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o"
-  "CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.o"

@@ -5,7 +5,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o"
-  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/boxBVH.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/BVH/boxBVH.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/collidable.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.o"
