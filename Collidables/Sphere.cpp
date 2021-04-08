@@ -71,6 +71,8 @@ sphere::sphere(int size, glm::mat4 model, glm::vec3 colour) : collidable(colour,
    for(int i=0; i<size*size*18;++i){
        vertexBuffer[i]=vertexBuffer[i]/2.0f;
    }
+
+   setGLuint();
 }
 
 int sphere::getSize() {

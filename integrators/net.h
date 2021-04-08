@@ -27,6 +27,10 @@ private:
     //list of springs
     std::vector<spring *> springs;
 
+    //particles that are hung or dragged
+    //should not update their position normally
+    std::vector<particle *> specialParticles;
+
     //buffer needed for OpenGl
     //vertex and color buffers
     //(i-1)*2*(j-1)
@@ -133,6 +137,8 @@ public:
     void setColour(GLuint newColour);
 
     void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID);
+
+    sphereBVH *getBvh() const;
 };
 
 

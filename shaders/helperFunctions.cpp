@@ -124,42 +124,6 @@ void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colo
     list->push_back(clothNew);
 }
 
-
-void drawCloth(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, helperStruct* obj){
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, obj->tr);
-    glm::mat4 mvp = ProjectionMatrix * ViewMatrix * model;
-
-    glUniformMatrix4fv(triangleMatrixID, 1, GL_FALSE, &mvp[0][0]);
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, obj->vertex);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, obj->cloth->getSize(), obj->cloth->getVertexBuffer());
-    glVertexAttribPointer(
-            0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void *) nullptr            // array buffer offset
-    );
-
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, obj->color);
-    glVertexAttribPointer(
-            1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-            3,                                // size
-            GL_FLOAT,                         // type
-            GL_FALSE,                         // normalized?
-            0,                                // stride
-            (void *) nullptr                          // array buffer offset
-    );
-
-    glDrawArrays(GL_TRIANGLES, 0, obj->cloth->getNumberOfVertices());
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-}
-
 //create and add sphere
 //type 0->sphere, 1->cube, 2 plane
 void addColl(std::vector<collidable *> * list, int type){
@@ -168,7 +132,7 @@ void addColl(std::vector<collidable *> * list, int type){
     switch(type){
         //sphere
         case 0:
-            model = glm::translate(model, glm::vec3(3.0f,0.0f,2.0f));
+            model = glm::translate(model, glm::vec3(6.0f,0.0f,2.0f));
             coll = new sphere(100, model,glm::vec3(1.0f,0.8f,0.8f));
             break;
             //cube
@@ -201,45 +165,8 @@ void addColl(std::vector<collidable *> * list, int type){
     list->push_back(coll);
 }
 
-//render collidable objects
-void drawColl(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, collidable* obj){
-    glm::mat4 mvp = ProjectionMatrix * ViewMatrix * obj->getModel();
-
-    //for the wireframe
-    //glPolygonMode ( GL_FRONT_AND_BACK, GL_LINE );
-    glUniformMatrix4fv(triangleMatrixID, 1, GL_FALSE, &mvp[0][0]);
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, obj->getCollVertex());
-    glBufferSubData(GL_ARRAY_BUFFER, 0, obj->getSize(), obj->getVertexBuffer());
-    glVertexAttribPointer(
-            0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void *) nullptr            // array buffer offset
-    );
-
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, obj->getCollColour());
-    glVertexAttribPointer(
-            1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-            3,                                // size
-            GL_FLOAT,                         // type
-            GL_FALSE,                         // normalized?
-            0,                                // stride
-            (void *) nullptr                          // array buffer offset
-    );
-
-    glDrawArrays(GL_TRIANGLES, 0, obj->getNumberOfVertices());
-    //glPolygonMode ( GL_FRONT_AND_BACK, GL_FILL );
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-}
-
 //dragging
-mouseIntersectStruct isMouseOverObject(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list){
+mouseIntersectStruct isMouseOverColl(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list){
     mouseIntersectStruct closestObject;
     closestObject.isMouseOver=false;
     for(auto i : *list){
@@ -261,6 +188,11 @@ mouseIntersectStruct isMouseOverObject(glm::vec3 origin, glm::vec3 direction, st
     return closestObject;
 }
 
+mouseIntersectStruct isMouseOverDeformable(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list){
+    mouseIntersectStruct closestObject;
+    return closestObject;
+}
+
 //compute the intersection with the plane
 glm::vec3 planeVectorIntersection(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 planeNormal, glm::vec3 planePoint){
     float t = glm::dot(planePoint-rayOrigin,planeNormal)/glm::dot(rayDirection,planeNormal);
@@ -270,4 +202,15 @@ glm::vec3 planeVectorIntersection(glm::vec3 rayOrigin, glm::vec3 rayDirection, g
 //compute projection of point onto plane
 glm::vec3 pointPlaneProjection(glm::vec3 point, glm::vec3 planeNormal){
     return point - glm::dot(point, planeNormal) * planeNormal;
+}
+
+bool vectorContains(std::vector<particle *> v, particle * e){
+    bool toReturn=false;
+    for(auto p : v){
+        if(p==e){
+            toReturn=true;
+            break;
+        }
+    }
+    return toReturn;
 }

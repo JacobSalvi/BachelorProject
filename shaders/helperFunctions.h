@@ -26,15 +26,19 @@ void drawCulture(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint Matrix
 
 //cloth
 void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colour, glm::vec3 tr);
-void drawCloth(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, helperStruct* obj);
 
 //collidables
 void addColl(std::vector<collidable *> * list, int type);
-void drawColl(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, collidable* obj);
 
 //dragging
-mouseIntersectStruct isMouseOverObject(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list);
+mouseIntersectStruct isMouseOverColl(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list);
+mouseIntersectStruct isMouseOverDeformable(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list);
+
 glm::vec3 planeVectorIntersection(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 planeNormal, glm::vec3 planePoint);
 glm::vec3 pointPlaneProjection(glm::vec3 point, glm::vec3 planeNormal);
+
+//utilities
+//I can't figure out how to use std::find
+bool vectorContains(std::vector<particle *> v, particle * e);
 
 #endif //CODE_HELPERFUNCTIONS_H

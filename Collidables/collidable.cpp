@@ -1,5 +1,7 @@
 #include "collidable.h"
 
+#include <iostream>
+
 collidable::collidable(glm::vec3 colour, glm::mat4 model) : colour(colour), model(model){
 }
 
@@ -68,8 +70,9 @@ void collidable::setModel(const glm::mat4 &model) {
     collidable::model = model;
 }
 
-void collidable::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, bool wireFrame){
-    glm::mat4 mvp = ProjectionMatrix * ViewMatrix * getModel();
+void collidable::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, bool wireFrame, glm::mat4 m){
+    glm::mat4 tmp = m*getModel();
+    glm::mat4 mvp = ProjectionMatrix * ViewMatrix * tmp;
 
     //for the wireframe
     wireFrame ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE):glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -105,5 +108,20 @@ void collidable::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+}
+
+void collidable::setGLuint() {
+    GLuint v;
+    glGenBuffers(1, &v);
+    glBindBuffer(GL_ARRAY_BUFFER, v);
+    glBufferData(GL_ARRAY_BUFFER, getSize(), getVertexBuffer(), GL_DYNAMIC_DRAW);
+
+    GLuint c;
+    glGenBuffers(1, &c);
+    glBindBuffer(GL_ARRAY_BUFFER, c);
+    glBufferData(GL_ARRAY_BUFFER, getSize(), getColorBuffer(), GL_STATIC_DRAW);
+
+    setCollVertex(v);
+    setCollColour(c);
 }
 

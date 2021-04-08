@@ -1,7 +1,7 @@
 #ifndef CODE_BVH_H
 #define CODE_BVH_H
 
-
+#include <GL/glew.h>
 #include <glm/glm.hpp>
 
 //bounding volume hierarchy needed to avoid
@@ -10,9 +10,6 @@
 //TODO: sphere? boxes? convex hull?
 class BVH {
 protected:
-    //model matrix
-    glm::mat4 * model;
-
     //four children
     //if child0 is NULL, we have a lead
     BVH * child0=NULL;
@@ -26,10 +23,10 @@ protected:
 
 
 public:
-    BVH(glm::mat4 *model);
+    BVH();
 
 
-    BVH(glm::mat4 *model, BVH *child0, BVH *child1, BVH *child2, BVH *child3);
+    BVH(BVH *child0, BVH *child1, BVH *child2, BVH *child3);
 
     BVH *getChild0() const;
 
@@ -38,6 +35,8 @@ public:
     BVH *getChild2() const;
 
     BVH *getChild3() const;
+
+    virtual void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, bool wireFrame, glm::mat4 model);
 };
 
 

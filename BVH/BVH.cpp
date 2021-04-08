@@ -10,8 +10,7 @@ BVH *BVH::getChild1() const {
     return child1;
 }
 
-BVH::BVH(glm::mat4 *model, BVH *child0, BVH *child1, BVH *child2, BVH *child3) : model(model), child0(child0),
-                                                                                       child1(child1), child2(child2),
+BVH::BVH(BVH *child0, BVH *child1, BVH *child2, BVH *child3) :  child0(child0), child1(child1), child2(child2),
                                                                                        child3(child3) {}
 
 BVH *BVH::getChild2() const {
@@ -22,4 +21,8 @@ BVH *BVH::getChild3() const {
     return child3;
 }
 
-BVH::BVH(glm::mat4 *model) : model(model) {}
+BVH::BVH() {}
+
+void BVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, bool wireFrame, glm::mat4 model) {
+
+}

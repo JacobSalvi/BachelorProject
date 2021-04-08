@@ -182,9 +182,9 @@ int main() {
     //This is likely not gonna work
     //nvm, it worked
     std::vector<net *> objectList;
-    addCloth(&objectList, 4, 5, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
+    addCloth(&objectList, 3, 3, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
     //addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
-    //addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f));
+    addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f));
 
 
     GLuint VertexArrayID;
@@ -300,7 +300,7 @@ int main() {
         if(ImGui::IsMouseClicked(0) && !dragThreadShouldLive && !ImGui::IsMouseHoveringWindow()){
             dragThreadShouldLive=true;
             glm::vec3 pixelRay = getMouseRay(ImGui::GetMousePos());
-            mouseIntersectStruct tmp = isMouseOverObject(getCameraPosition(), pixelRay, &collObjects);
+            mouseIntersectStruct tmp = isMouseOverColl(getCameraPosition(), pixelRay, &collObjects);
             if(tmp.isMouseOver){
                 dragMouse(tmp);
             }
@@ -329,6 +329,7 @@ int main() {
 //                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture3, textureId3, programId);
 //            }
             objectList[i]->render(ProjectionMatrix, ViewMatrix, triangleMatrixID);
+            //objectList[i]->getBvh()->render(ProjectionMatrix, ViewMatrix,triangleMatrixID, true);
         }
 
         for(auto i : collObjects){
@@ -364,6 +365,7 @@ int main() {
 
     //killing the thread, in case it was alive
     threadShouldLive=false;
+    dragThreadShouldLive=false;
 
     std::cout << "i don't even know" << std::endl;
     // Close OpenGL window and terminate GLFW

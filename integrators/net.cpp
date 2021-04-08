@@ -1,5 +1,6 @@
 #include "net.h"
 #include "../BVH/sphereBVH.h"
+#include "../shaders/helperFunctions.h"
 
 //constructor
 net::net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::vec3 tr) :
@@ -68,13 +69,17 @@ row(row), col(col), gravity(gravity), integrator(integrator){
         }
     }
 
-
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
             //initial position in a net, equidistant
             particle * tmp = new particle(glm::vec3(float(j), float(i), 0.0f), mass);
             tmp->setId(col*i+j);
             particles.push_back(tmp);
+
+            //set hanging particles
+            if(i*col+j==col*row-1 || i*col+j== col*(row-1)){
+                specialParticles.push_back(tmp);
+            }
 
             //setting up the springs
             //horizontal springs
@@ -106,7 +111,7 @@ row(row), col(col), gravity(gravity), integrator(integrator){
     net::modelMatrix=model;
 
     //bounding volume hierarchy
-    net::bvh=new sphereBVH(&model, particles, row);
+    net::bvh=new sphereBVH(particles, row);
 }
 
 //update the particles following the
@@ -151,7 +156,7 @@ void net::explicitEuler(float timeDelta) {
         //like if the cloth was hung
         //i!=col*row-1 && i!= col*(row-1)
         //i!=0 && i!= col-1
-        if(i!=col*row-1 && i!= col*(row-1)){
+        if(!vectorContains(specialParticles, particles[i])){
             particle * tmp = particles[i];
             glm::vec3 pos = tmp->getPosition();
             pos+= tmp->getVelocity()*timeDelta;
@@ -200,7 +205,7 @@ void net::rungeKutta(float timeDelta){
     }
 
     for(int i=0; i<particles.size(); ++i){
-        if(i!=col*row-1 && i!= col*(row-1)){
+        if(!vectorContains(specialParticles, particles[i])){
             glm::vec3 vel = particles[i]->getVelocity();
 
             //updating position
@@ -396,8 +401,7 @@ void net::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triang
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
 
-    //render the vbh
-
+    bvh->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, true, getModelMatrix());
 }
 
 const glm::mat4 &net::getModelMatrix() const {
@@ -418,5 +422,9 @@ GLuint net::getColour() const {
 
 void net::setColour(GLuint newColour) {
     net::colour = newColour;
+}
+
+sphereBVH *net::getBvh() const {
+    return bvh;
 }
 

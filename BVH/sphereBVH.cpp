@@ -1,20 +1,27 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "sphereBVH.h"
 
-sphereBVH::sphereBVH(glm::mat4 *model,  std::vector<particle *> particles, int row) : BVH(model){
+sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : BVH(){
     //needed information
     glm::vec3 p0=particles[0]->getPosition();
-    glm::vec3 direction = p0-particles[particles.size()-1]->getPosition();
+    glm::vec3 direction = particles[particles.size()-1]->getPosition()-p0;
 
     //get radius
     float r = glm::length(direction);
     r/=2.0f;
     sphereBVH::radius=r;
     //get center
-    glm::vec3 c = p0+r*direction;
+    glm::vec3 c = p0+r*glm::normalize(direction);
 
     //no need to divide further
+    //create sphere and return
     if(particles.size()==4){
+        //sphere and model matrix for the sphere
+        glm::mat4 internalSphereModel= glm::mat4(1);
+        //I discovered painstakingly that the order of operations matters
+        internalSphereModel = glm::translate(internalSphereModel, c);
+        internalSphereModel = glm::scale(internalSphereModel, glm::vec3(2.0*r,2.0*r,2.0*r));
+        sphereBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f,0.8f,0.8f));
         return;
     }
 
@@ -147,16 +154,17 @@ sphereBVH::sphereBVH(glm::mat4 *model,  std::vector<particle *> particles, int r
     }
 
     //recursively make children
-    child0= new sphereBVH(model, v0, childRow);
-    child1= new sphereBVH(model, v1, childRow);
-    child2= new sphereBVH(model, v2, childRow);
-    child3= new sphereBVH(model, v3, childRow);
+    child0= !v0.empty()?new sphereBVH(v0, childRow): NULL;
+    child1= !v1.empty()?new sphereBVH(v1, childRow): NULL;
+    child2= !v2.empty()?new sphereBVH(v2, childRow): NULL;
+    child3= !v3.empty()?new sphereBVH(v3, childRow): NULL;
 
     //sphere and model matrix for the sphere
-    glm::mat4 internalSphereModel(1);
-    internalSphereModel = glm::scale(internalSphereModel, glm::vec3(r,r,r));
+    glm::mat4 internalSphereModel= glm::mat4(1);
     internalSphereModel = glm::translate(internalSphereModel, c);
-    sphereBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(1.0f,1.0f,1.0f));
+    internalSphereModel = glm::scale(internalSphereModel, glm::vec3(2.0*r,2.0*r,2.0*r));
+
+    sphereBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f,0.8f,0.8f));
 
     //checking stuff
     //std::cout<<"childRow is: "<<childRow<<std::endl;
@@ -177,4 +185,25 @@ sphereBVH::sphereBVH(glm::mat4 *model,  std::vector<particle *> particles, int r
     for(int i=0; i<v3.size();++i){
         std::cout<< v3[i]->getId()<<std::endl;
     }*/
+}
+
+void sphereBVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, bool wireFrame, glm::mat4 model) {
+    sphereShown->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, true, model);
+    if(child0!=NULL){
+        child0->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, wireFrame, model);
+    }
+    if(child1!=NULL){
+        child1->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, wireFrame, model);
+    }
+    if(child2!=NULL){
+        child2->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, wireFrame, model);
+    }
+    if(child3!=NULL){
+        child3->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, wireFrame, model);
+    }
+
+}
+
+sphere *sphereBVH::getSphereShown() const {
+    return sphereShown;
 }
