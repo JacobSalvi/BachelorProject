@@ -45,7 +45,7 @@ std::thread sim;
 bool dragThreadShouldLive = false;
 std::thread dragThread;
 
-static bool threadShouldLive = true;
+static bool threadShouldLive = false;
 void timer_start(unsigned int interval, const std::vector<net *>& list, const std::vector<collidable *> &collList) {
     sim = std::thread([interval, list, collList]() {
         static int counter = 0;
@@ -54,6 +54,14 @@ void timer_start(unsigned int interval, const std::vector<net *>& list, const st
                 i->integrate((float)(interval)/1000.0f);
             }
             counter++;
+
+            //every 15 millisecond rebuild the bvh
+            if(counter%15==0){
+                for(auto i:list){
+                    i->getBvh()->update();
+                }
+            }
+
             //34 milliseconds ~= 30 frame per second
             if(counter==30){
                 for(auto i : list){
@@ -127,6 +135,8 @@ void dragMouse(mouseIntersectStruct obj){
 }
 
 //dragging deformable objects
+//TODO: problem, the BVH go insane when I move it around
+//sol1: rebuilt the sphere for each bvh element, probably won't work correctly
 void dragMouse(helperStruct obj){
     dragThread = std::thread([obj](){
         //make all of the special point normal
@@ -144,6 +154,9 @@ void dragMouse(helperStruct obj){
             glm::vec3 translation = p1-glm::vec3(obj.obj->getModelMatrix()*glm::vec4(obj.point->getPosition(),1.0f));
 
             obj.point->setPosition(obj.point->getPosition()+translation);
+
+            //update bvh
+            obj.obj->getBvh()->update();
 
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
@@ -210,9 +223,9 @@ int main() {
     //This is likely not gonna work
     //nvm, it worked
     std::vector<net *> objectList;
-    addCloth(&objectList, 2, 2, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
+    addCloth(&objectList, 3, 3, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
     //addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
-    //addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f));
+    addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f));
 
 
     GLuint VertexArrayID;
@@ -336,20 +349,25 @@ int main() {
             if(tmp.isMouseOver && !tmpColl.isMouseOver){
                 dragMouse(tmp);
             }else if(!tmp.isMouseOver && tmpColl.isMouseOver){
-                //start the other thread
-                threadShouldLive=true;
-                shouldSimulate=false;
-                timer_start(1, objectList, collObjects);
+                //in my infinite knowledge I had forgotten to chek whether the thread was already running
+                if(!threadShouldLive){
+                    //start the other thread
+                    threadShouldLive=true;
+                    shouldSimulate=false;
+                    timer_start(1, objectList, collObjects);
+                }
                 dragMouse(tmpColl);
             }else if(tmp.isMouseOver && tmpColl.isMouseOver){
                 //find the closest
                 if(glm::length(tmp.point-cameraPos)<glm::length(tmpColl.point->getPosition()-cameraPos)){
                     dragMouse(tmp);
                 }else{
-                    //start the other thread
-                    threadShouldLive=true;
-                    shouldSimulate=false;
-                    timer_start(1, objectList, collObjects);
+                    if(!threadShouldLive){
+                        //start the other thread
+                        threadShouldLive=true;
+                        shouldSimulate=false;
+                        timer_start(1, objectList, collObjects);
+                    }
                     dragMouse(tmpColl);
                 }
             }

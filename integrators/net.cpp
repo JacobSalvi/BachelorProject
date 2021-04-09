@@ -352,6 +352,9 @@ void net::reset() {
             vertexBuffer[pos++]=0.0f;
         }
     }
+
+    //reset bvh as well
+    getBvh()->update();
 }
 
 void net::setMass(float mass) {

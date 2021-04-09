@@ -36,6 +36,8 @@ public:
     sphere *getSphereShown() const;
 
     helperStruct rayIntersect(glm::vec3 origin, glm::vec3 direction, glm::mat4 model);
+
+    void update();
 };
 
 
