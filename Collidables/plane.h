@@ -54,12 +54,10 @@ public:
         }
 
         if (intersect){
-            std::cout<<"plane intersection"<<std::endl;
             toReturn.isMouseOver=true;
             toReturn.point=glm::vec3(getModel()*glm::vec4(p_,1.0f));
             return toReturn;
         }else{
-            std::cout<<"no plane intersection"<<std::endl;
             return toReturn;
         }
     }

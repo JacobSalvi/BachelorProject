@@ -310,6 +310,12 @@ void net::reset() {
         }
     }
 
+    //reset hanging particles
+    //set hanging particles
+    net::emptySpecialParticles();
+    net::setSpecial(net::particles[col*row-1]);
+    net::setSpecial(net::particles[col*(row-1)]);
+
     net::wind=glm::vec3(0.0f, 0.0f,0.0f);
     net::gravity=-1.0f;
 
@@ -431,5 +437,13 @@ sphereBVH *net::getBvh() const {
 helperStruct net::isHovered(glm::vec3 origin, glm::vec3 direction) {
     helperStruct toReturn = net::bvh->rayIntersect(origin, direction, modelMatrix);
     return toReturn;
+}
+
+void net::emptySpecialParticles() {
+    net::specialParticles.clear();
+}
+
+void net::setSpecial(particle *p) {
+    net::specialParticles.push_back(p);
 }
 

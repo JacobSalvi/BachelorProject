@@ -133,14 +133,11 @@ public:
         }
 
         if(intersect){
-            std::cout<<"cube collision"<<std::endl;
-
             //saving intersection data in the struct
             toReturn.isMouseOver=true;
             toReturn.point=glm::vec3(getModel()*glm::vec4(p_,1.0f));
             return toReturn;
         }else{
-            std::cout<<"no cube collision"<<std::endl;
             return toReturn;
         }
     }

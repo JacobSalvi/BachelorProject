@@ -32,7 +32,7 @@ void addColl(std::vector<collidable *> * list, int type);
 
 //dragging
 mouseIntersectStruct isMouseOverColl(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list);
-helperStruct isMouseOverDeformable(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list);
+helperStruct isMouseOverDeformable(glm::vec3 origin, glm::vec3 direction, std::vector<net *> * list);
 
 glm::vec3 planeVectorIntersection(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 planeNormal, glm::vec3 planePoint);
 glm::vec3 pointPlaneProjection(glm::vec3 point, glm::vec3 planeNormal);
@@ -40,5 +40,6 @@ glm::vec3 pointPlaneProjection(glm::vec3 point, glm::vec3 planeNormal);
 //utilities
 //I can't figure out how to use std::find
 bool vectorContains(std::vector<particle *> v, particle * e);
+void printPoint(glm::vec3 point, char * name);
 
 #endif //CODE_HELPERFUNCTIONS_H

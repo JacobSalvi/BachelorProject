@@ -36,6 +36,8 @@ using namespace glm;
 void timer_start(unsigned int interval);
 
 void dragMouse(mouseIntersectStruct obj);
+void dragMouse(helperStruct obj);
+
 
 bool shouldSimulate = true;
 std::thread sim;
@@ -73,7 +75,6 @@ void timer_start(unsigned int interval, const std::vector<net *>& list, const st
 }
 
 
-//TODO: not the most accurate results, must improve this, remove shaky effect
 void dragMouse(mouseIntersectStruct obj){
     dragThread = std::thread([obj](){
         glm::vec3 helper = obj.point;
@@ -124,6 +125,33 @@ void dragMouse(mouseIntersectStruct obj){
     });
     dragThread.detach();
 }
+
+//dragging deformable objects
+void dragMouse(helperStruct obj){
+    dragThread = std::thread([obj](){
+        //make all of the special point normal
+        obj.obj->emptySpecialParticles();
+        //set point as special point
+        obj.obj->setSpecial(obj.point);
+
+        while(dragThreadShouldLive){
+            //this code also brings shame upon my family, but less
+            glm::vec3 pixelRay = getMouseRay(ImGui::GetMousePos());
+            glm::vec3 rayOrigin = getCameraPosition();
+            glm::vec3 planeNormal = glm::normalize(rayOrigin);
+            glm::vec3 p1 = planeVectorIntersection(rayOrigin, pixelRay, planeNormal, obj.point->getPosition());
+
+            glm::vec3 translation = p1-glm::vec3(obj.obj->getModelMatrix()*glm::vec4(obj.point->getPosition(),1.0f));
+
+            obj.point->setPosition(obj.point->getPosition()+translation);
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+        std::cout<<"Drag thread should be dead now"<<std::endl;
+    });
+    dragThread.detach();
+}
+
 
 int main() {
     // Initialise GLFW
@@ -182,9 +210,9 @@ int main() {
     //This is likely not gonna work
     //nvm, it worked
     std::vector<net *> objectList;
-    addCloth(&objectList, 3, 3, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
+    addCloth(&objectList, 2, 2, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
     //addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
-    addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f));
+    //addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f));
 
 
     GLuint VertexArrayID;
@@ -300,9 +328,30 @@ int main() {
         if(ImGui::IsMouseClicked(0) && !dragThreadShouldLive && !ImGui::IsMouseHoveringWindow()){
             dragThreadShouldLive=true;
             glm::vec3 pixelRay = getMouseRay(ImGui::GetMousePos());
-            mouseIntersectStruct tmp = isMouseOverColl(getCameraPosition(), pixelRay, &collObjects);
-            if(tmp.isMouseOver){
+            glm::vec3 cameraPos = getCameraPosition();
+            mouseIntersectStruct tmp = isMouseOverColl(cameraPos, pixelRay, &collObjects);
+            helperStruct tmpColl = isMouseOverDeformable(cameraPos, pixelRay, &objectList);
+
+            //let's find the closest object to the mouse
+            if(tmp.isMouseOver && !tmpColl.isMouseOver){
                 dragMouse(tmp);
+            }else if(!tmp.isMouseOver && tmpColl.isMouseOver){
+                //start the other thread
+                threadShouldLive=true;
+                shouldSimulate=false;
+                timer_start(1, objectList, collObjects);
+                dragMouse(tmpColl);
+            }else if(tmp.isMouseOver && tmpColl.isMouseOver){
+                //find the closest
+                if(glm::length(tmp.point-cameraPos)<glm::length(tmpColl.point->getPosition()-cameraPos)){
+                    dragMouse(tmp);
+                }else{
+                    //start the other thread
+                    threadShouldLive=true;
+                    shouldSimulate=false;
+                    timer_start(1, objectList, collObjects);
+                    dragMouse(tmpColl);
+                }
             }
         }
         if(ImGui::IsMouseReleased(0)){

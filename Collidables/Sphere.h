@@ -21,7 +21,7 @@ public:
         std::cout<<"sphere"<<std::endl;
     }
 
-    bool rayIntersect(glm::vec3 origin, glm::vec3 direction);
+    bool rayIntersect(glm::vec3 origin, glm::vec3 direction, glm::mat4 superModel);
 
     mouseIntersectStruct isHovered(glm::vec3 origin, glm::vec3 direction) override{
         //return struct
@@ -49,11 +49,9 @@ public:
 
         if(d2>1.0f){
             //no intersection
-            std::cout<<"no sphere intersected"<<std::endl;
             return toReturn;
         }else{
             //intersection
-            std::cout<<"sphere intersected"<<std::endl;
             float dt = sqrt(1.0-d2);
             float t1 = t-dt;
 

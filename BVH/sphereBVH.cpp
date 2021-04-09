@@ -2,7 +2,7 @@
 #include "sphereBVH.h"
 
 
-sphereBVH::sphereBVH(std::vector<particle *> particles, int row){
+sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : p(particles){
 
 
     //needed information
@@ -19,6 +19,8 @@ sphereBVH::sphereBVH(std::vector<particle *> particles, int row){
     //no need to divide further
     //create sphere and return
     if(particles.size()==4){
+        std::swap(p[2],p[3]);
+
         //sphere and model matrix for the sphere
         glm::mat4 internalSphereModel= glm::mat4(1);
         //I discovered painstakingly that the order of operations matters
@@ -217,25 +219,34 @@ helperStruct sphereBVH::rayIntersect(glm::vec3 origin, glm::vec3 direction, glm:
     toReturn.isMouseOver=false;
 
     //do we intersect the sphere?
-    if(sphereBVH::sphereShown->rayIntersect(origin, direction)){
+    if(sphereBVH::sphereShown->rayIntersect(origin, direction, model)){
         //are we a leaf?
         if(child0==NULL){
+            //must invert the model matrix
+            glm::mat4 M_ = glm::inverse(model);
+            glm::vec4 orHelper = M_*glm::vec4(origin,1.0f);
+            glm::vec3 o_(orHelper.x, orHelper.y, orHelper.z);
+            glm::vec4 dirHelper = M_*glm::vec4(direction, 0.0f);
+            glm::vec3 d_(dirHelper.x, dirHelper.y, dirHelper.z);
+            d_=glm::normalize(d_);
+
+
             //do we intersect the part of the net inside the sphere?
             //find normal
-            glm::vec3 normal = glm::cross(p[0]->getPosition()-p[1]->getPosition(), p[2]->getPosition()-p[3]->getPosition());
+            glm::vec3 normal = glm::cross(p[1]->getPosition()-p[0]->getPosition(), p[3]->getPosition()-p[0]->getPosition());
             normal = glm::normalize(normal);
 
             //parallel, no intersection
-            if(glm::dot(direction,normal)==0){
+            if(glm::dot(d_,normal)==0){
                 return toReturn;
             }
 
             //point plane intersection
-            glm::vec3 diff = origin-p[0]->getPosition();
+            glm::vec3 diff = o_-p[0]->getPosition();
             float prod1= glm::dot(diff,normal);
-            float prod2= glm::dot(direction,normal);
+            float prod2= glm::dot(d_,normal);
             float prod3 = prod1/prod2;
-            glm::vec3 inter=origin-direction*prod3;
+            glm::vec3 inter=o_-d_*prod3;
 
             //divide the face in two triangles
             //first triangle is V1 V2 V4

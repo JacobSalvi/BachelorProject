@@ -84,13 +84,13 @@ int sphere::getNumberOfVertices() {
 }
 
 
-bool sphere::rayIntersect(glm::vec3 origin, glm::vec3 direction) {
+bool sphere::rayIntersect(glm::vec3 origin, glm::vec3 direction, glm::mat4 superModel) {
     //return struct
     mouseIntersectStruct toReturn;
     toReturn.isMouseOver=false;
 
     //i don't even know
-    glm::mat4 whatEven = getModel();
+    glm::mat4 whatEven = superModel*getModel();
 
     //sphere center
     glm::vec3 center(whatEven[3][0], whatEven[3][1], whatEven[3][2]);

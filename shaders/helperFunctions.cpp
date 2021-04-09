@@ -193,6 +193,10 @@ helperStruct isMouseOverDeformable(glm::vec3 origin, glm::vec3 direction, std::v
     closestObject.isMouseOver=false;
     for(auto i : *list){
         helperStruct tmp = i->isHovered(origin, direction);
+        if(tmp.isMouseOver){
+            closestObject=tmp;
+            closestObject.obj=i;
+        }
     }
     return closestObject;
 }
@@ -217,4 +221,9 @@ bool vectorContains(std::vector<particle *> v, particle * e){
         }
     }
     return toReturn;
+}
+
+void printPoint(glm::vec3 point, char * name){
+    std::cout<<name<<std::endl;
+    std::cout<<point[0]<<" "<<point[1]<<" "<<point[2]<<std::endl;
 }

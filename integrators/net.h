@@ -143,6 +143,10 @@ public:
     sphereBVH *getBvh() const;
 
     helperStruct isHovered(glm::vec3 origin, glm::vec3 direction);
+
+    void emptySpecialParticles();
+
+    void setSpecial(particle * p);
 };
 
 
