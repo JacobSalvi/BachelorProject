@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 
 #include <vector>
-#include "../integrators/particle.h"
+#include "../Bodies/Deformable/particle.h"
 #include "../shaders/helperStruct.h"
 
 //bounding volume hierarchy needed to avoid

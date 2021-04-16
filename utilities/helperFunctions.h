@@ -14,8 +14,8 @@
 
 using namespace glm;
 
-#include "../integrators/net.h"
-#include "helperStruct.h"
+#include "../Bodies/Deformable/net.h"
+#include "../shaders/helperStruct.h"
 #include "../Collidables/Sphere.h"
 #include "../Collidables/cube.h"
 #include "../Collidables/plane.h"
@@ -28,7 +28,7 @@ void drawCulture(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint Matrix
 void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colour, glm::vec3 tr);
 
 //collidables
-void addColl(std::vector<collidable *> * list, int type);
+void addColl(std::vector<collidable *> * list, int type, glm::vec3 lPos);
 
 //dragging
 mouseIntersectStruct isMouseOverColl(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list);

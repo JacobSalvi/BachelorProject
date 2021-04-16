@@ -2,7 +2,7 @@
 #define CODE_MOUSEINTERSECTSTRUCT_H
 
 
-#include "./collidable.h"
+#include "../Bodies/Solid/collidable.h"
 //needed due to circular dependency
 class collidable;
 

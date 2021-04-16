@@ -1,6 +1,6 @@
 #include "net.h"
-#include "../BVH/sphereBVH.h"
-#include "../shaders/helperFunctions.h"
+#include "../../BVH/sphereBVH.h"
+#include "../../utilities/helperFunctions.h"
 
 //constructor
 net::net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::vec3 tr) :
@@ -84,24 +84,24 @@ row(row), col(col), gravity(gravity), integrator(integrator){
             //setting up the springs
             //horizontal springs
             float coeff= 40.0f;
+            float damping = .1f;
             if(j-1>=0){
-                //TODO choose initial spring coefficient that make sense
-                spring * toAdd = new spring(1.0f, coeff,1.0f, particles[i*col+j-1],tmp);
+                spring * toAdd = new spring(1.0f, coeff, damping, particles[i*col+j-1],tmp);
                 springs.push_back(toAdd);
             }
             //vertical springs
             if(i-1>=0){
-                spring * toAdd = new spring(1.0f, coeff,1.0f, particles[i*col+j-col],tmp);
+                spring * toAdd = new spring(1.0f, coeff, damping, particles[i*col+j-col],tmp);
                 springs.push_back(toAdd);
             }
             //diagonal springs
             if(i>0&&j>0){
-                spring * toAdd = new spring(sqrt(2), coeff,1.0f, particles[i*col+j-(col+1)], tmp);
+                spring * toAdd = new spring(sqrt(2.0f), coeff, damping, particles[i*col+j-(col+1)], tmp);
                 springs.push_back(toAdd);
             }
             //diagonal spring but in the other direction
             if(i>0&&j<col-1){
-                spring * toAdd = new spring(sqrt(2), coeff,1.0f, particles[(i-1)*col+j+1], tmp);
+                spring * toAdd = new spring(sqrt(2.0f), coeff, damping, particles[(i-1)*col+j+1], tmp);
                 springs.push_back(toAdd);
             }
         }
@@ -112,6 +112,9 @@ row(row), col(col), gravity(gravity), integrator(integrator){
 
     //bounding volume hierarchy
     net::bvh=new sphereBVH(particles, row);
+
+    //normal
+
 }
 
 //update the particles following the
@@ -129,14 +132,6 @@ void net::explicitEuler(float timeDelta) {
         //update both particles
         springs[i]->updateParticlesForce();
     }
-
-//    for(int i=0;i<particles.size();++i){
-//        glm::vec3 tmp = particles[i]->getPosition();
-//        //std::cout<<"please god work"<<std::endl;
-//        std::cout<<tmp[0]<<std::endl;
-//        std::cout<<tmp[1]<<std::endl;
-//        std::cout<<tmp[2]<<std::endl;
-//    }
 
     //there is no collision yet
     //can't add force due to collision
@@ -170,7 +165,6 @@ void net::explicitEuler(float timeDelta) {
 //second order Runge Kutta integrator
 //half the time -> 1/4 the error
 void net::rungeKutta(float timeDelta){
-//    std::cout<<"Runge Kutta"<<std::endl;
     //TODO consider whether there is a better way to do this
 
     std::vector<glm::vec3> a1;
@@ -201,7 +195,8 @@ void net::rungeKutta(float timeDelta){
         //indices of the particles
         int part1 = springs[i]->getPart1Id();
         int part2 = springs[i]->getPart2Id();
-        springs[i]->rungeKuttaHelper((timeDelta/2.0f)*a1[part1], (timeDelta/2.0f)*a1[part2]);
+        springs[i]->rungeKuttaHelper((timeDelta/2.0f)*a1[part1], (timeDelta/2.0f)*a1[part2],
+                                     (timeDelta/2.0f)*a2[part1], (timeDelta/2.0f)*a2[part2]);
     }
 
     for(int i=0; i<particles.size(); ++i){
@@ -377,7 +372,11 @@ void net::setModelMatrix(const glm::mat4 &modelMatrix) {
     net::modelMatrix = modelMatrix;
 }
 
-void net::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID) {
+void net::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programID) {
+    //just to be safe
+    glUseProgram(programID);
+    // Get a handle for our "MVP" uniform
+    GLuint triangleMatrixID = glGetUniformLocation(programID, "MVP");
 
     glm::mat4 mvp = ProjectionMatrix * ViewMatrix * getModelMatrix();
 
@@ -410,7 +409,10 @@ void net::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triang
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
 
+    //render wireframe only when desired
+#if 0
     bvh->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, true, getModelMatrix());
+#endif
 }
 
 const glm::mat4 &net::getModelMatrix() const {
@@ -448,5 +450,13 @@ void net::emptySpecialParticles() {
 
 void net::setSpecial(particle *p) {
     net::specialParticles.push_back(p);
+}
+
+void net::setNormal(GLuint newNormal) {
+    net::normal = newNormal;
+}
+
+float *net::getNormalBuffer() const {
+    return normalBuffer;
 }
 

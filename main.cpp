@@ -1,7 +1,6 @@
 // Include standard headers
 #include <cstdio>
 #include <iostream>
-#include <chrono>
 
 // Include GLEW
 #include <GL/glew.h>
@@ -16,155 +15,21 @@ GLFWwindow *window;
 
 // Include GLM
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 using namespace glm;
 
 #include "shaders/shader.hpp"
 #include "shaders/controls.hpp"
-#include "integrators/net.h"
+#include "Bodies/Deformable/net.h"
 #include "shaders/texture.hpp"
-#include "Collidables/Sphere.h"
-#include <thread>
 #include <functional>
 
 #include "shaders/helperStruct.h"
-#include "shaders/helperFunctions.h"
+#include "utilities/helperFunctions.h"
 #include "Collidables/mouseIntersectStruct.h"
 #include "BVH/BVH.h"
 
-void timer_start(unsigned int interval);
-
-void dragMouse(mouseIntersectStruct obj);
-void dragMouse(helperStruct obj);
-
-
-bool shouldSimulate = true;
-std::thread sim;
-
-bool dragThreadShouldLive = false;
-std::thread dragThread;
-
-static bool threadShouldLive = false;
-void timer_start(unsigned int interval, const std::vector<net *>& list, const std::vector<collidable *> &collList) {
-    sim = std::thread([interval, list, collList]() {
-        static int counter = 0;
-        while (threadShouldLive) {
-            for(auto i : list){
-                i->integrate((float)(interval)/1000.0f);
-            }
-            counter++;
-
-            //every 15 millisecond rebuild the bvh
-            if(counter%15==0){
-                for(auto i:list){
-                    i->getBvh()->update();
-                }
-            }
-
-            //34 milliseconds ~= 30 frame per second
-            if(counter==30){
-                for(auto i : list){
-                    i->updateBuffer();
-                }
-
-                for(int i=0; i<collList.size();++i){
-                    for(int j=i+1; j<collList.size(); ++j){
-                        collList[i]->handleCollision(collList[j]);
-                    }
-                }
-                counter=0;
-            }
-            std::this_thread::sleep_for(std::chrono::milliseconds(interval));
-        }
-        std::cout<<"The thread should be dead now"<<std::endl;
-    });
-    sim.detach();
-}
-
-
-void dragMouse(mouseIntersectStruct obj){
-    dragThread = std::thread([obj](){
-        glm::vec3 helper = obj.point;
-        while(dragThreadShouldLive){
-//this piece of code is a crime against humanity and honestly it brings shame
-//on my family
-#if 0
-            glm::vec3 pixelRay = getMouseRay(ImGui::GetMousePos());
-            glm::vec3 rayOrigin = getCameraPosition();
-            glm::vec3 planeNormal = glm::normalize(rayOrigin);
-            glm::vec3 p1 = planeVectorIntersection(rayOrigin, pixelRay, planeNormal, glm::vec3(0.0,0.0,0.0));
-
-            //get object pos
-            glm::mat4 tmp = obj.object->getModel();
-            glm::vec3 p2 = planeVectorIntersection(rayOrigin, glm::normalize(helper-rayOrigin), planeNormal, glm::vec3(0.0,0.0,0.0));
-
-            //translating the object accordingly
-            glm::vec3 translation = p1-p2;
-            tmp[3][0]+=translation[0];
-            tmp[3][1]+=translation[1];
-            tmp[3][2]+=translation[2];
-
-            std::cout<<"translation: "<<translation[0]<<" ";
-            std::cout<<translation[1]<<" ";
-            std::cout<<translation[2]<<std::endl;
-
-            //updating obj
-            obj.object->setModel(tmp);
-            helper+=translation;
-#endif
-            //this code also brings shame upon my family, but less
-            glm::vec3 pixelRay = getMouseRay(ImGui::GetMousePos());
-            glm::vec3 rayOrigin = getCameraPosition();
-            glm::vec3 planeNormal = glm::normalize(rayOrigin);
-            glm::vec3 p1 = planeVectorIntersection(rayOrigin, pixelRay, planeNormal, helper);
-
-            glm::vec3 translation = p1-helper;
-            glm::mat4 tmp = obj.object->getModel();
-            tmp[3][0]+=translation[0];
-            tmp[3][1]+=translation[1];
-            tmp[3][2]+=translation[2];
-            obj.object->setModel(tmp);
-            helper+=translation;
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        }
-        std::cout<<"Drag thread should be dead now"<<std::endl;
-    });
-    dragThread.detach();
-}
-
-//dragging deformable objects
-//TODO: problem, the BVH go insane when I move it around
-//sol1: rebuilt the sphere for each bvh element, probably won't work correctly
-void dragMouse(helperStruct obj){
-    dragThread = std::thread([obj](){
-        //make all of the special point normal
-        obj.obj->emptySpecialParticles();
-        //set point as special point
-        obj.obj->setSpecial(obj.point);
-
-        while(dragThreadShouldLive){
-            //this code also brings shame upon my family, but less
-            glm::vec3 pixelRay = getMouseRay(ImGui::GetMousePos());
-            glm::vec3 rayOrigin = getCameraPosition();
-            glm::vec3 planeNormal = glm::normalize(rayOrigin);
-            glm::vec3 p1 = planeVectorIntersection(rayOrigin, pixelRay, planeNormal, obj.point->getPosition());
-
-            glm::vec3 translation = p1-glm::vec3(obj.obj->getModelMatrix()*glm::vec4(obj.point->getPosition(),1.0f));
-
-            obj.point->setPosition(obj.point->getPosition()+translation);
-
-            //update bvh
-            obj.obj->getBvh()->update();
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        }
-        std::cout<<"Drag thread should be dead now"<<std::endl;
-    });
-    dragThread.detach();
-}
-
+#include "utilities/multiThreading.h"
 
 int main() {
     // Initialise GLFW
@@ -223,8 +88,8 @@ int main() {
     //This is likely not gonna work
     //nvm, it worked
     std::vector<net *> objectList;
-    addCloth(&objectList, 3, 3, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
-    //addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
+    addCloth(&objectList, 4, 5, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
+   // addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
     addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f));
 
 
@@ -234,10 +99,6 @@ int main() {
 
     //Triangle
     GLuint triangleProgramID = LoadShaders("shaders/vert.vertexshader", "shaders/colorFrag.fragmentshader");
-
-    // Get a handle for our "MVP" uniform
-    GLuint triangleMatrixID = glGetUniformLocation(triangleProgramID, "MVP");
-
 
     //infinite wisdom
     GLuint programId = LoadShaders("shaders/vertexShader.vertexshader", "shaders/fragmentShader.fragmentshader");
@@ -256,17 +117,20 @@ int main() {
 
 
     //phong lighting system
-    //GLuint lightSysId = LoadShaders("shaders/shadowVert.vertexshader", "shaders/shadowFrag.fragmentshader");
-    //glm::vec3 lightPosition(0.0f, 3.0f, 5.0f);
+    GLuint lightSysId = LoadShaders("shaders/shadowVert.vertexshader", "shaders/shadowFrag.fragmentshader");
+    glm::vec3 lightPosition(0.0f, 10.0f, 5.0f);
 
     //glfwSetKeyCallback(window, key_callback);
     std::cout << "about to enter while loop" << std::endl;
 
     //Collidables
     std::vector<collidable *> collObjects;
-    addColl(&collObjects, 2);
-    addColl(&collObjects, 0);
-    addColl(&collObjects,1);
+    //plane
+    addColl(&collObjects, 2, lightPosition);
+    //sphere
+    addColl(&collObjects, 0, lightPosition);
+    //cube
+    addColl(&collObjects,1, lightPosition);
     std::cout<<"init successful"<<std::endl;
 
     //gui stuff
@@ -395,12 +259,12 @@ int main() {
 //            }else{
 //                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture3, textureId3, programId);
 //            }
-            objectList[i]->render(ProjectionMatrix, ViewMatrix, triangleMatrixID);
+            objectList[i]->render(ProjectionMatrix, ViewMatrix, triangleProgramID);
             //objectList[i]->getBvh()->render(ProjectionMatrix, ViewMatrix,triangleMatrixID, true);
         }
 
         for(auto i : collObjects){
-            i->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, false);
+            i->render(ProjectionMatrix, ViewMatrix, lightSysId, false);
         }
         //gui stuff
         ImGui::Render();

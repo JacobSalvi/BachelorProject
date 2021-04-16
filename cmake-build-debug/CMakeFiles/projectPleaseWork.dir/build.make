@@ -129,44 +129,44 @@ CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/controls.cpp -o CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.s
 
-CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
-CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.o: ../integrators/spring.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/spring.cpp
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.o: ../Bodies/Deformable/spring.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.cpp
 
-CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/spring.cpp > CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.i
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.cpp > CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.i
 
-CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/spring.cpp -o CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.s
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.cpp -o CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.s
 
-CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
-CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.o: ../integrators/net.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/net.cpp
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o: ../Bodies/Deformable/net.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.cpp
 
-CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/net.cpp > CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.i
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.cpp > CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.i
 
-CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/net.cpp -o CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.s
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.cpp -o CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.s
 
-CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
-CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.o: ../integrators/particle.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/particle.cpp
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.o: ../Bodies/Deformable/particle.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.cpp
 
-CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/particle.cpp > CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.i
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.cpp > CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.i
 
-CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/particle.cpp -o CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.s
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.cpp -o CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.s
 
 CMakeFiles/projectPleaseWork.dir/imgui/imgui_draw.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
 CMakeFiles/projectPleaseWork.dir/imgui/imgui_draw.cpp.o: ../imgui/imgui_draw.cpp
@@ -220,18 +220,18 @@ CMakeFiles/projectPleaseWork.dir/imgui/imgui_impl_glfw_gl3.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/imgui/imgui_impl_glfw_gl3.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imgui_impl_glfw_gl3.cpp -o CMakeFiles/projectPleaseWork.dir/imgui/imgui_impl_glfw_gl3.cpp.s
 
-CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
-CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.o: ../Collidables/collidable.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/collidable.cpp
+CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
+CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o: ../Bodies/Solid/collidable.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.cpp
 
-CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/collidable.cpp > CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.i
+CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.cpp > CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.i
 
-CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/collidable.cpp -o CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.s
+CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.cpp -o CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.s
 
 CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
 CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o: ../Collidables/Sphere.cpp
@@ -272,18 +272,18 @@ CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.cpp -o CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.s
 
-CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
-CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o: ../shaders/helperFunctions.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperFunctions.cpp
+CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
+CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.o: ../utilities/helperFunctions.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.cpp
 
-CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperFunctions.cpp > CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.i
+CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.cpp > CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.i
 
-CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperFunctions.cpp -o CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.s
+CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.cpp -o CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.s
 
 CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
 CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o: ../BVH/BVH.cpp
@@ -311,26 +311,40 @@ CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.cpp -o CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.s
 
+CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
+CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../utilities/multiThreading.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/multiThreading.cpp
+
+CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/multiThreading.cpp > CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.i
+
+CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/multiThreading.cpp -o CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.s
+
 # Object files for target projectPleaseWork
 projectPleaseWork_OBJECTS = \
 "CMakeFiles/projectPleaseWork.dir/main.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/shaders/shader.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/shaders/texture.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.o" \
-"CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.o" \
-"CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.o" \
-"CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.o" \
+"CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.o" \
+"CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o" \
+"CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/imgui/imgui_draw.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/imgui/imgui.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/imgui/imgui_demo.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/imgui/imgui_impl_glfw_gl3.cpp.o" \
-"CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.o" \
+"CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.o" \
-"CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o" \
+"CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o" \
-"CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o"
+"CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o" \
+"CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o"
 
 # External object files for target projectPleaseWork
 projectPleaseWork_EXTERNAL_OBJECTS =
@@ -339,25 +353,26 @@ projectPleaseWork: CMakeFiles/projectPleaseWork.dir/main.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/shaders/shader.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/shaders/texture.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.o
-projectPleaseWork: CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.o
-projectPleaseWork: CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.o
-projectPleaseWork: CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.o
+projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.o
+projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o
+projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/imgui/imgui_draw.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/imgui/imgui.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/imgui/imgui_demo.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/imgui/imgui_impl_glfw_gl3.cpp.o
-projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.o
+projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.o
-projectPleaseWork: CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o
+projectPleaseWork: CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o
+projectPleaseWork: CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/build.make
 projectPleaseWork: external/glfw-3.1.2/src/libglfw3.a
 projectPleaseWork: external/libGLEW_1130.a
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable projectPleaseWork"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Linking CXX executable projectPleaseWork"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/projectPleaseWork.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

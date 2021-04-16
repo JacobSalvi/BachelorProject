@@ -26,7 +26,7 @@ sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : p(particles) 
         //I discovered painstakingly that the order of operations matters
         internalSphereModel = glm::translate(internalSphereModel, c);
         internalSphereModel = glm::scale(internalSphereModel, glm::vec3(2.0 * r, 2.0 * r, 2.0 * r));
-        sphereBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f, 0.8f, 0.8f));
+        sphereBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(0,0,0));
         return;
     }
 
@@ -169,7 +169,7 @@ sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : p(particles) 
     internalSphereModel = glm::translate(internalSphereModel, c);
     internalSphereModel = glm::scale(internalSphereModel, glm::vec3(2.0 * r, 2.0 * r, 2.0 * r));
 
-    sphereBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f, 0.8f, 0.8f));
+    sphereBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(0,0,0));
 
 }
 

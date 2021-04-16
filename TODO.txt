@@ -3,9 +3,17 @@ add collision
 
 add other deformable simple primitives
 
+add damping coefficent
+
 //optional but would make the code cleaner
-refactor classes hierarchy
+refactor classes hierarchy and files
 
 //quality of life stuff
 add lights, 'cos it is quite ugly like this
 also add a skybox
+
+//tool mesh-> tethraedon TetGen
+//libigl
+//tethraedalize.h
+
+//23 meeting

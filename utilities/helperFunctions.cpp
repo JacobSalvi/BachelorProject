@@ -118,33 +118,41 @@ void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colo
     glBindBuffer(GL_ARRAY_BUFFER, netColor);
     glBufferData(GL_ARRAY_BUFFER, clothNew->getSize(), clothNew->getColorBuffer(), GL_STATIC_DRAW);
 
+    /*
+    GLuint netNormal;
+    glGenBuffers(1, &netNormal);
+    glBindBuffer(GL_ARRAY_BUFFER, netNormal);
+    glBufferData(GL_ARRAY_BUFFER, clothNew->getSize(), clothNew->getNormalBuffer(), GL_STATIC_DRAW);
+     */
+
     clothNew->setVertex(netVertex);
     clothNew->setColour(netColor);
+    //clothNew->setNormal(netNormal);
 
     list->push_back(clothNew);
 }
 
 //create and add sphere
 //type 0->sphere, 1->cube, 2 plane
-void addColl(std::vector<collidable *> * list, int type){
+void addColl(std::vector<collidable *> * list, int type, glm::vec3 lPos){
     collidable * coll;
     glm::mat4 model = glm::mat4(1.0f);
     switch(type){
         //sphere
         case 0:
             model = glm::translate(model, glm::vec3(6.0f,0.0f,2.0f));
-            coll = new sphere(100, model,glm::vec3(1.0f,0.8f,0.8f));
+            coll = new sphere(100, model,glm::vec3(1.0f,0.8f,0.8f), lPos);
             break;
             //cube
         case 1:
             model = glm::translate(model, glm::vec3(-3.0f,0.0f,2.0f));
-            coll = new cube(model,glm::vec3(1.0f,1.0f,0.4f));
+            coll = new cube(model,glm::vec3(1.0f,1.0f,0.4f), lPos);
             break;
             //plane
         case 2:
             glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,-2.0f,0.0f));
             model = glm::scale(translate, glm::vec3(5.0f,5.0f,5.0f));
-            coll = new plane(3.0f,1.0f, model, glm::vec3(0.4f,1.0f,0.6f));
+            coll = new plane(3.0f,1.0f, model, glm::vec3(0.4f,1.0f,0.6f), lPos);
             break;
 
     }
@@ -159,8 +167,14 @@ void addColl(std::vector<collidable *> * list, int type){
     glBindBuffer(GL_ARRAY_BUFFER, collColour);
     glBufferData(GL_ARRAY_BUFFER, coll->getSize(), coll->getColorBuffer(), GL_STATIC_DRAW);
 
+    GLuint collNormal;
+    glGenBuffers(1, &collNormal);
+    glBindBuffer(GL_ARRAY_BUFFER, collNormal);
+    glBufferData(GL_ARRAY_BUFFER, coll->getSize(), coll->getNormalBuffer(), GL_STATIC_DRAW);
+
     coll->setCollVertex(collVertex);
     coll->setCollColour(collColour);
+    coll->setCollNormal(collNormal);
 
     list->push_back(coll);
 }

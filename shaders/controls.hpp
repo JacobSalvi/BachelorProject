@@ -1,7 +1,7 @@
 #ifndef CONTROLS_HPP
 #define CONTROLS_HPP
 #include <GL/glew.h>
-#include "../integrators/net.h"
+#include "../Bodies/Deformable/net.h"
 // Include GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

@@ -29,14 +29,14 @@ add_executable(projectPleaseWork
         cmake-build-debug/shaders/fragmentShader.fragmentshader
         cmake-build-debug/shaders/uvtemplate.DDS
         shaders/texture.hpp shaders/texture.cpp shaders/controls.hpp shaders/controls.cpp
-        integrators/spring.hpp integrators/spring.cpp integrators/net.cpp integrators/net.h integrators/particle.cpp
-        integrators/particle.h
+        Bodies/Deformable/spring.hpp Bodies/Deformable/spring.cpp Bodies/Deformable/net.cpp Bodies/Deformable/net.h Bodies/Deformable/particle.cpp
+        Bodies/Deformable/particle.h
         imgui/imgui_internal.h imgui/imgui.h imgui/imconfig.h imgui/imgui_impl_glfw_gl3.h
         imgui/stb_rect_pack.h imgui/stb_textedit.h imgui/stb_truetype.h
-        imgui/imgui_draw.cpp imgui/imgui.cpp imgui/imgui_demo.cpp imgui/imgui_impl_glfw_gl3.cpp Collidables/collidable.cpp
-        Collidables/collidable.h Collidables/Sphere.cpp Collidables/Sphere.h Collidables/cube.cpp Collidables/cube.h
+        imgui/imgui_draw.cpp imgui/imgui.cpp imgui/imgui_demo.cpp imgui/imgui_impl_glfw_gl3.cpp Bodies/Solid/collidable.cpp
+        Bodies/Solid/collidable.h Collidables/Sphere.cpp Collidables/Sphere.h Collidables/cube.cpp Collidables/cube.h
         Collidables/plane.cpp Collidables/plane.h
-        shaders/helperFunctions.cpp shaders/helperStruct.h shaders/helperFunctions.h Collidables/mouseIntersectStruct.h BVH/BVH.cpp BVH/BVH.h BVH/sphereBVH.cpp BVH/sphereBVH.h)
+        utilities/helperFunctions.cpp shaders/helperStruct.h utilities/helperFunctions.h Collidables/mouseIntersectStruct.h BVH/BVH.cpp BVH/BVH.h BVH/sphereBVH.cpp BVH/sphereBVH.h utilities/multiThreading.h utilities/multiThreading.cpp)
 
 target_link_libraries(projectPleaseWork
         ${ALL_LIBS}

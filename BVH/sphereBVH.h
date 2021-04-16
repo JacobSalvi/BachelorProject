@@ -2,7 +2,7 @@
 #define CODE_SPHEREBVH_H
 
 #include "../Collidables/Sphere.h"
-#include "../integrators/particle.h"
+#include "../Bodies/Deformable/particle.h"
 #include "../shaders/helperStruct.h"
 
 struct helperStruct;

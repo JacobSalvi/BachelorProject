@@ -2,7 +2,7 @@
 #define CODE_HELPERSTRUCT_H
 
 #include <GLFW/glfw3.h>
-#include "../integrators/net.h"
+#include "../Bodies/Deformable/net.h"
 
 class net;
 

@@ -6,22 +6,23 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o"
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o"
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.o"
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.o"
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o"
-  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/collidable.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imgui.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/imgui/imgui.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imgui_demo.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/imgui/imgui_demo.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imgui_draw.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/imgui/imgui_draw.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imgui_impl_glfw_gl3.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/imgui/imgui_impl_glfw_gl3.cpp.o"
-  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/net.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.o"
-  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/particle.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.o"
-  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/spring.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/main.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/main.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/controls.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.o"
-  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperFunctions.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/shader.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/shaders/shader.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/texture.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/shaders/texture.cpp.o"
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.o"
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/multiThreading.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

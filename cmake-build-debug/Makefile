@@ -672,6 +672,114 @@ BVH/sphereBVH.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.s
 .PHONY : BVH/sphereBVH.cpp.s
 
+Bodies/Deformable/net.o: Bodies/Deformable/net.cpp.o
+
+.PHONY : Bodies/Deformable/net.o
+
+# target to build an object file
+Bodies/Deformable/net.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o
+.PHONY : Bodies/Deformable/net.cpp.o
+
+Bodies/Deformable/net.i: Bodies/Deformable/net.cpp.i
+
+.PHONY : Bodies/Deformable/net.i
+
+# target to preprocess a source file
+Bodies/Deformable/net.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.i
+.PHONY : Bodies/Deformable/net.cpp.i
+
+Bodies/Deformable/net.s: Bodies/Deformable/net.cpp.s
+
+.PHONY : Bodies/Deformable/net.s
+
+# target to generate assembly for a file
+Bodies/Deformable/net.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.s
+.PHONY : Bodies/Deformable/net.cpp.s
+
+Bodies/Deformable/particle.o: Bodies/Deformable/particle.cpp.o
+
+.PHONY : Bodies/Deformable/particle.o
+
+# target to build an object file
+Bodies/Deformable/particle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.o
+.PHONY : Bodies/Deformable/particle.cpp.o
+
+Bodies/Deformable/particle.i: Bodies/Deformable/particle.cpp.i
+
+.PHONY : Bodies/Deformable/particle.i
+
+# target to preprocess a source file
+Bodies/Deformable/particle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.i
+.PHONY : Bodies/Deformable/particle.cpp.i
+
+Bodies/Deformable/particle.s: Bodies/Deformable/particle.cpp.s
+
+.PHONY : Bodies/Deformable/particle.s
+
+# target to generate assembly for a file
+Bodies/Deformable/particle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.s
+.PHONY : Bodies/Deformable/particle.cpp.s
+
+Bodies/Deformable/spring.o: Bodies/Deformable/spring.cpp.o
+
+.PHONY : Bodies/Deformable/spring.o
+
+# target to build an object file
+Bodies/Deformable/spring.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.o
+.PHONY : Bodies/Deformable/spring.cpp.o
+
+Bodies/Deformable/spring.i: Bodies/Deformable/spring.cpp.i
+
+.PHONY : Bodies/Deformable/spring.i
+
+# target to preprocess a source file
+Bodies/Deformable/spring.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.i
+.PHONY : Bodies/Deformable/spring.cpp.i
+
+Bodies/Deformable/spring.s: Bodies/Deformable/spring.cpp.s
+
+.PHONY : Bodies/Deformable/spring.s
+
+# target to generate assembly for a file
+Bodies/Deformable/spring.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.s
+.PHONY : Bodies/Deformable/spring.cpp.s
+
+Bodies/Solid/collidable.o: Bodies/Solid/collidable.cpp.o
+
+.PHONY : Bodies/Solid/collidable.o
+
+# target to build an object file
+Bodies/Solid/collidable.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o
+.PHONY : Bodies/Solid/collidable.cpp.o
+
+Bodies/Solid/collidable.i: Bodies/Solid/collidable.cpp.i
+
+.PHONY : Bodies/Solid/collidable.i
+
+# target to preprocess a source file
+Bodies/Solid/collidable.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.i
+.PHONY : Bodies/Solid/collidable.cpp.i
+
+Bodies/Solid/collidable.s: Bodies/Solid/collidable.cpp.s
+
+.PHONY : Bodies/Solid/collidable.s
+
+# target to generate assembly for a file
+Bodies/Solid/collidable.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.s
+.PHONY : Bodies/Solid/collidable.cpp.s
+
 Collidables/Sphere.o: Collidables/Sphere.cpp.o
 
 .PHONY : Collidables/Sphere.o
@@ -698,33 +806,6 @@ Collidables/Sphere.s: Collidables/Sphere.cpp.s
 Collidables/Sphere.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.s
 .PHONY : Collidables/Sphere.cpp.s
-
-Collidables/collidable.o: Collidables/collidable.cpp.o
-
-.PHONY : Collidables/collidable.o
-
-# target to build an object file
-Collidables/collidable.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.o
-.PHONY : Collidables/collidable.cpp.o
-
-Collidables/collidable.i: Collidables/collidable.cpp.i
-
-.PHONY : Collidables/collidable.i
-
-# target to preprocess a source file
-Collidables/collidable.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.i
-.PHONY : Collidables/collidable.cpp.i
-
-Collidables/collidable.s: Collidables/collidable.cpp.s
-
-.PHONY : Collidables/collidable.s
-
-# target to generate assembly for a file
-Collidables/collidable.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/collidable.cpp.s
-.PHONY : Collidables/collidable.cpp.s
 
 Collidables/cube.o: Collidables/cube.cpp.o
 
@@ -888,87 +969,6 @@ imgui/imgui_impl_glfw_gl3.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/imgui/imgui_impl_glfw_gl3.cpp.s
 .PHONY : imgui/imgui_impl_glfw_gl3.cpp.s
 
-integrators/net.o: integrators/net.cpp.o
-
-.PHONY : integrators/net.o
-
-# target to build an object file
-integrators/net.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.o
-.PHONY : integrators/net.cpp.o
-
-integrators/net.i: integrators/net.cpp.i
-
-.PHONY : integrators/net.i
-
-# target to preprocess a source file
-integrators/net.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.i
-.PHONY : integrators/net.cpp.i
-
-integrators/net.s: integrators/net.cpp.s
-
-.PHONY : integrators/net.s
-
-# target to generate assembly for a file
-integrators/net.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/integrators/net.cpp.s
-.PHONY : integrators/net.cpp.s
-
-integrators/particle.o: integrators/particle.cpp.o
-
-.PHONY : integrators/particle.o
-
-# target to build an object file
-integrators/particle.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.o
-.PHONY : integrators/particle.cpp.o
-
-integrators/particle.i: integrators/particle.cpp.i
-
-.PHONY : integrators/particle.i
-
-# target to preprocess a source file
-integrators/particle.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.i
-.PHONY : integrators/particle.cpp.i
-
-integrators/particle.s: integrators/particle.cpp.s
-
-.PHONY : integrators/particle.s
-
-# target to generate assembly for a file
-integrators/particle.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/integrators/particle.cpp.s
-.PHONY : integrators/particle.cpp.s
-
-integrators/spring.o: integrators/spring.cpp.o
-
-.PHONY : integrators/spring.o
-
-# target to build an object file
-integrators/spring.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.o
-.PHONY : integrators/spring.cpp.o
-
-integrators/spring.i: integrators/spring.cpp.i
-
-.PHONY : integrators/spring.i
-
-# target to preprocess a source file
-integrators/spring.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.i
-.PHONY : integrators/spring.cpp.i
-
-integrators/spring.s: integrators/spring.cpp.s
-
-.PHONY : integrators/spring.s
-
-# target to generate assembly for a file
-integrators/spring.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/integrators/spring.cpp.s
-.PHONY : integrators/spring.cpp.s
-
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -1022,33 +1022,6 @@ shaders/controls.s: shaders/controls.cpp.s
 shaders/controls.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.s
 .PHONY : shaders/controls.cpp.s
-
-shaders/helperFunctions.o: shaders/helperFunctions.cpp.o
-
-.PHONY : shaders/helperFunctions.o
-
-# target to build an object file
-shaders/helperFunctions.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.o
-.PHONY : shaders/helperFunctions.cpp.o
-
-shaders/helperFunctions.i: shaders/helperFunctions.cpp.i
-
-.PHONY : shaders/helperFunctions.i
-
-# target to preprocess a source file
-shaders/helperFunctions.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.i
-.PHONY : shaders/helperFunctions.cpp.i
-
-shaders/helperFunctions.s: shaders/helperFunctions.cpp.s
-
-.PHONY : shaders/helperFunctions.s
-
-# target to generate assembly for a file
-shaders/helperFunctions.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/shaders/helperFunctions.cpp.s
-.PHONY : shaders/helperFunctions.cpp.s
 
 shaders/shader.o: shaders/shader.cpp.o
 
@@ -1104,6 +1077,60 @@ shaders/texture.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/shaders/texture.cpp.s
 .PHONY : shaders/texture.cpp.s
 
+utilities/helperFunctions.o: utilities/helperFunctions.cpp.o
+
+.PHONY : utilities/helperFunctions.o
+
+# target to build an object file
+utilities/helperFunctions.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.o
+.PHONY : utilities/helperFunctions.cpp.o
+
+utilities/helperFunctions.i: utilities/helperFunctions.cpp.i
+
+.PHONY : utilities/helperFunctions.i
+
+# target to preprocess a source file
+utilities/helperFunctions.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.i
+.PHONY : utilities/helperFunctions.cpp.i
+
+utilities/helperFunctions.s: utilities/helperFunctions.cpp.s
+
+.PHONY : utilities/helperFunctions.s
+
+# target to generate assembly for a file
+utilities/helperFunctions.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.s
+.PHONY : utilities/helperFunctions.cpp.s
+
+utilities/multiThreading.o: utilities/multiThreading.cpp.o
+
+.PHONY : utilities/multiThreading.o
+
+# target to build an object file
+utilities/multiThreading.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o
+.PHONY : utilities/multiThreading.cpp.o
+
+utilities/multiThreading.i: utilities/multiThreading.cpp.i
+
+.PHONY : utilities/multiThreading.i
+
+# target to preprocess a source file
+utilities/multiThreading.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.i
+.PHONY : utilities/multiThreading.cpp.i
+
+utilities/multiThreading.s: utilities/multiThreading.cpp.s
+
+.PHONY : utilities/multiThreading.s
+
+# target to generate assembly for a file
+utilities/multiThreading.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.s
+.PHONY : utilities/multiThreading.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1156,12 +1183,21 @@ help:
 	@echo "... BVH/sphereBVH.o"
 	@echo "... BVH/sphereBVH.i"
 	@echo "... BVH/sphereBVH.s"
+	@echo "... Bodies/Deformable/net.o"
+	@echo "... Bodies/Deformable/net.i"
+	@echo "... Bodies/Deformable/net.s"
+	@echo "... Bodies/Deformable/particle.o"
+	@echo "... Bodies/Deformable/particle.i"
+	@echo "... Bodies/Deformable/particle.s"
+	@echo "... Bodies/Deformable/spring.o"
+	@echo "... Bodies/Deformable/spring.i"
+	@echo "... Bodies/Deformable/spring.s"
+	@echo "... Bodies/Solid/collidable.o"
+	@echo "... Bodies/Solid/collidable.i"
+	@echo "... Bodies/Solid/collidable.s"
 	@echo "... Collidables/Sphere.o"
 	@echo "... Collidables/Sphere.i"
 	@echo "... Collidables/Sphere.s"
-	@echo "... Collidables/collidable.o"
-	@echo "... Collidables/collidable.i"
-	@echo "... Collidables/collidable.s"
 	@echo "... Collidables/cube.o"
 	@echo "... Collidables/cube.i"
 	@echo "... Collidables/cube.s"
@@ -1180,30 +1216,24 @@ help:
 	@echo "... imgui/imgui_impl_glfw_gl3.o"
 	@echo "... imgui/imgui_impl_glfw_gl3.i"
 	@echo "... imgui/imgui_impl_glfw_gl3.s"
-	@echo "... integrators/net.o"
-	@echo "... integrators/net.i"
-	@echo "... integrators/net.s"
-	@echo "... integrators/particle.o"
-	@echo "... integrators/particle.i"
-	@echo "... integrators/particle.s"
-	@echo "... integrators/spring.o"
-	@echo "... integrators/spring.i"
-	@echo "... integrators/spring.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
 	@echo "... shaders/controls.o"
 	@echo "... shaders/controls.i"
 	@echo "... shaders/controls.s"
-	@echo "... shaders/helperFunctions.o"
-	@echo "... shaders/helperFunctions.i"
-	@echo "... shaders/helperFunctions.s"
 	@echo "... shaders/shader.o"
 	@echo "... shaders/shader.i"
 	@echo "... shaders/shader.s"
 	@echo "... shaders/texture.o"
 	@echo "... shaders/texture.i"
 	@echo "... shaders/texture.s"
+	@echo "... utilities/helperFunctions.o"
+	@echo "... utilities/helperFunctions.i"
+	@echo "... utilities/helperFunctions.s"
+	@echo "... utilities/multiThreading.o"
+	@echo "... utilities/multiThreading.i"
+	@echo "... utilities/multiThreading.s"
 .PHONY : help
 
 

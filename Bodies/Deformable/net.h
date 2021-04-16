@@ -5,8 +5,8 @@
 #include <glm/glm.hpp>
 #include "particle.h"
 #include "spring.hpp"
-#include "../BVH/sphereBVH.h"
-#include "../shaders/helperStruct.h"
+#include "../../BVH/sphereBVH.h"
+#include "../../shaders/helperStruct.h"
 #include <vector>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -38,6 +38,7 @@ private:
     //(i-1)*2*(j-1)
     float * vertexBuffer;
     float * colorBuffer;
+    float * normalBuffer;
 
     //integrator to use
     //0 explicit euler
@@ -54,6 +55,7 @@ private:
     //stuff needed for opengl
     GLuint vertex;
     GLuint colour;
+    GLuint normal;
 
     //BVH
     sphereBVH * bvh;
@@ -94,6 +96,8 @@ public:
     float *getVertexBuffer();
 
     float *getColorBuffer();
+
+    float *getNormalBuffer() const;
 
     virtual ~net();
 
@@ -138,7 +142,9 @@ public:
 
     void setColour(GLuint newColour);
 
-    void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID);
+    void setNormal(GLuint newNormal);
+
+    void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programID);
 
     sphereBVH *getBvh() const;
 

@@ -2056,16 +2056,34 @@
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.cpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h">
-			<Option target="projectPleaseWork"/>
-		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/collidable.cpp">
-			<Option target="projectPleaseWork"/>
-		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/collidable.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.cpp">
@@ -4417,24 +4435,6 @@
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/stb_truetype.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/net.cpp">
-			<Option target="projectPleaseWork"/>
-		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/net.h">
-			<Option target="projectPleaseWork"/>
-		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/particle.cpp">
-			<Option target="projectPleaseWork"/>
-		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/particle.h">
-			<Option target="projectPleaseWork"/>
-		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/spring.cpp">
-			<Option target="projectPleaseWork"/>
-		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/integrators/spring.hpp">
-			<Option target="projectPleaseWork"/>
-		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/main.cpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>
@@ -4442,12 +4442,6 @@
 			<Option target="projectPleaseWork"/>
 		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/controls.hpp">
-			<Option target="projectPleaseWork"/>
-		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperFunctions.cpp">
-			<Option target="projectPleaseWork"/>
-		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperFunctions.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h">
@@ -4463,6 +4457,18 @@
 			<Option target="projectPleaseWork"/>
 		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/texture.hpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/multiThreading.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/multiThreading.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/CMakeLists.txt">
