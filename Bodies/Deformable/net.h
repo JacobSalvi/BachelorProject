@@ -60,13 +60,16 @@ private:
     //BVH
     sphereBVH * bvh;
 
+    //lightPosition
+    glm::vec3 lightPos;
+
 public:
     //assumption:
     //-equal mass particles
     //-equidistant
     //-vertical and horizontal springs have the same properties
     //-diagonal springs have the same properties
-    net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::vec3 tr);
+    net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::vec3 tr, glm::vec3 lPos);
 
     void setWind(const glm::vec3 &newWind);
     void addWind(const glm::vec3 &windToAdd);
@@ -153,6 +156,11 @@ public:
     void emptySpecialParticles();
 
     void setSpecial(particle * p);
+
+    const glm::vec3 &getLightPos() const;
+
+    void updateNormalBuffer();
+
 };
 
 

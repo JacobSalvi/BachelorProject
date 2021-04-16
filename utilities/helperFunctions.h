@@ -25,7 +25,7 @@ void culture(std::vector<helperStruct *> *list, glm::vec3 tr);
 void drawCulture(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint MatrixID, helperStruct* obj, GLuint texture, GLuint textureId, GLuint program);
 
 //cloth
-void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colour, glm::vec3 tr);
+void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colour, glm::vec3 tr, glm::vec3 lPos);
 
 //collidables
 void addColl(std::vector<collidable *> * list, int type, glm::vec3 lPos);

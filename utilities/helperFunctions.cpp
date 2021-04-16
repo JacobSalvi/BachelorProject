@@ -106,8 +106,8 @@ void drawCulture(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint Matrix
 }
 #endif
 
-void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colour, glm::vec3 tr){
-    net * clothNew = new net(1.0f, col, row, in, colour, -1.0f, tr);
+void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colour, glm::vec3 tr, glm::vec3 lPos){
+    net * clothNew = new net(1.0f, col, row, in, colour, -1.0f, tr, lPos);
     GLuint netVertex;
     glGenBuffers(1, &netVertex);
     glBindBuffer(GL_ARRAY_BUFFER, netVertex);
@@ -118,16 +118,16 @@ void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colo
     glBindBuffer(GL_ARRAY_BUFFER, netColor);
     glBufferData(GL_ARRAY_BUFFER, clothNew->getSize(), clothNew->getColorBuffer(), GL_STATIC_DRAW);
 
-    /*
+
     GLuint netNormal;
     glGenBuffers(1, &netNormal);
     glBindBuffer(GL_ARRAY_BUFFER, netNormal);
     glBufferData(GL_ARRAY_BUFFER, clothNew->getSize(), clothNew->getNormalBuffer(), GL_STATIC_DRAW);
-     */
+
 
     clothNew->setVertex(netVertex);
     clothNew->setColour(netColor);
-    //clothNew->setNormal(netNormal);
+    clothNew->setNormal(netNormal);
 
     list->push_back(clothNew);
 }

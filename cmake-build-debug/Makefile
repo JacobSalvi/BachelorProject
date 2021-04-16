@@ -1131,6 +1131,33 @@ utilities/multiThreading.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.s
 .PHONY : utilities/multiThreading.cpp.s
 
+utilities/skybox.o: utilities/skybox.cpp.o
+
+.PHONY : utilities/skybox.o
+
+# target to build an object file
+utilities/skybox.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o
+.PHONY : utilities/skybox.cpp.o
+
+utilities/skybox.i: utilities/skybox.cpp.i
+
+.PHONY : utilities/skybox.i
+
+# target to preprocess a source file
+utilities/skybox.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.i
+.PHONY : utilities/skybox.cpp.i
+
+utilities/skybox.s: utilities/skybox.cpp.s
+
+.PHONY : utilities/skybox.s
+
+# target to generate assembly for a file
+utilities/skybox.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.s
+.PHONY : utilities/skybox.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1234,6 +1261,9 @@ help:
 	@echo "... utilities/multiThreading.o"
 	@echo "... utilities/multiThreading.i"
 	@echo "... utilities/multiThreading.s"
+	@echo "... utilities/skybox.o"
+	@echo "... utilities/skybox.i"
+	@echo "... utilities/skybox.s"
 .PHONY : help
 
 

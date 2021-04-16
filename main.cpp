@@ -85,12 +85,14 @@ int main() {
     // Cull triangles which normal is not towards the camera
     //glEnable(GL_CULL_FACE);
 
+    glm::vec3 lightPosition(-4.0f, 10.0f, 5.0f);
+
     //This is likely not gonna work
     //nvm, it worked
     std::vector<net *> objectList;
-    addCloth(&objectList, 4, 5, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f));
+    addCloth(&objectList, 4, 5, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f), lightPosition);
    // addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
-    addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f));
+    addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f), lightPosition);
 
 
     GLuint VertexArrayID;
@@ -118,7 +120,6 @@ int main() {
 
     //phong lighting system
     GLuint lightSysId = LoadShaders("shaders/shadowVert.vertexshader", "shaders/shadowFrag.fragmentshader");
-    glm::vec3 lightPosition(0.0f, 10.0f, 5.0f);
 
     //glfwSetKeyCallback(window, key_callback);
     std::cout << "about to enter while loop" << std::endl;
@@ -259,7 +260,7 @@ int main() {
 //            }else{
 //                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture3, textureId3, programId);
 //            }
-            objectList[i]->render(ProjectionMatrix, ViewMatrix, triangleProgramID);
+            objectList[i]->render(ProjectionMatrix, ViewMatrix, lightSysId);
             //objectList[i]->getBvh()->render(ProjectionMatrix, ViewMatrix,triangleMatrixID, true);
         }
 

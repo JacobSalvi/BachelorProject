@@ -23,6 +23,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/texture.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/shaders/texture.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/multiThreading.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o"
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/skybox.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

@@ -1,0 +1,32 @@
+#version 330 core
+
+in vec3 v_color;
+in vec3 v_normal;
+
+in vec3 v_lightDirection;
+in vec3 v_view;
+const vec3 lightColor= vec3(1.0, 1.0, 1.0);
+const float ambientCoefficient = 0.01;
+const float diffusionCoefficient = 0.3;
+const float specularCoefficient = 0.4;
+const float gammaValue =2.2;
+const float shininess =10.0;
+
+out vec3 color;
+void main(){
+
+    vec3 normal = normalize(v_normal);
+    vec3 lightDirectionNormalized = normalize(v_lightDirection);
+    vec3 viewNormalized= normalize(v_view);
+
+    vec3 ambient = ambientCoefficient*lightColor;
+    vec3 diffuse = diffusionCoefficient*(max(dot(normal, lightDirectionNormalized),0.0))*lightColor;
+
+    vec3 r = reflect(lightDirectionNormalized, normal);
+    vec3 specular = specularCoefficient*pow(max(dot(viewNormalized,r),0.0), shininess)*lightColor;
+
+    vec3 tmp=ambient+diffuse+specular;
+
+    tmp.rgb=pow(tmp, vec3(1.0/gammaValue));
+    color = v_color*tmp;
+}

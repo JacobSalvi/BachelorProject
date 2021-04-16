@@ -4471,6 +4471,15 @@
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/multiThreading.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/skybox.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/skybox.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/stdbi_image.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

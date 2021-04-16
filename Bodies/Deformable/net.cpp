@@ -1,10 +1,9 @@
 #include "net.h"
-#include "../../BVH/sphereBVH.h"
 #include "../../utilities/helperFunctions.h"
 
 //constructor
-net::net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::vec3 tr) :
-row(row), col(col), gravity(gravity), integrator(integrator){
+net::net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::vec3 tr, glm::vec3 lPos) :
+row(row), col(col), gravity(gravity), integrator(integrator), lightPos(lPos){
     //Eureka, finally I understood, took me only 15 hundred year but I did it in the end
     //number of triangles given by
     //(row-1)*(col-1)*2
@@ -14,6 +13,7 @@ row(row), col(col), gravity(gravity), integrator(integrator){
     int a = (row-1)*(col-1)*18;
     vertexBuffer = new float[a];
     colorBuffer = new float[a];
+    normalBuffer =  new float[a];
 
 
     //adding the vertices to the vertex buffer
@@ -114,7 +114,14 @@ row(row), col(col), gravity(gravity), integrator(integrator){
     net::bvh=new sphereBVH(particles, row);
 
     //normal
-
+    //the cloth are always initially created as vertical planes
+    for(int i=0; i<a;++i){
+        if(i%3==2){
+            normalBuffer[i]=1.0f;
+        }else{
+            normalBuffer[i]=0.0f;
+        }
+    }
 }
 
 //update the particles following the
@@ -262,6 +269,47 @@ void net::updateBuffer() {
             vertexBuffer[pos++]=topRight[2];
         }
     }
+
+    net::updateNormalBuffer();
+}
+
+void net::updateNormalBuffer() {
+    int nVert = (row-1)*(col-1)*6;
+    std::vector<glm::vec3> helper;
+    //initially of 0 vectors
+    for(int i=0; i<nVert;++i){
+        helper.push_back(glm::vec3(0.0f,0.0f, 0.0f));
+    }
+    //update the normal buffer as well
+    for(int i=0; i<row-1;++i){
+        for(int j=0; j<col-1;++j){
+            //the 4 particles
+            glm::vec3 bottomLeft = particles[col*i+j]->getPosition();
+            glm::vec3 bottomRight = particles[col*i+j+1]->getPosition();
+            glm::vec3 topLeft = particles[col*(i+1)+j]->getPosition();
+            glm::vec3 topRight = particles[col*(i+1)+j+1]->getPosition();
+
+            //let's calculate the normal
+            glm::vec3 topNormal = glm::normalize(glm::cross(bottomLeft-topLeft, bottomLeft-topRight));
+            glm::vec3 bottomNormal = glm::normalize(glm::cross(bottomLeft-topRight, bottomLeft-bottomRight));
+
+            //sum to the corresponding vert the computed normal
+            helper[col*i+j]+=topNormal+bottomNormal;
+            helper[col*i+j+1]+=bottomNormal;
+            helper[col*(i+1)+j]+=topNormal;
+            helper[col*(i+1)+j+1]+=topNormal+bottomNormal;
+        }
+    }
+
+    //we need now to normalize the helper
+    int pos = 0;
+    for(int i = 0; i<nVert;++i){
+        glm::vec3 tmp = glm::normalize(helper[i]);
+        //and finally we can update the buffer
+        normalBuffer[pos++]=tmp[0];
+        normalBuffer[pos++]=tmp[1];
+        normalBuffer[pos++]=tmp[2];
+    }
 }
 
 void net::setVertexBuffer(float *vb) {
@@ -350,6 +398,17 @@ void net::reset() {
 
     //reset bvh as well
     getBvh()->update();
+
+    //reset the normal buffer
+    int n = (row-1)*(col-1)*18;
+    for(int i=0; i<n;++i){
+        if(i%3==2){
+            normalBuffer[i]=1.0f;
+        }else{
+            normalBuffer[i]=0.0f;
+        }
+    }
+
 }
 
 void net::setMass(float mass) {
@@ -375,14 +434,20 @@ void net::setModelMatrix(const glm::mat4 &modelMatrix) {
 void net::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programID) {
     //just to be safe
     glUseProgram(programID);
-    // Get a handle for our "MVP" uniform
-    GLuint triangleMatrixID = glGetUniformLocation(programID, "MVP");
 
-    glm::mat4 mvp = ProjectionMatrix * ViewMatrix * getModelMatrix();
+    //Get a handle for all of the uniforms
+    GLuint modelUn = glGetUniformLocation(programID, "modelMatrix");
+    GLuint viewUn = glGetUniformLocation(programID, "viewMatrix");
+    GLuint projectionUn = glGetUniformLocation(programID, "projectionMatrix");
+    GLuint lightUn = glGetUniformLocation(programID, "lightDirection");
+    //set the uniforms
+    glUniformMatrix4fv(modelUn, 1, GL_FALSE, &getModelMatrix()[0][0]);
+    glUniformMatrix4fv(viewUn, 1, GL_FALSE, &ViewMatrix[0][0]);
+    glUniformMatrix4fv(projectionUn, 1, GL_FALSE, &ProjectionMatrix[0][0]);
+    glUniform3f(lightUn, lightPos[0], lightPos[1], lightPos[2]);
 
-    glUniformMatrix4fv(triangleMatrixID, 1, GL_FALSE, &mvp[0][0]);
     glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vertex);
+    glBindBuffer(GL_ARRAY_BUFFER, net::vertex);
     glBufferSubData(GL_ARRAY_BUFFER, 0, getSize(), getVertexBuffer());
     glVertexAttribPointer(
             0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
@@ -394,9 +459,21 @@ void net::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint progra
     );
 
     glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, colour);
+    glBindBuffer(GL_ARRAY_BUFFER, net::colour);
     glVertexAttribPointer(
             1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
+            3,                                // size
+            GL_FLOAT,                         // type
+            GL_FALSE,                         // normalized?
+            0,                                // stride
+            (void *) nullptr                          // array buffer offset
+    );
+
+    //normals
+    glEnableVertexAttribArray(2);
+    glBindBuffer(GL_ARRAY_BUFFER, net::normal);
+    glVertexAttribPointer(
+            2,                                // attribute. No particular reason for 1, but must match the layout in the shader.
             3,                                // size
             GL_FLOAT,                         // type
             GL_FALSE,                         // normalized?
@@ -408,6 +485,7 @@ void net::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint progra
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
 
     //render wireframe only when desired
 #if 0
@@ -459,4 +537,9 @@ void net::setNormal(GLuint newNormal) {
 float *net::getNormalBuffer() const {
     return normalBuffer;
 }
+
+const vec3 &net::getLightPos() const {
+    return lightPos;
+}
+
 

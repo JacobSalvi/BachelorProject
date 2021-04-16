@@ -18,6 +18,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/projectPleaseWork.dir/shaders/texture.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o"
+  "CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o"
   "projectPleaseWork"
   "projectPleaseWork.pdb"
 )
