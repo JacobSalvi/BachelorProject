@@ -1,6 +1,6 @@
 
-#ifndef CODE_STDBI_IMAGE_H
-#define CODE_STDBI_IMAGE_H
+#ifndef CODE_STB_IMAGE_H
+#define CODE_STB_IMAGE_H
 /* stb_image - v2.26 - public domain image loader - http://nothings.org/stb
                                   no warranty implied; use at your own risk
 
@@ -7764,4 +7764,4 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ------------------------------------------------------------------------------
 */
 
-#endif //CODE_STDBI_IMAGE_H
+#endif //CODE_STB_IMAGE_H

@@ -161,6 +161,10 @@ public:
 
     void updateNormalBuffer();
 
+    //collision detection
+    //this is gonna be painful
+    void detectCollision(collidable * obj);
+
 };
 
 

@@ -194,8 +194,11 @@ CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o
  ../external/glew-1.13.0/include/GL/glew.h
  ../external/glfw-3.1.2/include/GLFW/glfw3.h
@@ -542,6 +545,10 @@ CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o
  ../external/glm-0.9.7.1/glm/fwd.hpp
  ../external/glm-0.9.7.1/glm/geometric.hpp
  ../external/glm-0.9.7.1/glm/glm.hpp
+ ../external/glm-0.9.7.1/glm/gtc/constants.hpp
+ ../external/glm-0.9.7.1/glm/gtc/constants.inl
+ ../external/glm-0.9.7.1/glm/gtc/matrix_transform.hpp
+ ../external/glm-0.9.7.1/glm/gtc/matrix_transform.inl
  ../external/glm-0.9.7.1/glm/integer.hpp
  ../external/glm-0.9.7.1/glm/mat2x2.hpp
  ../external/glm-0.9.7.1/glm/mat2x3.hpp
@@ -938,7 +945,6 @@ CMakeFiles/projectPleaseWork.dir/main.cpp.o
  ../external/glm-0.9.7.1/glm/vec4.hpp
  ../external/glm-0.9.7.1/glm/vector_relational.hpp
  ../imgui/imgui.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h
@@ -958,6 +964,8 @@ CMakeFiles/projectPleaseWork.dir/main.cpp.o
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/texture.hpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/multiThreading.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/skybox.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/stb_image.h
 CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.o
  ../external/glew-1.13.0/include/GL/glew.h
  ../external/glfw-3.1.2/include/GLFW/glfw3.h
@@ -1330,6 +1338,10 @@ CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o
  ../external/glm-0.9.7.1/glm/fwd.hpp
  ../external/glm-0.9.7.1/glm/geometric.hpp
  ../external/glm-0.9.7.1/glm/glm.hpp
+ ../external/glm-0.9.7.1/glm/gtc/constants.hpp
+ ../external/glm-0.9.7.1/glm/gtc/constants.inl
+ ../external/glm-0.9.7.1/glm/gtc/matrix_transform.hpp
+ ../external/glm-0.9.7.1/glm/gtc/matrix_transform.inl
  ../external/glm-0.9.7.1/glm/integer.hpp
  ../external/glm-0.9.7.1/glm/mat2x2.hpp
  ../external/glm-0.9.7.1/glm/mat2x3.hpp
@@ -1349,4 +1361,4 @@ CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o
  ../external/glm-0.9.7.1/glm/vector_relational.hpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/skybox.cpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/skybox.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/stdbi_image.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/stb_image.h

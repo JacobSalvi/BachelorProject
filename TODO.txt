@@ -1,4 +1,3 @@
-add mouse dragging functionality. Done for solids, doing now for deformable
 add collision
 
 add other deformable simple primitives
@@ -9,7 +8,6 @@ add damping coefficent
 refactor classes hierarchy and files
 
 //quality of life stuff
-add lights, 'cos it is quite ugly like this
 also add a skybox
 
 //tool mesh-> tethraedon TetGen

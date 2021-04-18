@@ -84,7 +84,7 @@ row(row), col(col), gravity(gravity), integrator(integrator), lightPos(lPos){
             //setting up the springs
             //horizontal springs
             float coeff= 40.0f;
-            float damping = .1f;
+            float damping = .95f;
             if(j-1>=0){
                 spring * toAdd = new spring(1.0f, coeff, damping, particles[i*col+j-1],tmp);
                 springs.push_back(toAdd);
@@ -489,8 +489,9 @@ void net::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint progra
 
     //render wireframe only when desired
 #if 0
-    bvh->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, true, getModelMatrix());
+    bvh->render(ProjectionMatrix, ViewMatrix, programID, true, getModelMatrix());
 #endif
+
 }
 
 const glm::mat4 &net::getModelMatrix() const {
@@ -540,6 +541,15 @@ float *net::getNormalBuffer() const {
 
 const vec3 &net::getLightPos() const {
     return lightPos;
+}
+
+void net::detectCollision(collidable * obj) {
+    //collision with sphere
+    //net::bvh->detectCollisionSphere(modelMatrix, obj);
+    //collision with cube
+    //net::bvh->detectCollisionCube(modelMatrix, obj);
+    //collision with plane
+    net::bvh->detectCollisionPlane(modelMatrix, obj);
 }
 
 

@@ -20,6 +20,8 @@ extern bool shouldSimulate;
 extern bool threadShouldLive;
 void timer_start(unsigned int interval,  const std::vector<net *>& list, const std::vector<collidable *> &collList);
 
+void checkCollision();
+
 void dragMouse(mouseIntersectStruct obj);
 void dragMouse(helperStruct obj);
 #endif //CODE_MULTITHREADING_H

@@ -193,8 +193,11 @@ CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o: ../Bodies/Deformable/parti
 CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o: ../Bodies/Deformable/spring.hpp
 CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o: ../Bodies/Solid/collidable.h
 CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o: ../Collidables/Sphere.h
+CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o: ../Collidables/cube.h
 CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o: ../Collidables/mouseIntersectStruct.h
+CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o: ../Collidables/plane.h
 CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o: ../shaders/helperStruct.h
+CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o: ../utilities/helperFunctions.h
 
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o: ../external/glew-1.13.0/include/GL/glew.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o: ../external/glfw-3.1.2/include/GLFW/glfw3.h
@@ -541,6 +544,10 @@ CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o: ../external/glm-
 CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o: ../external/glm-0.9.7.1/glm/fwd.hpp
 CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o: ../external/glm-0.9.7.1/glm/geometric.hpp
 CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o: ../external/glm-0.9.7.1/glm/glm.hpp
+CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o: ../external/glm-0.9.7.1/glm/gtc/constants.hpp
+CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o: ../external/glm-0.9.7.1/glm/gtc/constants.inl
+CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o: ../external/glm-0.9.7.1/glm/gtc/matrix_transform.hpp
+CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o: ../external/glm-0.9.7.1/glm/gtc/matrix_transform.inl
 CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o: ../external/glm-0.9.7.1/glm/integer.hpp
 CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o: ../external/glm-0.9.7.1/glm/mat2x2.hpp
 CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o: ../external/glm-0.9.7.1/glm/mat2x3.hpp
@@ -937,7 +944,6 @@ CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../external/glm-0.9.7.1/glm/vec3.hp
 CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../external/glm-0.9.7.1/glm/vec4.hpp
 CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../external/glm-0.9.7.1/glm/vector_relational.hpp
 CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../imgui/imgui.h
-CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../BVH/BVH.h
 CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../BVH/sphereBVH.h
 CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../Bodies/Deformable/net.h
 CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../Bodies/Deformable/particle.h
@@ -957,6 +963,8 @@ CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../shaders/shader.hpp
 CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../shaders/texture.hpp
 CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../utilities/helperFunctions.h
 CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../utilities/multiThreading.h
+CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../utilities/skybox.h
+CMakeFiles/projectPleaseWork.dir/main.cpp.o: ../utilities/stb_image.h
 
 CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.o: ../external/glew-1.13.0/include/GL/glew.h
 CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.o: ../external/glfw-3.1.2/include/GLFW/glfw3.h
@@ -1329,6 +1337,10 @@ CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../external/glm-0.9.7.1
 CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../external/glm-0.9.7.1/glm/fwd.hpp
 CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../external/glm-0.9.7.1/glm/geometric.hpp
 CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../external/glm-0.9.7.1/glm/glm.hpp
+CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../external/glm-0.9.7.1/glm/gtc/constants.hpp
+CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../external/glm-0.9.7.1/glm/gtc/constants.inl
+CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../external/glm-0.9.7.1/glm/gtc/matrix_transform.hpp
+CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../external/glm-0.9.7.1/glm/gtc/matrix_transform.inl
 CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../external/glm-0.9.7.1/glm/integer.hpp
 CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../external/glm-0.9.7.1/glm/mat2x2.hpp
 CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../external/glm-0.9.7.1/glm/mat2x3.hpp
@@ -1348,5 +1360,5 @@ CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../external/glm-0.9.7.1
 CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../external/glm-0.9.7.1/glm/vector_relational.hpp
 CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../utilities/skybox.cpp
 CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../utilities/skybox.h
-CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../utilities/stdbi_image.h
+CMakeFiles/projectPleaseWork.dir/utilities/skybox.cpp.o: ../utilities/stb_image.h
 

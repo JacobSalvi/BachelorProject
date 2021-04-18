@@ -4477,7 +4477,7 @@
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/skybox.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/stdbi_image.h">
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/stb_image.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/CMakeLists.txt">

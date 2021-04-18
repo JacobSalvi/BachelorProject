@@ -36,7 +36,9 @@ add_executable(projectPleaseWork
         imgui/imgui_draw.cpp imgui/imgui.cpp imgui/imgui_demo.cpp imgui/imgui_impl_glfw_gl3.cpp Bodies/Solid/collidable.cpp
         Bodies/Solid/collidable.h Collidables/Sphere.cpp Collidables/Sphere.h Collidables/cube.cpp Collidables/cube.h
         Collidables/plane.cpp Collidables/plane.h
-        utilities/helperFunctions.cpp shaders/helperStruct.h utilities/helperFunctions.h Collidables/mouseIntersectStruct.h BVH/BVH.cpp BVH/BVH.h BVH/sphereBVH.cpp BVH/sphereBVH.h utilities/multiThreading.h utilities/multiThreading.cpp utilities/skybox.cpp utilities/skybox.h utilities/stdbi_image.h)
+        utilities/helperFunctions.cpp shaders/helperStruct.h utilities/helperFunctions.h Collidables/mouseIntersectStruct.h
+        BVH/BVH.cpp BVH/BVH.h BVH/sphereBVH.cpp BVH/sphereBVH.h utilities/multiThreading.h utilities/multiThreading.cpp
+        utilities/skybox.cpp utilities/skybox.h utilities/stb_image.h)
 
 target_link_libraries(projectPleaseWork
         ${ALL_LIBS}

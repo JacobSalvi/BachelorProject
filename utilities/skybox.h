@@ -2,9 +2,12 @@
 #define CODE_SKYBOX_H
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-#include "stdbi_image.h"
 #include <vector>
 #include <string>
+#include <glm/gtc/matrix_transform.hpp>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 class skybox {
 private:
@@ -20,7 +23,7 @@ public:
     ~skybox();
 
     //unexpectedly the render functions renders stuff
-    void render();
+    void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, glm::vec3 cPos);
 
     //to load the skybox texture
     void loadTexture();

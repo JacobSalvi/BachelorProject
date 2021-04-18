@@ -31,13 +31,20 @@ private:
 public:
     sphereBVH(std::vector<particle *> particles, int row);
 
-    void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, bool wireFrame, glm::mat4 model);
+    void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programId, bool wireFrame, glm::mat4 model);
 
     sphere *getSphereShown() const;
 
     helperStruct rayIntersect(glm::vec3 origin, glm::vec3 direction, glm::mat4 model);
 
     void update();
+
+    void detectCollisionSphere(glm::mat4 outModel, collidable * obj);
+
+    void detectCollisionCube(glm::mat4 outModel, collidable * obj);
+
+    void detectCollisionPlane(glm::mat4 outModel, collidable * obj);
+
 };
 
 

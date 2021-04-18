@@ -59,6 +59,8 @@ public:
 
     void setModel(const glm::mat4 &model);
 
+    void move(glm::vec3 mv);
+
     void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programID, bool wireFrame, glm::mat4 m=glm::mat4(1));
 
     void setGLuint();

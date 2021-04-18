@@ -27,9 +27,14 @@ using namespace glm;
 #include "shaders/helperStruct.h"
 #include "utilities/helperFunctions.h"
 #include "Collidables/mouseIntersectStruct.h"
-#include "BVH/BVH.h"
 
 #include "utilities/multiThreading.h"
+//I have no idea why including this make it compile,
+//I mean it isn't used, Clion even complains about it
+//but without the linker throws a fit
+//whatever hocus pocus it does I don't care as long as it works
+#include "utilities/stb_image.h"
+#include "utilities/skybox.h"
 
 int main() {
     // Initialise GLFW
@@ -90,9 +95,9 @@ int main() {
     //This is likely not gonna work
     //nvm, it worked
     std::vector<net *> objectList;
-    addCloth(&objectList, 4, 5, 0, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(2.0f,0.0f,0.0f), lightPosition);
+    addCloth(&objectList, 4, 5, 1, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), lightPosition);
    // addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
-    addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f), lightPosition);
+    //addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f), lightPosition);
 
 
     GLuint VertexArrayID;
@@ -129,9 +134,9 @@ int main() {
     //plane
     addColl(&collObjects, 2, lightPosition);
     //sphere
-    addColl(&collObjects, 0, lightPosition);
+    //addColl(&collObjects, 0, lightPosition);
     //cube
-    addColl(&collObjects,1, lightPosition);
+    //addColl(&collObjects,1, lightPosition);
     std::cout<<"init successful"<<std::endl;
 
     //gui stuff
@@ -146,8 +151,11 @@ int main() {
     static float gravity = -1.0f;
     static float ks = 40.0f;
 
+    //skybox
+    GLuint skyboxProgramID = LoadShaders("shaders/skybox.vertexshader","shaders/skybox.fragmentshader");
+    skybox * sky = new skybox(skyboxProgramID);
 
-    int idk =0;
+    int sphereMv =4;
     do {
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -261,12 +269,22 @@ int main() {
 //                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture3, textureId3, programId);
 //            }
             objectList[i]->render(ProjectionMatrix, ViewMatrix, lightSysId);
-            //objectList[i]->getBvh()->render(ProjectionMatrix, ViewMatrix,triangleMatrixID, true);
+            //objectList[i]->getBvh()->render(ProjectionMatrix, ViewMatrix, lightSysId, true, glm::mat4(1));
         }
 
         for(auto i : collObjects){
             i->render(ProjectionMatrix, ViewMatrix, lightSysId, false);
         }
+
+//        //collision
+//        for (auto i : objectList) {
+//            for (auto j : collObjects){
+//                i->detectCollisionSphere(j);
+//            }
+//        }
+
+        //sky->render(ProjectionMatrix, ViewMatrix, getCameraPosition());
+
         //gui stuff
         ImGui::Render();
         ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());

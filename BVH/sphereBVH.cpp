@@ -1,10 +1,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "sphereBVH.h"
+#include "../utilities/helperFunctions.h"
 
 
 sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : p(particles) {
-
-
     //needed information
     glm::vec3 p0 = particles[0]->getPosition();
     glm::vec3 direction = particles[particles.size() - 1]->getPosition() - p0;
@@ -26,7 +25,7 @@ sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : p(particles) 
         //I discovered painstakingly that the order of operations matters
         internalSphereModel = glm::translate(internalSphereModel, c);
         internalSphereModel = glm::scale(internalSphereModel, glm::vec3(2.0 * r, 2.0 * r, 2.0 * r));
-        sphereBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(0,0,0));
+        sphereBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(0, 0, 0));
         return;
     }
 
@@ -169,24 +168,24 @@ sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : p(particles) 
     internalSphereModel = glm::translate(internalSphereModel, c);
     internalSphereModel = glm::scale(internalSphereModel, glm::vec3(2.0 * r, 2.0 * r, 2.0 * r));
 
-    sphereBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(0,0,0));
+    sphereBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(-4, 10, 5));
 
 }
 
-void sphereBVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, bool wireFrame,
+void sphereBVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programId, bool wireFrame,
                        glm::mat4 model) {
-    sphereShown->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, true, model);
+    sphereShown->render(ProjectionMatrix, ViewMatrix, programId, wireFrame, model);
     if (child0 != NULL) {
-        child0->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, wireFrame, model);
+        child0->render(ProjectionMatrix, ViewMatrix, programId, wireFrame, model);
     }
     if (child1 != NULL) {
-        child1->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, wireFrame, model);
+        child1->render(ProjectionMatrix, ViewMatrix, programId, wireFrame, model);
     }
     if (child2 != NULL) {
-        child2->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, wireFrame, model);
+        child2->render(ProjectionMatrix, ViewMatrix, programId, wireFrame, model);
     }
     if (child3 != NULL) {
-        child3->render(ProjectionMatrix, ViewMatrix, triangleMatrixID, wireFrame, model);
+        child3->render(ProjectionMatrix, ViewMatrix, programId, wireFrame, model);
     }
 
 }
@@ -321,7 +320,7 @@ void sphereBVH::update() {
     }
 
     //direction of the vector
-    glm::vec3 direction = p2->getPosition()-p1->getPosition();
+    glm::vec3 direction = p2->getPosition() - p1->getPosition();
 
     //new sphere radius
     float r = glm::length(direction);
@@ -339,8 +338,144 @@ void sphereBVH::update() {
     sphereBVH::sphereShown->setModel(internalSphereModel);
 
     //update children
-    if(sphereBVH::child0!=NULL) sphereBVH::child0->update();
-    if(sphereBVH::child1!=NULL) sphereBVH::child1->update();
-    if(sphereBVH::child2!=NULL) sphereBVH::child2->update();
-    if(sphereBVH::child3!=NULL) sphereBVH::child3->update();
+    if (sphereBVH::child0 != NULL) sphereBVH::child0->update();
+    if (sphereBVH::child1 != NULL) sphereBVH::child1->update();
+    if (sphereBVH::child2 != NULL) sphereBVH::child2->update();
+    if (sphereBVH::child3 != NULL) sphereBVH::child3->update();
+}
+
+void sphereBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
+    //the internal model plus our model give us the position of the sphere
+    glm::mat4 internalModel = sphereShown->getModel();
+    glm::mat4 actualModel = outModel * internalModel;
+    //get position and radius of the sphere
+    glm::vec3 s1 = glm::vec3(actualModel[3][0], actualModel[3][1], actualModel[3][2]);
+    float r1 = actualModel[0][0] / 2.0f;
+
+    //position and radius of colliding obj
+    glm::vec3 s2 = glm::vec3(obj->getModel()[3][0], obj->getModel()[3][1], obj->getModel()[3][2]);
+    //printPoint(s2, "???");
+    float r2 = obj->getModel()[0][0] / 2.0f;
+
+    if (glm::length(s1 - s2) <= r1 + r2) {
+        //we are intersecting the BVH, potentially intersecting the cloth
+        //if we are a leaf check if we actually intersect the clot
+        if (child0 == NULL) {
+            //instead of doing some complicated sphere-triangle collision detection
+            //I simply check if one of the particles is inside the sphere
+            for (auto i : p) {
+                //get particles translation
+                glm::vec3 tr = glm::vec3(outModel[3][0], outModel[3][1], outModel[3][2]);
+                if (glm::length(i->getPosition() + tr - s2) <= r2) {
+                    std::cout << "COLLISION" << std::endl;
+                }
+            }
+        } else {
+            //otherwise recursively check the children
+            if (sphereBVH::child0 != NULL) sphereBVH::child0->detectCollisionSphere(outModel, obj);
+            if (sphereBVH::child1 != NULL) sphereBVH::child1->detectCollisionSphere(outModel, obj);
+            if (sphereBVH::child2 != NULL) sphereBVH::child2->detectCollisionSphere(outModel, obj);
+            if (sphereBVH::child3 != NULL) sphereBVH::child3->detectCollisionSphere(outModel, obj);
+        }
+    }
+}
+
+void sphereBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
+    //the internal model plus our model give us the position of the sphere
+    glm::mat4 internalModel = sphereShown->getModel();
+    glm::mat4 actualModel = outModel * internalModel;
+    //get position and radius of the sphere
+    glm::vec3 s = glm::vec3(actualModel[3][0], actualModel[3][1], actualModel[3][2]);
+    float r = actualModel[0][0] / 2.0f;
+
+    //position and radius of colliding obj
+    glm::vec3 s2 = glm::vec3(obj->getModel()[3][0], obj->getModel()[3][1], obj->getModel()[3][2]);
+
+    float distSquared = r * r;
+    glm::vec3 C1(-0.5, -0.5, -0.5);
+    glm::vec3 C2(0.5, 0.5, 0.5);
+    C1 = glm::vec3(obj->getModel() * (glm::vec4(C1, 1.0)));
+    C2 = glm::vec3(obj->getModel() * (glm::vec4(C2, 1.0)));
+    if (s.x < C1.x) {
+        distSquared -= (s.x - C1.x) * (s.x - C1.x);
+    } else if (s.x > C2.x) {
+        distSquared -= (s.x - C2.x) * (s.x - C2.x);
+    }
+    if (s.y < C1.y) {
+        distSquared -= (s.y - C1.y) * (s.y - C1.y);
+    } else if (s.y > C2.y) {
+        distSquared -= (s.y - C2.y) * (s.y - C2.y);
+    }
+    if (s.z < C1.z) {
+        distSquared -= (s.z - C1.z) * (s.z - C1.z);
+    } else if (s.z > C2.z) {
+        distSquared -= (s.z - C2.z) * (s.z - C2.z);
+    }
+
+    if (distSquared > 0) {
+        //cube intersect sphere
+        if (child0 == NULL) {
+            //check if any particle is inside the cube
+            glm::vec3 tr = glm::vec3(outModel[3][0], outModel[3][1], outModel[3][2]);
+            for (auto i : p) {
+                glm::vec3 pos = i->getPosition() + tr;
+                if (C1.x <= pos.x && pos.x <= C2.x && C1.y <= pos.y && pos.y <= C2.y && C1.z <= pos.z &&
+                    pos.z <= C2.z) {
+                    std::cout << "COLLISION" << std::endl;
+                }
+            }
+
+        } else {
+            if (sphereBVH::child0 != NULL) sphereBVH::child0->detectCollisionCube(outModel, obj);
+            if (sphereBVH::child1 != NULL) sphereBVH::child1->detectCollisionCube(outModel, obj);
+            if (sphereBVH::child2 != NULL) sphereBVH::child2->detectCollisionCube(outModel, obj);
+            if (sphereBVH::child3 != NULL) sphereBVH::child3->detectCollisionCube(outModel, obj);
+        }
+    }
+}
+
+//with this one I am gonna cheat a lot
+//since it would be difficult to check the collision between a plane
+//that has no height, for the sake of the collision detection
+//I am gonna give it an artificial height
+//so basically it is the same as a cube/box
+void sphereBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
+    //the internal model plus our model give us the position of the sphere
+    glm::mat4 internalModel = sphereShown->getModel();
+    glm::mat4 actualModel = outModel * internalModel;
+    //get position and radius of the sphere
+    glm::vec3 s = glm::vec3(actualModel[3][0], actualModel[3][1], actualModel[3][2]);
+    float r = actualModel[0][0] / 2.0f;
+
+    float spherePlaneDistance = 0.0f;
+    float width = obj->getVertexBuffer()[6];
+    float depth = obj->getVertexBuffer()[8];
+    glm::vec3 C1(-width, 0.0, -depth);
+    glm::vec3 C2(width, 0.0, depth);
+    C1 = glm::vec3(obj->getModel() * (glm::vec4(C1, 1.0)));
+    C1.y-=1.0;
+    C2 = glm::vec3(obj->getModel() * (glm::vec4(C2, 1.0)));
+
+    spherePlaneDistance = glm::dot((s-C2), glm::vec3(0.0,1.0,0.0));
+
+    if (-r<spherePlaneDistance && spherePlaneDistance<r) {
+        //cube intersect sphere
+        if (child0 == NULL) {
+            //check if any particle is inside the plane
+            glm::vec3 tr = glm::vec3(outModel[3][0], outModel[3][1], outModel[3][2]);
+            for (auto i : p) {
+                glm::vec3 pos = i->getPosition() + tr;
+                if (C1.x <= pos.x && pos.x <= C2.x && C1.y <= pos.y && pos.y <= C2.y && C1.z <= pos.z &&
+                    pos.z <= C2.z) {
+                    std::cout << "COLLISION" << std::endl;
+                }
+            }
+
+        } else {
+            if (sphereBVH::child0 != NULL) sphereBVH::child0->detectCollisionPlane(outModel, obj);
+            if (sphereBVH::child1 != NULL) sphereBVH::child1->detectCollisionPlane(outModel, obj);
+            if (sphereBVH::child2 != NULL) sphereBVH::child2->detectCollisionPlane(outModel, obj);
+            if (sphereBVH::child3 != NULL) sphereBVH::child3->detectCollisionPlane(outModel, obj);
+        }
+    }
 }

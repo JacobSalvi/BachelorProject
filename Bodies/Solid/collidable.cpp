@@ -1,5 +1,5 @@
+#include <glm/gtc/matrix_transform.hpp>
 #include "collidable.h"
-#include <iostream>
 
 collidable::collidable(glm::vec3 colour, glm::mat4 model, glm::vec3 lPos) : colour(colour), model(model), lightPos(lPos){
 }
@@ -147,7 +147,17 @@ void collidable::setGLuint() {
     glBindBuffer(GL_ARRAY_BUFFER, c);
     glBufferData(GL_ARRAY_BUFFER, getSize(), getColorBuffer(), GL_STATIC_DRAW);
 
+    GLuint n;
+    glGenBuffers(1, &n);
+    glBindBuffer(GL_ARRAY_BUFFER, n);
+    glBufferData(GL_ARRAY_BUFFER, getSize(), getNormalBuffer(), GL_STATIC_DRAW);
+
     setCollVertex(v);
     setCollColour(c);
+    setCollNormal(n);
+}
+
+void collidable::move(glm::vec3 mv) {
+    model = glm::translate(model, mv);
 }
 
