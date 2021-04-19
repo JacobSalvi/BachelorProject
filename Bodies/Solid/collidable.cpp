@@ -85,7 +85,7 @@ void collidable::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint
     GLuint projectionUn = glGetUniformLocation(programID, "projectionMatrix");
     GLuint lightUn = glGetUniformLocation(programID, "lightDirection");
     //set the uniforms
-    glUniformMatrix4fv(modelUn, 1, GL_FALSE, &getModel()[0][0]);
+    glUniformMatrix4fv(modelUn, 1, GL_FALSE, &tmp[0][0]);
     glUniformMatrix4fv(viewUn, 1, GL_FALSE, &ViewMatrix[0][0]);
     glUniformMatrix4fv(projectionUn, 1, GL_FALSE, &ProjectionMatrix[0][0]);
     glUniform3f(lightUn, lightPos[0], lightPos[1], lightPos[2]);
@@ -159,5 +159,9 @@ void collidable::setGLuint() {
 
 void collidable::move(glm::vec3 mv) {
     model = glm::translate(model, mv);
+}
+
+int collidable::returnType() {
+    return -1;
 }
 

@@ -232,3 +232,7 @@ mouseIntersectStruct cube::isHovered(glm::vec3 origin, glm::vec3 direction) {
         return toReturn;
     }
 }
+
+int cube::returnType() {
+    return 1;
+}

@@ -17,17 +17,18 @@ void timer_start(unsigned int interval, const std::vector<net *> &list, const st
             for (auto i : list) {
                 i->integrate((float) (interval) / 1000.0f);
             }
-            for (auto i : list) {
-                for (auto j :collList){
-                    i->detectCollision(j);
-                }
-            }
+
             counter++;
 
             //every 15 millisecond rebuild the bvh
             if (counter % 8 == 0) {
                 for (auto i:list) {
                     i->getBvh()->update();
+                }
+                for (auto i : list) {
+                    for (auto j :collList){
+                        i->detectCollision(j);
+                    }
                 }
             }
 

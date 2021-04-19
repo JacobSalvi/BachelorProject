@@ -160,3 +160,7 @@ mouseIntersectStruct sphere::isHovered(glm::vec3 origin, glm::vec3 direction) {
     }
 }
 
+int sphere::returnType() {
+    return 0;
+}
+

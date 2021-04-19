@@ -2,8 +2,8 @@
 #include "../../utilities/helperFunctions.h"
 
 //constructor
-net::net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::vec3 tr, glm::vec3 lPos) :
-row(row), col(col), gravity(gravity), integrator(integrator), lightPos(lPos){
+net::net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::mat4 mod, glm::vec3 lPos) :
+row(row), col(col), gravity(gravity), integrator(integrator), lightPos(lPos), modelMatrix(mod){
     //Eureka, finally I understood, took me only 15 hundred year but I did it in the end
     //number of triangles given by
     //(row-1)*(col-1)*2
@@ -106,9 +106,9 @@ row(row), col(col), gravity(gravity), integrator(integrator), lightPos(lPos){
             }
         }
     }
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, tr);
-    net::modelMatrix=model;
+//    glm::mat4 model = glm::mat4(1.0f);
+//    model = glm::translate(model, tr);
+//    net::modelMatrix=model;
 
     //bounding volume hierarchy
     net::bvh=new sphereBVH(particles, row);
@@ -140,8 +140,13 @@ void net::explicitEuler(float timeDelta) {
         springs[i]->updateParticlesForce();
     }
 
-    //there is no collision yet
-    //can't add force due to collision
+    //there is collision now
+    //must add collision force
+    for(int i=0; i<particles.size();++i){
+        particles[i]->addForce(particles[i]->getCollisionForce());
+        //once we added it we can reset it to 0
+        particles[i]->resetCollisionForce();
+    }
 
     //update velocity
     for(int i=0; i<particles.size();++i){
@@ -190,12 +195,14 @@ void net::rungeKutta(float timeDelta){
     }
 
     for(int i=0; i<particles.size();++i){
+        particles[i]->addForce(particles[i]->getCollisionForce());
         a2.push_back(particles[i]->getForce()/particles[i]->getMass());
     }
 
     //second evaluation of the forces
     for(int i =0;i< particles.size();++i){
-        particles[i]->setForce(net::wind+glm::vec3(0.0f,net::gravity, 0.0f));
+        particles[i]->setForce(net::wind+glm::vec3(0.0f,net::gravity, 0.0f)+particles[i]->getCollisionForce());
+        particles[i]->resetCollisionForce();
     }
 
     for(int i=0; i<springs.size(); ++i){
@@ -544,12 +551,23 @@ const vec3 &net::getLightPos() const {
 }
 
 void net::detectCollision(collidable * obj) {
-    //collision with sphere
-    //net::bvh->detectCollisionSphere(modelMatrix, obj);
-    //collision with cube
-    //net::bvh->detectCollisionCube(modelMatrix, obj);
-    //collision with plane
-    net::bvh->detectCollisionPlane(modelMatrix, obj);
+    switch(obj->returnType()){
+        case 0:
+            //collision with sphere
+            net::bvh->detectCollisionSphere(modelMatrix, obj);
+            break;
+        case 1:
+            //collision with cube
+            net::bvh->detectCollisionCube(modelMatrix, obj);
+            break;
+        case 2:
+            //collision with plane
+            net::bvh->detectCollisionPlane(modelMatrix, obj);
+            break;
+        default:
+            std::cout<<"something went wrong"<<std::endl;
+            break;
+    }
 }
 
 

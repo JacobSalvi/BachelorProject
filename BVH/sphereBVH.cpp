@@ -365,9 +365,21 @@ void sphereBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
             //I simply check if one of the particles is inside the sphere
             for (auto i : p) {
                 //get particles translation
-                glm::vec3 tr = glm::vec3(outModel[3][0], outModel[3][1], outModel[3][2]);
-                if (glm::length(i->getPosition() + tr - s2) <= r2) {
-                    std::cout << "COLLISION" << std::endl;
+                glm::vec3 tr = outModel[0][0]*glm::vec3(outModel[3][0], outModel[3][1], outModel[3][2]);
+                glm::vec3 idk = glm::vec3(outModel*glm::vec4(i->getPosition(),1));
+                if (glm::length(idk - s2) <= r2) {
+                    //let's find the intersection point
+                    glm::vec3 point = idk;
+                    glm::vec3 direction = glm::normalize(-i->getVelocity());
+                    float a = glm::dot(direction,direction);
+                    float b = 2.0f*glm::dot((s2-point), direction);
+                    float c = glm::dot(s2-point, s2-point)-r2*r2;
+                    float t1 = (-b+sqrt(b*b-4.0f*a*c))*(2.0*a);
+                    glm::vec3 intersectionPoint = point+t1*direction;
+
+                    //let's set the collision force for the particle
+                    //since I have no indication what k should be I will wing it
+                    i->setCollisionForce(3000.0f*(intersectionPoint-point));
                 }
             }
         } else {

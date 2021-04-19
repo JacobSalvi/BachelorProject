@@ -18,6 +18,8 @@ public:
     }
 
     mouseIntersectStruct isHovered(glm::vec3 origin, glm::vec3 direction) override;
+
+    int returnType() override;
 };
 
 

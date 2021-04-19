@@ -17,6 +17,8 @@ private:
 
     //force
     glm::vec3 force = glm::vec3(0.0f,0.0f,0.0f);
+    //collision force
+    glm::vec3 collisionForce =glm::vec3(0.0f, 0.0f,0.0f);
 public:
 
     particle(glm::vec3 pos, float mass);
@@ -25,7 +27,7 @@ public:
         id=i;
     }
 
-    int getId(){
+    int getId() const{
         return id;
     }
 
@@ -55,6 +57,11 @@ public:
 
     void setMass(float mass);
 
+    void setCollisionForce(const glm::vec3 &newForce);
+
+    void resetCollisionForce();
+
+    const glm::vec3 &getCollisionForce() const;
 };
 
 

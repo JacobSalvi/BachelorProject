@@ -95,7 +95,11 @@ int main() {
     //This is likely not gonna work
     //nvm, it worked
     std::vector<net *> objectList;
-    addCloth(&objectList, 4, 5, 1, glm::vec3(1.0f,0.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), lightPosition);
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
+    model = glm::translate(model, glm::vec3(0,0,0));
+
+    addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition);
    // addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
     //addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f), lightPosition);
 
@@ -131,12 +135,12 @@ int main() {
 
     //Collidables
     std::vector<collidable *> collObjects;
-    //plane
-    addColl(&collObjects, 2, lightPosition);
     //sphere
-    //addColl(&collObjects, 0, lightPosition);
+    addColl(&collObjects, 0, lightPosition);
     //cube
     //addColl(&collObjects,1, lightPosition);
+    //plane
+    //addColl(&collObjects, 2, lightPosition);
     std::cout<<"init successful"<<std::endl;
 
     //gui stuff

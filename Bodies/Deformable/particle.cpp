@@ -28,3 +28,15 @@ void particle::setMass(float newMass) {
     particle::mass = newMass;
 }
 
+void particle::setCollisionForce(const glm::vec3 &newForce) {
+    particle::collisionForce = newForce;
+}
+
+void particle::resetCollisionForce() {
+    particle::setCollisionForce(glm::vec3(0,0,0));
+}
+
+const glm::vec3 &particle::getCollisionForce() const {
+    return collisionForce;
+}
+

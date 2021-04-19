@@ -106,8 +106,8 @@ void drawCulture(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint Matrix
 }
 #endif
 
-void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colour, glm::vec3 tr, glm::vec3 lPos){
-    net * clothNew = new net(1.0f, col, row, in, colour, -1.0f, tr, lPos);
+void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colour, glm::mat4 mod, glm::vec3 lPos){
+    net * clothNew = new net(1.0f, col, row, in, colour, -1.0f, mod, lPos);
     GLuint netVertex;
     glGenBuffers(1, &netVertex);
     glBindBuffer(GL_ARRAY_BUFFER, netVertex);

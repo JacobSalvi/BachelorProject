@@ -65,6 +65,8 @@ public:
 
     void setGLuint();
 
+    virtual int returnType();
+
 };
 
 

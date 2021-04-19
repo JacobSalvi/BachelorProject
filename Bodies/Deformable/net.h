@@ -69,7 +69,7 @@ public:
     //-equidistant
     //-vertical and horizontal springs have the same properties
     //-diagonal springs have the same properties
-    net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::vec3 tr, glm::vec3 lPos);
+    net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::mat4 mod, glm::vec3 lPos);
 
     void setWind(const glm::vec3 &newWind);
     void addWind(const glm::vec3 &windToAdd);
