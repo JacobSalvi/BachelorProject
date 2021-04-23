@@ -3,7 +3,7 @@
 
 //constructor
 net::net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::mat4 mod, glm::vec3 lPos) :
-row(row), col(col), gravity(gravity), integrator(integrator), lightPos(lPos), modelMatrix(mod){
+deformableObjects(gravity, mod, lPos), row(row), col(col), integrator(integrator){
     //Eureka, finally I understood, took me only 15 hundred year but I did it in the end
     //number of triangles given by
     //(row-1)*(col-1)*2
@@ -122,6 +122,9 @@ row(row), col(col), gravity(gravity), integrator(integrator), lightPos(lPos), mo
             normalBuffer[i]=0.0f;
         }
     }
+
+    //GLuint
+    setGLuint();
 }
 
 //update the particles following the
@@ -323,22 +326,9 @@ void net::setVertexBuffer(float *vb) {
     net::vertexBuffer = vb;
 }
 
-float *net::getVertexBuffer(){
-    return vertexBuffer;
-}
-
-float *net::getColorBuffer() {
-    return colorBuffer;
-}
-
-
 //destructor
 net::~net() {
     std::cout<<"cloth destroyed"<<std::endl;
-}
-
-void net::setWind(const glm::vec3 &newWind) {
-    net::wind = newWind;
 }
 
 void net::addWind(const glm::vec3 &windToAdd) {
@@ -418,107 +408,23 @@ void net::reset() {
 
 }
 
-void net::setMass(float mass) {
-    for(auto i:net::particles){
-        i->setMass(mass);
-    }
-}
-
-void net::setGravity(const float newGravity) {
-    net::gravity=newGravity;
-}
-
-void net::setStiffness(float stiffness) {
-    for(auto i : net::springs){
-        i->setKs(stiffness);
-    }
-}
-
 void net::setModelMatrix(const glm::mat4 &modelMatrix) {
     net::modelMatrix = modelMatrix;
 }
 
 void net::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programID) {
-    //just to be safe
-    glUseProgram(programID);
-
-    //Get a handle for all of the uniforms
-    GLuint modelUn = glGetUniformLocation(programID, "modelMatrix");
-    GLuint viewUn = glGetUniformLocation(programID, "viewMatrix");
-    GLuint projectionUn = glGetUniformLocation(programID, "projectionMatrix");
-    GLuint lightUn = glGetUniformLocation(programID, "lightDirection");
-    //set the uniforms
-    glUniformMatrix4fv(modelUn, 1, GL_FALSE, &getModelMatrix()[0][0]);
-    glUniformMatrix4fv(viewUn, 1, GL_FALSE, &ViewMatrix[0][0]);
-    glUniformMatrix4fv(projectionUn, 1, GL_FALSE, &ProjectionMatrix[0][0]);
-    glUniform3f(lightUn, lightPos[0], lightPos[1], lightPos[2]);
-
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, net::vertex);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, getSize(), getVertexBuffer());
-    glVertexAttribPointer(
-            0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void *) nullptr            // array buffer offset
-    );
-
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, net::colour);
-    glVertexAttribPointer(
-            1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-            3,                                // size
-            GL_FLOAT,                         // type
-            GL_FALSE,                         // normalized?
-            0,                                // stride
-            (void *) nullptr                          // array buffer offset
-    );
-
-    //normals
-    glEnableVertexAttribArray(2);
-    glBindBuffer(GL_ARRAY_BUFFER, net::normal);
-    glVertexAttribPointer(
-            2,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-            3,                                // size
-            GL_FLOAT,                         // type
-            GL_FALSE,                         // normalized?
-            0,                                // stride
-            (void *) nullptr                          // array buffer offset
-    );
-
-    glDrawArrays(GL_TRIANGLES, 0, getNumberOfVertices());
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(2);
-
-    //render wireframe only when desired
+    deformableObjects::render(ProjectionMatrix, ViewMatrix, programID);
 #if 0
     bvh->render(ProjectionMatrix, ViewMatrix, programID, true, getModelMatrix());
 #endif
-
-}
-
-const glm::mat4 &net::getModelMatrix() const {
-    return modelMatrix;
 }
 
 GLuint net::getVertex() const {
     return vertex;
 }
 
-void net::setVertex(GLuint newVert) {
-    net::vertex = newVert;
-}
-
 GLuint net::getColour() const {
     return colour;
-}
-
-void net::setColour(GLuint newColour) {
-    net::colour = newColour;
 }
 
 sphereBVH *net::getBvh() const {
@@ -528,22 +434,6 @@ sphereBVH *net::getBvh() const {
 helperStruct net::isHovered(glm::vec3 origin, glm::vec3 direction) {
     helperStruct toReturn = net::bvh->rayIntersect(origin, direction, modelMatrix);
     return toReturn;
-}
-
-void net::emptySpecialParticles() {
-    net::specialParticles.clear();
-}
-
-void net::setSpecial(particle *p) {
-    net::specialParticles.push_back(p);
-}
-
-void net::setNormal(GLuint newNormal) {
-    net::normal = newNormal;
-}
-
-float *net::getNormalBuffer() const {
-    return normalBuffer;
 }
 
 const vec3 &net::getLightPos() const {
@@ -570,4 +460,32 @@ void net::detectCollision(collidable * obj) {
     }
 }
 
+void net::setGLuint() {
+    GLuint netVertex;
+    glGenBuffers(1, &netVertex);
+    glBindBuffer(GL_ARRAY_BUFFER, netVertex);
+    glBufferData(GL_ARRAY_BUFFER, net::getSize(), net::getVertexBuffer(), GL_DYNAMIC_DRAW);
 
+    GLuint netColor;
+    glGenBuffers(1, &netColor);
+    glBindBuffer(GL_ARRAY_BUFFER, netColor);
+    glBufferData(GL_ARRAY_BUFFER, net::getSize(), net::getColorBuffer(), GL_STATIC_DRAW);
+
+
+    GLuint netNormal;
+    glGenBuffers(1, &netNormal);
+    glBindBuffer(GL_ARRAY_BUFFER, netNormal);
+    glBufferData(GL_ARRAY_BUFFER, net::getSize(), net::getNormalBuffer(), GL_STATIC_DRAW);
+
+    net::setVertex(netVertex);
+    net::setColour(netColor);
+    net::setNormal(netNormal);
+}
+
+int net::getSize() {
+    return sizeof(float)*(row-1)*(col-1)*18;
+}
+
+int net::getNumberOfVertices() {
+    return (row-1)*(col-1)*6;
+}

@@ -2,7 +2,7 @@
 #define CODE_CUBE_H
 
 
-#include "../Bodies/Solid/collidable.h"
+#include "collidable.h"
 #include <iostream>
 
 class cube : public collidable {

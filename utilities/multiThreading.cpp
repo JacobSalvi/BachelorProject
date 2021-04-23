@@ -16,7 +16,7 @@ std::thread updateBuffers;
 std::thread dragThread;
 
 
-void timer_start(unsigned int interval, const std::vector<net *> &list, const std::vector<collidable *> &collList) {
+void timer_start(unsigned int interval, const std::vector<deformableObjects *> &list, const std::vector<collidable *> &collList) {
     unsigned int collInterval = 8 * interval;
     //thread that checks collision
     collThread = std::thread([collInterval, list, collList]() {

@@ -379,7 +379,7 @@ void sphereBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
 
                     //let's set the collision force for the particle
                     //since I have no indication what k should be I will wing it
-                    i->setCollisionForce(3000.0f*(intersectionPoint-point));
+                    i->setCollisionForce(4000.0f*(intersectionPoint-point));
                 }
             }
         } else {
@@ -425,7 +425,7 @@ void sphereBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
                     pos.z <= C2.z) {
                     //let's find the intersection point between the velocity of the particle and
                     //the cube
-                    std::cout<<"collision "<<pos.x<<std::endl;
+
                     //front and back faces
                     glm::vec3 cNormal(0,0, 1);
                     glm::vec3 rDir = glm::normalize(-i->getVelocity());

@@ -1,17 +1,15 @@
 
 #ifndef CODE_NET_H
 #define CODE_NET_H
-#include <GL/glew.h>
-#include <glm/glm.hpp>
-#include "particle.h"
-#include "spring.hpp"
+
 #include "../../BVH/sphereBVH.h"
-#include "../../shaders/helperStruct.h"
-#include <vector>
+//#include "../../shaders/helperStruct.h"
+
 #include <glm/gtc/matrix_transform.hpp>
+#include "deformableObjects.h"
 
 class sphereBVH;
-struct helperStruct;
+//struct helperStruct;
 
 //simple object made of particles and spring
 //should be quite similar to a net/cloth
@@ -20,48 +18,22 @@ struct helperStruct;
 // X--X--X
 // | \| \|
 // X--X--X
-class net{
+class net: public deformableObjects{
 private:
     int col;
     int row;
-    //list of particles
-    std::vector<particle* > particles;
-    //list of springs
-    std::vector<spring *> springs;
-
-    //particles that are hung or dragged
-    //should not update their position normally
-    std::vector<particle *> specialParticles;
 
     //buffer needed for OpenGl
     //vertex and color buffers
     //(i-1)*2*(j-1)
-    float * vertexBuffer;
-    float * colorBuffer;
-    float * normalBuffer;
 
     //integrator to use
     //0 explicit euler
     //1 runge kutta
     int integrator;
 
-    //environmental forces, gravity and wind
-    float gravity;
-    glm::vec3 wind;
-
-    //model matrix
-    glm::mat4 modelMatrix;
-
-    //stuff needed for opengl
-    GLuint vertex;
-    GLuint colour;
-    GLuint normal;
-
     //BVH
     sphereBVH * bvh;
-
-    //lightPosition
-    glm::vec3 lightPos;
 
 public:
     //assumption:
@@ -71,10 +43,7 @@ public:
     //-diagonal springs have the same properties
     net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::mat4 mod, glm::vec3 lPos);
 
-    void setWind(const glm::vec3 &newWind);
     void addWind(const glm::vec3 &windToAdd);
-
-    void setGravity(const float newGravity);
 
     //integrators
     void explicitEuler(float timeDelta);
@@ -96,25 +65,15 @@ public:
         }
     }
 
-    float *getVertexBuffer();
-
-    float *getColorBuffer();
-
-    float *getNormalBuffer() const;
-
     virtual ~net();
 
     void setVertexBuffer(float *vertexBuffer);
 
-    int getSize() const{
-        return sizeof(float)*(row-1)*(col-1)*18;
-    }
+    int getSize() override;
 
-    int getNumberOfVertices() const{
-        return (row-1)*(col-1)*18;
-    }
+    int getNumberOfVertices() override;
 
-    void updateBuffer();
+    void updateBuffer() override;
 
     void cleanUp(){
         for(auto & particle : particles){
@@ -125,37 +84,21 @@ public:
         }
     }
 
-    void integrate(float timeDelta){!integrator ? explicitEuler(timeDelta) : rungeKutta(timeDelta);}
+    void integrate(float timeDelta) override{!integrator ? explicitEuler(timeDelta) : rungeKutta(timeDelta);}
 
-    void reset();
-
-    void setMass(float mass);
-
-    void setStiffness(float stiffness);
+    void reset() override;
 
     void setModelMatrix(const glm::mat4 &modelMatrix);
 
-    const glm::mat4 &getModelMatrix() const;
-
     GLuint getVertex() const;
-
-    void setVertex(GLuint newVert);
 
     GLuint getColour() const;
 
-    void setColour(GLuint newColour);
+    void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programID) override;
 
-    void setNormal(GLuint newNormal);
+    sphereBVH *getBvh() const override;
 
-    void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programID);
-
-    sphereBVH *getBvh() const;
-
-    helperStruct isHovered(glm::vec3 origin, glm::vec3 direction);
-
-    void emptySpecialParticles();
-
-    void setSpecial(particle * p);
+    helperStruct isHovered(glm::vec3 origin, glm::vec3 direction) override;
 
     const glm::vec3 &getLightPos() const;
 
@@ -163,7 +106,9 @@ public:
 
     //collision detection
     //this is gonna be painful
-    void detectCollision(collidable * obj);
+    void detectCollision(collidable * obj) override;
+
+    void setGLuint() override;
 
 };
 

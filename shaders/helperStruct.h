@@ -2,13 +2,13 @@
 #define CODE_HELPERSTRUCT_H
 
 #include <GLFW/glfw3.h>
-#include "../Bodies/Deformable/net.h"
+#include "../Bodies/Deformable/deformableObjects.h"
 
-class net;
+class deformableObjects;
 
 struct helperStruct{
     bool isMouseOver;
-    net * obj;
+    deformableObjects * obj;
     particle * point;
 };
 

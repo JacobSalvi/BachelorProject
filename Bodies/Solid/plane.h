@@ -2,7 +2,7 @@
 #define CODE_PLANE_H
 
 
-#include "../Bodies/Solid/collidable.h"
+#include "collidable.h"
 #include <iostream>
 
 class plane : public collidable {

@@ -2056,6 +2056,18 @@
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.cpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>
@@ -2074,31 +2086,31 @@
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.cpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.cpp">
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/cube.cpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h">
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/cube.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.cpp">
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.h">
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/plane.cpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h">
-			<Option target="projectPleaseWork"/>
-		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.cpp">
-			<Option target="projectPleaseWork"/>
-		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.h">
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/plane.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/AntTweakBar-ObjectiveC/LoadOGL.mm">

@@ -26,7 +26,7 @@ using namespace glm;
 
 #include "shaders/helperStruct.h"
 #include "utilities/helperFunctions.h"
-#include "Collidables/mouseIntersectStruct.h"
+#include "Bodies/Solid/mouseIntersectStruct.h"
 
 #include "utilities/multiThreading.h"
 //I have no idea why including this make it compile,
@@ -35,6 +35,7 @@ using namespace glm;
 //whatever hocus pocus it does I don't care as long as it works
 #include "utilities/stb_image.h"
 #include "utilities/skybox.h"
+#include "Bodies/Deformable/deformableSphere.h"
 
 int main() {
     // Initialise GLFW
@@ -94,17 +95,21 @@ int main() {
 
     //This is likely not gonna work
     //nvm, it worked
-    std::vector<net *> objectList;
+    std::vector<deformableObjects *> objectList;
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
     model = glm::translate(model, glm::vec3(0,0,0));
 
-    //4 5
+    //standard: 4 5
     //for the cube using a 40 by 50 grid is better but it burns the cpu
     addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition);
-   // addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
+    //addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), model, lightPosition);
     //addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f), lightPosition);
 
+    //deformable sphere
+    glm::mat4 sMod(1);
+    sMod = glm::translate(sMod, glm::vec3(-3, 0, 0));
+    //addDefSphere(&objectList, glm::vec3(0,1,0), sMod ,lightPosition);
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -138,11 +143,11 @@ int main() {
     //Collidables
     std::vector<collidable *> collObjects;
     //sphere
-    //addColl(&collObjects, 0, lightPosition);
+    addColl(&collObjects, 0, lightPosition);
     //cube
-    addColl(&collObjects,1, lightPosition);
+    //addColl(&collObjects,1, lightPosition);
     //plane
-    //addColl(&collObjects, 2, lightPosition);
+    addColl(&collObjects, 2, lightPosition);
     std::cout<<"init successful"<<std::endl;
 
     //gui stuff
@@ -287,13 +292,6 @@ int main() {
             i->render(ProjectionMatrix, ViewMatrix, lightSysId, false);
         }
 
-//        //collision
-//        for (auto i : objectList) {
-//            for (auto j : collObjects){
-//                i->detectCollisionSphere(j);
-//            }
-//        }
-
         //sky->render(ProjectionMatrix, ViewMatrix, getCameraPosition());
 
         //gui stuff
@@ -303,7 +301,6 @@ int main() {
         // Swap buffers
         glfwSwapBuffers(window);
         glfwPollEvents();
-
     } // Check if the ESC key was pressed or the window was closed
     while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
            glfwWindowShouldClose(window) == 0);

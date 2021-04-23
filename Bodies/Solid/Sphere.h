@@ -3,7 +3,7 @@
 
 
 #include <glm/glm.hpp>
-#include "../Bodies/Solid/collidable.h"
+#include "collidable.h"
 #include <iostream>
 #include <cmath>
 

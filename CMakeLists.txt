@@ -34,11 +34,12 @@ add_executable(projectPleaseWork
         imgui/imgui_internal.h imgui/imgui.h imgui/imconfig.h imgui/imgui_impl_glfw_gl3.h
         imgui/stb_rect_pack.h imgui/stb_textedit.h imgui/stb_truetype.h
         imgui/imgui_draw.cpp imgui/imgui.cpp imgui/imgui_demo.cpp imgui/imgui_impl_glfw_gl3.cpp Bodies/Solid/collidable.cpp
-        Bodies/Solid/collidable.h Collidables/Sphere.cpp Collidables/Sphere.h Collidables/cube.cpp Collidables/cube.h
-        Collidables/plane.cpp Collidables/plane.h
-        utilities/helperFunctions.cpp shaders/helperStruct.h utilities/helperFunctions.h Collidables/mouseIntersectStruct.h
+        Bodies/Solid/collidable.h Bodies/Solid/Sphere.cpp Bodies/Solid/Sphere.h Bodies/Solid/cube.cpp Bodies/Solid/cube.h
+        Bodies/Solid/plane.cpp Bodies/Solid/plane.h
+        utilities/helperFunctions.cpp shaders/helperStruct.h utilities/helperFunctions.h Bodies/Solid/mouseIntersectStruct.h
         BVH/BVH.cpp BVH/BVH.h BVH/sphereBVH.cpp BVH/sphereBVH.h utilities/multiThreading.h utilities/multiThreading.cpp
-        utilities/skybox.cpp utilities/skybox.h utilities/stb_image.h)
+        utilities/skybox.cpp utilities/skybox.h utilities/stb_image.h Bodies/Deformable/deformableSphere.cpp
+        Bodies/Deformable/deformableSphere.h Bodies/Deformable/deformableObjects.cpp Bodies/Deformable/deformableObjects.h)
 
 target_link_libraries(projectPleaseWork
         ${ALL_LIBS}

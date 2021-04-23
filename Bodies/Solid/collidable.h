@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 #include <imgui.h>
-#include "../../Collidables/mouseIntersectStruct.h"
+#include "mouseIntersectStruct.h"
 
 struct mouseIntersectStruct;
 

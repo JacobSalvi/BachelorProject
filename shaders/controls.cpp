@@ -123,11 +123,6 @@ void computeMatricesFromInputs(int * azimuthal, int* polar, float distance){
 
     ProjectionMatrix = glm::perspective(glm::radians(initialFoV), 4.0f / 3.0f, 0.1f, 100.0f);
 }
-//to do various stuff
-void setWind(net * net, float wind[]){
-    //net->addForce(glm::vec3(0.0f,0.0f, -1.0f));
-    net->setWind(glm::vec3(wind[0],wind[1], wind[2]));
-}
 
 //check whether the mouse touches an object
 glm::vec3 getMouseRay(ImVec2 mousePosition){

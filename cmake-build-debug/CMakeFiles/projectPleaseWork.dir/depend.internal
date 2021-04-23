@@ -66,10 +66,6 @@ CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o
  ../external/glm-0.9.7.1/glm/fwd.hpp
  ../external/glm-0.9.7.1/glm/geometric.hpp
  ../external/glm-0.9.7.1/glm/glm.hpp
- ../external/glm-0.9.7.1/glm/gtc/constants.hpp
- ../external/glm-0.9.7.1/glm/gtc/constants.inl
- ../external/glm-0.9.7.1/glm/gtc/matrix_transform.hpp
- ../external/glm-0.9.7.1/glm/gtc/matrix_transform.inl
  ../external/glm-0.9.7.1/glm/integer.hpp
  ../external/glm-0.9.7.1/glm/mat2x2.hpp
  ../external/glm-0.9.7.1/glm/mat2x3.hpp
@@ -92,12 +88,12 @@ CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.cpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
 CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o
  ../external/glew-1.13.0/include/GL/glew.h
@@ -189,16 +185,205 @@ CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o
  ../imgui/imgui.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.cpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/cube.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/plane.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o
+ ../external/glew-1.13.0/include/GL/glew.h
+ ../external/glfw-3.1.2/include/GLFW/glfw3.h
+ ../external/glm-0.9.7.1/glm/common.hpp
+ ../external/glm-0.9.7.1/glm/detail/_fixes.hpp
+ ../external/glm-0.9.7.1/glm/detail/_swizzle.hpp
+ ../external/glm-0.9.7.1/glm/detail/_swizzle_func.hpp
+ ../external/glm-0.9.7.1/glm/detail/_vectorize.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_common.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_common.inl
+ ../external/glm-0.9.7.1/glm/detail/func_exponential.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_exponential.inl
+ ../external/glm-0.9.7.1/glm/detail/func_geometric.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_geometric.inl
+ ../external/glm-0.9.7.1/glm/detail/func_integer.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_integer.inl
+ ../external/glm-0.9.7.1/glm/detail/func_matrix.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_matrix.inl
+ ../external/glm-0.9.7.1/glm/detail/func_packing.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_packing.inl
+ ../external/glm-0.9.7.1/glm/detail/func_trigonometric.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_trigonometric.inl
+ ../external/glm-0.9.7.1/glm/detail/func_vector_relational.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_vector_relational.inl
+ ../external/glm-0.9.7.1/glm/detail/precision.hpp
+ ../external/glm-0.9.7.1/glm/detail/setup.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_float.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_half.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_half.inl
+ ../external/glm-0.9.7.1/glm/detail/type_int.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x2.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x3.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x3.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x4.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x4.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x2.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x3.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x3.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x4.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x4.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x2.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x3.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x3.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x4.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x4.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec1.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec1.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec2.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec3.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec3.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec4.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec4.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec4_avx.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec4_avx2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec4_sse2.inl
+ ../external/glm-0.9.7.1/glm/exponential.hpp
+ ../external/glm-0.9.7.1/glm/fwd.hpp
+ ../external/glm-0.9.7.1/glm/geometric.hpp
+ ../external/glm-0.9.7.1/glm/glm.hpp
+ ../external/glm-0.9.7.1/glm/integer.hpp
+ ../external/glm-0.9.7.1/glm/mat2x2.hpp
+ ../external/glm-0.9.7.1/glm/mat2x3.hpp
+ ../external/glm-0.9.7.1/glm/mat2x4.hpp
+ ../external/glm-0.9.7.1/glm/mat3x2.hpp
+ ../external/glm-0.9.7.1/glm/mat3x3.hpp
+ ../external/glm-0.9.7.1/glm/mat3x4.hpp
+ ../external/glm-0.9.7.1/glm/mat4x2.hpp
+ ../external/glm-0.9.7.1/glm/mat4x3.hpp
+ ../external/glm-0.9.7.1/glm/mat4x4.hpp
+ ../external/glm-0.9.7.1/glm/matrix.hpp
+ ../external/glm-0.9.7.1/glm/packing.hpp
+ ../external/glm-0.9.7.1/glm/trigonometric.hpp
+ ../external/glm-0.9.7.1/glm/vec2.hpp
+ ../external/glm-0.9.7.1/glm/vec3.hpp
+ ../external/glm-0.9.7.1/glm/vec4.hpp
+ ../external/glm-0.9.7.1/glm/vector_relational.hpp
+ ../imgui/imconfig.h
+ ../imgui/imgui.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.cpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableSphere.cpp.o
+ ../external/glew-1.13.0/include/GL/glew.h
+ ../external/glfw-3.1.2/include/GLFW/glfw3.h
+ ../external/glm-0.9.7.1/glm/common.hpp
+ ../external/glm-0.9.7.1/glm/detail/_fixes.hpp
+ ../external/glm-0.9.7.1/glm/detail/_swizzle.hpp
+ ../external/glm-0.9.7.1/glm/detail/_swizzle_func.hpp
+ ../external/glm-0.9.7.1/glm/detail/_vectorize.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_common.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_common.inl
+ ../external/glm-0.9.7.1/glm/detail/func_exponential.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_exponential.inl
+ ../external/glm-0.9.7.1/glm/detail/func_geometric.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_geometric.inl
+ ../external/glm-0.9.7.1/glm/detail/func_integer.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_integer.inl
+ ../external/glm-0.9.7.1/glm/detail/func_matrix.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_matrix.inl
+ ../external/glm-0.9.7.1/glm/detail/func_packing.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_packing.inl
+ ../external/glm-0.9.7.1/glm/detail/func_trigonometric.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_trigonometric.inl
+ ../external/glm-0.9.7.1/glm/detail/func_vector_relational.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_vector_relational.inl
+ ../external/glm-0.9.7.1/glm/detail/precision.hpp
+ ../external/glm-0.9.7.1/glm/detail/setup.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_float.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_half.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_half.inl
+ ../external/glm-0.9.7.1/glm/detail/type_int.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x2.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x3.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x3.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x4.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x4.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x2.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x3.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x3.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x4.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x4.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x2.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x3.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x3.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x4.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x4.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec1.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec1.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec2.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec3.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec3.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec4.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec4.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec4_avx.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec4_avx2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec4_sse2.inl
+ ../external/glm-0.9.7.1/glm/exponential.hpp
+ ../external/glm-0.9.7.1/glm/fwd.hpp
+ ../external/glm-0.9.7.1/glm/geometric.hpp
+ ../external/glm-0.9.7.1/glm/glm.hpp
+ ../external/glm-0.9.7.1/glm/integer.hpp
+ ../external/glm-0.9.7.1/glm/mat2x2.hpp
+ ../external/glm-0.9.7.1/glm/mat2x3.hpp
+ ../external/glm-0.9.7.1/glm/mat2x4.hpp
+ ../external/glm-0.9.7.1/glm/mat3x2.hpp
+ ../external/glm-0.9.7.1/glm/mat3x3.hpp
+ ../external/glm-0.9.7.1/glm/mat3x4.hpp
+ ../external/glm-0.9.7.1/glm/mat4x2.hpp
+ ../external/glm-0.9.7.1/glm/mat4x3.hpp
+ ../external/glm-0.9.7.1/glm/mat4x4.hpp
+ ../external/glm-0.9.7.1/glm/matrix.hpp
+ ../external/glm-0.9.7.1/glm/packing.hpp
+ ../external/glm-0.9.7.1/glm/trigonometric.hpp
+ ../external/glm-0.9.7.1/glm/vec2.hpp
+ ../external/glm-0.9.7.1/glm/vec3.hpp
+ ../external/glm-0.9.7.1/glm/vec4.hpp
+ ../external/glm-0.9.7.1/glm/vector_relational.hpp
+ ../imgui/imconfig.h
+ ../imgui/imgui.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.cpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o
  ../external/glew-1.13.0/include/GL/glew.h
  ../external/glfw-3.1.2/include/GLFW/glfw3.h
@@ -288,15 +473,17 @@ CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o
  ../imgui/imconfig.h
  ../imgui/imgui.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.cpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/cube.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/plane.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.o
@@ -470,17 +657,106 @@ CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.o
  ../imgui/imconfig.h
  ../imgui/imgui.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.cpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/cube.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/plane.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Solid/Sphere.cpp.o
+ ../external/glew-1.13.0/include/GL/glew.h
+ ../external/glm-0.9.7.1/glm/common.hpp
+ ../external/glm-0.9.7.1/glm/detail/_fixes.hpp
+ ../external/glm-0.9.7.1/glm/detail/_swizzle.hpp
+ ../external/glm-0.9.7.1/glm/detail/_swizzle_func.hpp
+ ../external/glm-0.9.7.1/glm/detail/_vectorize.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_common.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_common.inl
+ ../external/glm-0.9.7.1/glm/detail/func_exponential.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_exponential.inl
+ ../external/glm-0.9.7.1/glm/detail/func_geometric.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_geometric.inl
+ ../external/glm-0.9.7.1/glm/detail/func_integer.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_integer.inl
+ ../external/glm-0.9.7.1/glm/detail/func_matrix.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_matrix.inl
+ ../external/glm-0.9.7.1/glm/detail/func_packing.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_packing.inl
+ ../external/glm-0.9.7.1/glm/detail/func_trigonometric.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_trigonometric.inl
+ ../external/glm-0.9.7.1/glm/detail/func_vector_relational.hpp
+ ../external/glm-0.9.7.1/glm/detail/func_vector_relational.inl
+ ../external/glm-0.9.7.1/glm/detail/precision.hpp
+ ../external/glm-0.9.7.1/glm/detail/setup.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_float.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_half.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_half.inl
+ ../external/glm-0.9.7.1/glm/detail/type_int.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x2.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x3.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x3.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x4.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat2x4.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x2.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x3.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x3.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x4.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat3x4.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x2.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x3.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x3.inl
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x4.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_mat4x4.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec1.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec1.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec2.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec3.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec3.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec4.hpp
+ ../external/glm-0.9.7.1/glm/detail/type_vec4.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec4_avx.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec4_avx2.inl
+ ../external/glm-0.9.7.1/glm/detail/type_vec4_sse2.inl
+ ../external/glm-0.9.7.1/glm/exponential.hpp
+ ../external/glm-0.9.7.1/glm/fwd.hpp
+ ../external/glm-0.9.7.1/glm/geometric.hpp
+ ../external/glm-0.9.7.1/glm/glm.hpp
+ ../external/glm-0.9.7.1/glm/integer.hpp
+ ../external/glm-0.9.7.1/glm/mat2x2.hpp
+ ../external/glm-0.9.7.1/glm/mat2x3.hpp
+ ../external/glm-0.9.7.1/glm/mat2x4.hpp
+ ../external/glm-0.9.7.1/glm/mat3x2.hpp
+ ../external/glm-0.9.7.1/glm/mat3x3.hpp
+ ../external/glm-0.9.7.1/glm/mat3x4.hpp
+ ../external/glm-0.9.7.1/glm/mat4x2.hpp
+ ../external/glm-0.9.7.1/glm/mat4x3.hpp
+ ../external/glm-0.9.7.1/glm/mat4x4.hpp
+ ../external/glm-0.9.7.1/glm/matrix.hpp
+ ../external/glm-0.9.7.1/glm/packing.hpp
+ ../external/glm-0.9.7.1/glm/trigonometric.hpp
+ ../external/glm-0.9.7.1/glm/vec2.hpp
+ ../external/glm-0.9.7.1/glm/vec3.hpp
+ ../external/glm-0.9.7.1/glm/vec4.hpp
+ ../external/glm-0.9.7.1/glm/vector_relational.hpp
+ ../imgui/imconfig.h
+ ../imgui/imgui.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.cpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o
  ../external/glew-1.13.0/include/GL/glew.h
  ../external/glm-0.9.7.1/glm/common.hpp
@@ -570,8 +846,8 @@ CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.o
  ../imgui/imgui.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.cpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
-CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Solid/cube.cpp.o
  ../external/glew-1.13.0/include/GL/glew.h
  ../external/glm-0.9.7.1/glm/common.hpp
  ../external/glm-0.9.7.1/glm/detail/_fixes.hpp
@@ -655,10 +931,10 @@ CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o
  ../imgui/imconfig.h
  ../imgui/imgui.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.cpp
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
-CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.o
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/cube.cpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/cube.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Solid/plane.cpp.o
  ../external/glew-1.13.0/include/GL/glew.h
  ../external/glm-0.9.7.1/glm/common.hpp
  ../external/glm-0.9.7.1/glm/detail/_fixes.hpp
@@ -742,96 +1018,9 @@ CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.o
  ../imgui/imconfig.h
  ../imgui/imgui.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.cpp
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
-CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.o
- ../external/glew-1.13.0/include/GL/glew.h
- ../external/glm-0.9.7.1/glm/common.hpp
- ../external/glm-0.9.7.1/glm/detail/_fixes.hpp
- ../external/glm-0.9.7.1/glm/detail/_swizzle.hpp
- ../external/glm-0.9.7.1/glm/detail/_swizzle_func.hpp
- ../external/glm-0.9.7.1/glm/detail/_vectorize.hpp
- ../external/glm-0.9.7.1/glm/detail/func_common.hpp
- ../external/glm-0.9.7.1/glm/detail/func_common.inl
- ../external/glm-0.9.7.1/glm/detail/func_exponential.hpp
- ../external/glm-0.9.7.1/glm/detail/func_exponential.inl
- ../external/glm-0.9.7.1/glm/detail/func_geometric.hpp
- ../external/glm-0.9.7.1/glm/detail/func_geometric.inl
- ../external/glm-0.9.7.1/glm/detail/func_integer.hpp
- ../external/glm-0.9.7.1/glm/detail/func_integer.inl
- ../external/glm-0.9.7.1/glm/detail/func_matrix.hpp
- ../external/glm-0.9.7.1/glm/detail/func_matrix.inl
- ../external/glm-0.9.7.1/glm/detail/func_packing.hpp
- ../external/glm-0.9.7.1/glm/detail/func_packing.inl
- ../external/glm-0.9.7.1/glm/detail/func_trigonometric.hpp
- ../external/glm-0.9.7.1/glm/detail/func_trigonometric.inl
- ../external/glm-0.9.7.1/glm/detail/func_vector_relational.hpp
- ../external/glm-0.9.7.1/glm/detail/func_vector_relational.inl
- ../external/glm-0.9.7.1/glm/detail/precision.hpp
- ../external/glm-0.9.7.1/glm/detail/setup.hpp
- ../external/glm-0.9.7.1/glm/detail/type_float.hpp
- ../external/glm-0.9.7.1/glm/detail/type_half.hpp
- ../external/glm-0.9.7.1/glm/detail/type_half.inl
- ../external/glm-0.9.7.1/glm/detail/type_int.hpp
- ../external/glm-0.9.7.1/glm/detail/type_mat.hpp
- ../external/glm-0.9.7.1/glm/detail/type_mat2x2.hpp
- ../external/glm-0.9.7.1/glm/detail/type_mat2x2.inl
- ../external/glm-0.9.7.1/glm/detail/type_mat2x3.hpp
- ../external/glm-0.9.7.1/glm/detail/type_mat2x3.inl
- ../external/glm-0.9.7.1/glm/detail/type_mat2x4.hpp
- ../external/glm-0.9.7.1/glm/detail/type_mat2x4.inl
- ../external/glm-0.9.7.1/glm/detail/type_mat3x2.hpp
- ../external/glm-0.9.7.1/glm/detail/type_mat3x2.inl
- ../external/glm-0.9.7.1/glm/detail/type_mat3x3.hpp
- ../external/glm-0.9.7.1/glm/detail/type_mat3x3.inl
- ../external/glm-0.9.7.1/glm/detail/type_mat3x4.hpp
- ../external/glm-0.9.7.1/glm/detail/type_mat3x4.inl
- ../external/glm-0.9.7.1/glm/detail/type_mat4x2.hpp
- ../external/glm-0.9.7.1/glm/detail/type_mat4x2.inl
- ../external/glm-0.9.7.1/glm/detail/type_mat4x3.hpp
- ../external/glm-0.9.7.1/glm/detail/type_mat4x3.inl
- ../external/glm-0.9.7.1/glm/detail/type_mat4x4.hpp
- ../external/glm-0.9.7.1/glm/detail/type_mat4x4.inl
- ../external/glm-0.9.7.1/glm/detail/type_vec.hpp
- ../external/glm-0.9.7.1/glm/detail/type_vec1.hpp
- ../external/glm-0.9.7.1/glm/detail/type_vec1.inl
- ../external/glm-0.9.7.1/glm/detail/type_vec2.hpp
- ../external/glm-0.9.7.1/glm/detail/type_vec2.inl
- ../external/glm-0.9.7.1/glm/detail/type_vec3.hpp
- ../external/glm-0.9.7.1/glm/detail/type_vec3.inl
- ../external/glm-0.9.7.1/glm/detail/type_vec4.hpp
- ../external/glm-0.9.7.1/glm/detail/type_vec4.inl
- ../external/glm-0.9.7.1/glm/detail/type_vec4_avx.inl
- ../external/glm-0.9.7.1/glm/detail/type_vec4_avx2.inl
- ../external/glm-0.9.7.1/glm/detail/type_vec4_sse2.inl
- ../external/glm-0.9.7.1/glm/exponential.hpp
- ../external/glm-0.9.7.1/glm/fwd.hpp
- ../external/glm-0.9.7.1/glm/geometric.hpp
- ../external/glm-0.9.7.1/glm/glm.hpp
- ../external/glm-0.9.7.1/glm/integer.hpp
- ../external/glm-0.9.7.1/glm/mat2x2.hpp
- ../external/glm-0.9.7.1/glm/mat2x3.hpp
- ../external/glm-0.9.7.1/glm/mat2x4.hpp
- ../external/glm-0.9.7.1/glm/mat3x2.hpp
- ../external/glm-0.9.7.1/glm/mat3x3.hpp
- ../external/glm-0.9.7.1/glm/mat3x4.hpp
- ../external/glm-0.9.7.1/glm/mat4x2.hpp
- ../external/glm-0.9.7.1/glm/mat4x3.hpp
- ../external/glm-0.9.7.1/glm/mat4x4.hpp
- ../external/glm-0.9.7.1/glm/matrix.hpp
- ../external/glm-0.9.7.1/glm/packing.hpp
- ../external/glm-0.9.7.1/glm/trigonometric.hpp
- ../external/glm-0.9.7.1/glm/vec2.hpp
- ../external/glm-0.9.7.1/glm/vec3.hpp
- ../external/glm-0.9.7.1/glm/vec4.hpp
- ../external/glm-0.9.7.1/glm/vector_relational.hpp
- ../imgui/imconfig.h
- ../imgui/imgui.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.cpp
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/plane.cpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/plane.h
 CMakeFiles/projectPleaseWork.dir/imgui/imgui.cpp.o
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imconfig.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imgui.cpp
@@ -946,14 +1135,16 @@ CMakeFiles/projectPleaseWork.dir/main.cpp.o
  ../external/glm-0.9.7.1/glm/vector_relational.hpp
  ../imgui/imgui.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/cube.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/plane.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imconfig.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imgui.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/imgui/imgui_impl_glfw_gl3.h
@@ -1055,12 +1246,13 @@ CMakeFiles/projectPleaseWork.dir/shaders/controls.cpp.o
  ../imgui/imconfig.h
  ../imgui/imgui.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/controls.cpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/controls.hpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
@@ -1161,14 +1353,16 @@ CMakeFiles/projectPleaseWork.dir/utilities/helperFunctions.cpp.o
  ../imgui/imconfig.h
  ../imgui/imgui.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/cube.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/plane.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.cpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.h
@@ -1261,14 +1455,16 @@ CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o
  ../imgui/imconfig.h
  ../imgui/imgui.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/Sphere.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/cube.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/mouseIntersectStruct.h
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Collidables/plane.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/cube.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/plane.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/controls.hpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.h

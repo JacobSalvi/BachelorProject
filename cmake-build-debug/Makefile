@@ -672,6 +672,60 @@ BVH/sphereBVH.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.s
 .PHONY : BVH/sphereBVH.cpp.s
 
+Bodies/Deformable/deformableObjects.o: Bodies/Deformable/deformableObjects.cpp.o
+
+.PHONY : Bodies/Deformable/deformableObjects.o
+
+# target to build an object file
+Bodies/Deformable/deformableObjects.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o
+.PHONY : Bodies/Deformable/deformableObjects.cpp.o
+
+Bodies/Deformable/deformableObjects.i: Bodies/Deformable/deformableObjects.cpp.i
+
+.PHONY : Bodies/Deformable/deformableObjects.i
+
+# target to preprocess a source file
+Bodies/Deformable/deformableObjects.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.i
+.PHONY : Bodies/Deformable/deformableObjects.cpp.i
+
+Bodies/Deformable/deformableObjects.s: Bodies/Deformable/deformableObjects.cpp.s
+
+.PHONY : Bodies/Deformable/deformableObjects.s
+
+# target to generate assembly for a file
+Bodies/Deformable/deformableObjects.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.s
+.PHONY : Bodies/Deformable/deformableObjects.cpp.s
+
+Bodies/Deformable/deformableSphere.o: Bodies/Deformable/deformableSphere.cpp.o
+
+.PHONY : Bodies/Deformable/deformableSphere.o
+
+# target to build an object file
+Bodies/Deformable/deformableSphere.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableSphere.cpp.o
+.PHONY : Bodies/Deformable/deformableSphere.cpp.o
+
+Bodies/Deformable/deformableSphere.i: Bodies/Deformable/deformableSphere.cpp.i
+
+.PHONY : Bodies/Deformable/deformableSphere.i
+
+# target to preprocess a source file
+Bodies/Deformable/deformableSphere.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableSphere.cpp.i
+.PHONY : Bodies/Deformable/deformableSphere.cpp.i
+
+Bodies/Deformable/deformableSphere.s: Bodies/Deformable/deformableSphere.cpp.s
+
+.PHONY : Bodies/Deformable/deformableSphere.s
+
+# target to generate assembly for a file
+Bodies/Deformable/deformableSphere.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableSphere.cpp.s
+.PHONY : Bodies/Deformable/deformableSphere.cpp.s
+
 Bodies/Deformable/net.o: Bodies/Deformable/net.cpp.o
 
 .PHONY : Bodies/Deformable/net.o
@@ -753,6 +807,33 @@ Bodies/Deformable/spring.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.s
 .PHONY : Bodies/Deformable/spring.cpp.s
 
+Bodies/Solid/Sphere.o: Bodies/Solid/Sphere.cpp.o
+
+.PHONY : Bodies/Solid/Sphere.o
+
+# target to build an object file
+Bodies/Solid/Sphere.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Solid/Sphere.cpp.o
+.PHONY : Bodies/Solid/Sphere.cpp.o
+
+Bodies/Solid/Sphere.i: Bodies/Solid/Sphere.cpp.i
+
+.PHONY : Bodies/Solid/Sphere.i
+
+# target to preprocess a source file
+Bodies/Solid/Sphere.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Solid/Sphere.cpp.i
+.PHONY : Bodies/Solid/Sphere.cpp.i
+
+Bodies/Solid/Sphere.s: Bodies/Solid/Sphere.cpp.s
+
+.PHONY : Bodies/Solid/Sphere.s
+
+# target to generate assembly for a file
+Bodies/Solid/Sphere.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Solid/Sphere.cpp.s
+.PHONY : Bodies/Solid/Sphere.cpp.s
+
 Bodies/Solid/collidable.o: Bodies/Solid/collidable.cpp.o
 
 .PHONY : Bodies/Solid/collidable.o
@@ -780,86 +861,59 @@ Bodies/Solid/collidable.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Solid/collidable.cpp.s
 .PHONY : Bodies/Solid/collidable.cpp.s
 
-Collidables/Sphere.o: Collidables/Sphere.cpp.o
+Bodies/Solid/cube.o: Bodies/Solid/cube.cpp.o
 
-.PHONY : Collidables/Sphere.o
-
-# target to build an object file
-Collidables/Sphere.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.o
-.PHONY : Collidables/Sphere.cpp.o
-
-Collidables/Sphere.i: Collidables/Sphere.cpp.i
-
-.PHONY : Collidables/Sphere.i
-
-# target to preprocess a source file
-Collidables/Sphere.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.i
-.PHONY : Collidables/Sphere.cpp.i
-
-Collidables/Sphere.s: Collidables/Sphere.cpp.s
-
-.PHONY : Collidables/Sphere.s
-
-# target to generate assembly for a file
-Collidables/Sphere.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/Sphere.cpp.s
-.PHONY : Collidables/Sphere.cpp.s
-
-Collidables/cube.o: Collidables/cube.cpp.o
-
-.PHONY : Collidables/cube.o
+.PHONY : Bodies/Solid/cube.o
 
 # target to build an object file
-Collidables/cube.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.o
-.PHONY : Collidables/cube.cpp.o
+Bodies/Solid/cube.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Solid/cube.cpp.o
+.PHONY : Bodies/Solid/cube.cpp.o
 
-Collidables/cube.i: Collidables/cube.cpp.i
+Bodies/Solid/cube.i: Bodies/Solid/cube.cpp.i
 
-.PHONY : Collidables/cube.i
+.PHONY : Bodies/Solid/cube.i
 
 # target to preprocess a source file
-Collidables/cube.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.i
-.PHONY : Collidables/cube.cpp.i
+Bodies/Solid/cube.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Solid/cube.cpp.i
+.PHONY : Bodies/Solid/cube.cpp.i
 
-Collidables/cube.s: Collidables/cube.cpp.s
+Bodies/Solid/cube.s: Bodies/Solid/cube.cpp.s
 
-.PHONY : Collidables/cube.s
+.PHONY : Bodies/Solid/cube.s
 
 # target to generate assembly for a file
-Collidables/cube.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/cube.cpp.s
-.PHONY : Collidables/cube.cpp.s
+Bodies/Solid/cube.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Solid/cube.cpp.s
+.PHONY : Bodies/Solid/cube.cpp.s
 
-Collidables/plane.o: Collidables/plane.cpp.o
+Bodies/Solid/plane.o: Bodies/Solid/plane.cpp.o
 
-.PHONY : Collidables/plane.o
+.PHONY : Bodies/Solid/plane.o
 
 # target to build an object file
-Collidables/plane.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.o
-.PHONY : Collidables/plane.cpp.o
+Bodies/Solid/plane.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Solid/plane.cpp.o
+.PHONY : Bodies/Solid/plane.cpp.o
 
-Collidables/plane.i: Collidables/plane.cpp.i
+Bodies/Solid/plane.i: Bodies/Solid/plane.cpp.i
 
-.PHONY : Collidables/plane.i
+.PHONY : Bodies/Solid/plane.i
 
 # target to preprocess a source file
-Collidables/plane.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.i
-.PHONY : Collidables/plane.cpp.i
+Bodies/Solid/plane.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Solid/plane.cpp.i
+.PHONY : Bodies/Solid/plane.cpp.i
 
-Collidables/plane.s: Collidables/plane.cpp.s
+Bodies/Solid/plane.s: Bodies/Solid/plane.cpp.s
 
-.PHONY : Collidables/plane.s
+.PHONY : Bodies/Solid/plane.s
 
 # target to generate assembly for a file
-Collidables/plane.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Collidables/plane.cpp.s
-.PHONY : Collidables/plane.cpp.s
+Bodies/Solid/plane.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Solid/plane.cpp.s
+.PHONY : Bodies/Solid/plane.cpp.s
 
 imgui/imgui.o: imgui/imgui.cpp.o
 
@@ -1210,6 +1264,12 @@ help:
 	@echo "... BVH/sphereBVH.o"
 	@echo "... BVH/sphereBVH.i"
 	@echo "... BVH/sphereBVH.s"
+	@echo "... Bodies/Deformable/deformableObjects.o"
+	@echo "... Bodies/Deformable/deformableObjects.i"
+	@echo "... Bodies/Deformable/deformableObjects.s"
+	@echo "... Bodies/Deformable/deformableSphere.o"
+	@echo "... Bodies/Deformable/deformableSphere.i"
+	@echo "... Bodies/Deformable/deformableSphere.s"
 	@echo "... Bodies/Deformable/net.o"
 	@echo "... Bodies/Deformable/net.i"
 	@echo "... Bodies/Deformable/net.s"
@@ -1219,18 +1279,18 @@ help:
 	@echo "... Bodies/Deformable/spring.o"
 	@echo "... Bodies/Deformable/spring.i"
 	@echo "... Bodies/Deformable/spring.s"
+	@echo "... Bodies/Solid/Sphere.o"
+	@echo "... Bodies/Solid/Sphere.i"
+	@echo "... Bodies/Solid/Sphere.s"
 	@echo "... Bodies/Solid/collidable.o"
 	@echo "... Bodies/Solid/collidable.i"
 	@echo "... Bodies/Solid/collidable.s"
-	@echo "... Collidables/Sphere.o"
-	@echo "... Collidables/Sphere.i"
-	@echo "... Collidables/Sphere.s"
-	@echo "... Collidables/cube.o"
-	@echo "... Collidables/cube.i"
-	@echo "... Collidables/cube.s"
-	@echo "... Collidables/plane.o"
-	@echo "... Collidables/plane.i"
-	@echo "... Collidables/plane.s"
+	@echo "... Bodies/Solid/cube.o"
+	@echo "... Bodies/Solid/cube.i"
+	@echo "... Bodies/Solid/cube.s"
+	@echo "... Bodies/Solid/plane.o"
+	@echo "... Bodies/Solid/plane.i"
+	@echo "... Bodies/Solid/plane.s"
 	@echo "... imgui/imgui.o"
 	@echo "... imgui/imgui.i"
 	@echo "... imgui/imgui.s"

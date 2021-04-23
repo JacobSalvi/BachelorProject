@@ -15,8 +15,6 @@ glm::mat4 getViewMatrix();
 glm::mat4 getProjectionMatrix();
 glm::vec3 getCameraPosition();
 
-void setWind(net * net, float wind[]);
-
 glm::vec3 getMouseRay(ImVec2 mousePosition);
 
 #endif

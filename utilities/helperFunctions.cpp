@@ -106,30 +106,14 @@ void drawCulture(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint Matrix
 }
 #endif
 
-void addCloth(std::vector<net *> *list, int col, int row, int in, glm::vec3 colour, glm::mat4 mod, glm::vec3 lPos){
+void addCloth(std::vector<deformableObjects *> *list, int col, int row, int in, glm::vec3 colour, glm::mat4 mod, glm::vec3 lPos){
     net * clothNew = new net(1.0f, col, row, in, colour, -1.0f, mod, lPos);
-    GLuint netVertex;
-    glGenBuffers(1, &netVertex);
-    glBindBuffer(GL_ARRAY_BUFFER, netVertex);
-    glBufferData(GL_ARRAY_BUFFER, clothNew->getSize(), clothNew->getVertexBuffer(), GL_DYNAMIC_DRAW);
-
-    GLuint netColor;
-    glGenBuffers(1, &netColor);
-    glBindBuffer(GL_ARRAY_BUFFER, netColor);
-    glBufferData(GL_ARRAY_BUFFER, clothNew->getSize(), clothNew->getColorBuffer(), GL_STATIC_DRAW);
-
-
-    GLuint netNormal;
-    glGenBuffers(1, &netNormal);
-    glBindBuffer(GL_ARRAY_BUFFER, netNormal);
-    glBufferData(GL_ARRAY_BUFFER, clothNew->getSize(), clothNew->getNormalBuffer(), GL_STATIC_DRAW);
-
-
-    clothNew->setVertex(netVertex);
-    clothNew->setColour(netColor);
-    clothNew->setNormal(netNormal);
-
     list->push_back(clothNew);
+}
+
+void addDefSphere(std::vector<deformableObjects *> *list, glm::vec3 colour, glm::mat4 mod, glm::vec3 lPos){
+    deformableSphere * newSphere = new deformableSphere(mod, colour, lPos);
+    list->push_back(newSphere);
 }
 
 //create and add sphere
@@ -150,11 +134,10 @@ void addColl(std::vector<collidable *> * list, int type, glm::vec3 lPos){
             break;
             //plane
         case 2:
-            glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,-0.2f,0.0f));
+            glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,-2.0f,0.0f));
             model = glm::scale(translate, glm::vec3(5.0f,5.0f,5.0f));
             coll = new plane(3.0f,1.0f, model, glm::vec3(0.4f,1.0f,0.6f), lPos);
             break;
-
     }
 
     list->push_back(coll);
@@ -183,14 +166,15 @@ mouseIntersectStruct isMouseOverColl(glm::vec3 origin, glm::vec3 direction, std:
     return closestObject;
 }
 
-helperStruct isMouseOverDeformable(glm::vec3 origin, glm::vec3 direction, std::vector<net *> * list){
+helperStruct isMouseOverDeformable(glm::vec3 origin, glm::vec3 direction, std::vector<deformableObjects *> * list){
     helperStruct closestObject;
     closestObject.isMouseOver=false;
     for(auto i : *list){
         helperStruct tmp = i->isHovered(origin, direction);
         if(tmp.isMouseOver){
-            closestObject=tmp;
+            closestObject.isMouseOver=true;
             closestObject.obj=i;
+            closestObject.point=tmp.point;
         }
     }
     return closestObject;
@@ -221,4 +205,10 @@ bool vectorContains(std::vector<particle *> v, particle * e){
 void printPoint(glm::vec3 point, char * name){
     std::cout<<name<<std::endl;
     std::cout<<point[0]<<" "<<point[1]<<" "<<point[2]<<std::endl;
+}
+
+//to do various stuff
+void setWind(deformableObjects * net, float wind[]){
+    //net->addForce(glm::vec3(0.0f,0.0f, -1.0f));
+    net->setWind(glm::vec3(wind[0],wind[1], wind[2]));
 }

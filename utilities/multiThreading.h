@@ -1,7 +1,7 @@
 #ifndef CODE_MULTITHREADING_H
 #define CODE_MULTITHREADING_H
 
-#include "../Collidables/mouseIntersectStruct.h"
+#include "../Bodies/Solid/mouseIntersectStruct.h"
 #include "../shaders/helperStruct.h"
 #include "helperFunctions.h"
 #include "../shaders/controls.hpp"
@@ -18,7 +18,7 @@ extern std::thread dragThread;
 extern bool dragThreadShouldLive;
 extern bool shouldSimulate;
 extern bool threadShouldLive;
-void timer_start(unsigned int interval,  const std::vector<net *>& list, const std::vector<collidable *> &collList);
+void timer_start(unsigned int interval,  const std::vector<deformableObjects *>& list, const std::vector<collidable *> &collList);
 
 void checkCollision();
 

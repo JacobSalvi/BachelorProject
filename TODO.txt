@@ -1,6 +1,3 @@
-add collision, new thread for collision detection?
-might make the code faster
-
 add other deformable simple primitives
 
 //optional but would make the code cleaner

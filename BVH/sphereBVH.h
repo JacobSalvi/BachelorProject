@@ -1,7 +1,7 @@
 #ifndef CODE_SPHEREBVH_H
 #define CODE_SPHEREBVH_H
 
-#include "../Collidables/Sphere.h"
+#include "../Bodies/Solid/Sphere.h"
 #include "../Bodies/Deformable/particle.h"
 #include "../shaders/helperStruct.h"
 
