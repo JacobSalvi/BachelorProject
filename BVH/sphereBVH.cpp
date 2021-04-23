@@ -400,40 +400,95 @@ void sphereBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
     glm::vec3 s = glm::vec3(actualModel[3][0], actualModel[3][1], actualModel[3][2]);
     float r = actualModel[0][0] / 2.0f;
 
-    //position and radius of colliding obj
-    glm::vec3 s2 = glm::vec3(obj->getModel()[3][0], obj->getModel()[3][1], obj->getModel()[3][2]);
-
     float distSquared = r * r;
     glm::vec3 C1(-0.5, -0.5, -0.5);
     glm::vec3 C2(0.5, 0.5, 0.5);
     C1 = glm::vec3(obj->getModel() * (glm::vec4(C1, 1.0)));
     C2 = glm::vec3(obj->getModel() * (glm::vec4(C2, 1.0)));
-    if (s.x < C1.x) {
-        distSquared -= (s.x - C1.x) * (s.x - C1.x);
-    } else if (s.x > C2.x) {
-        distSquared -= (s.x - C2.x) * (s.x - C2.x);
-    }
-    if (s.y < C1.y) {
-        distSquared -= (s.y - C1.y) * (s.y - C1.y);
-    } else if (s.y > C2.y) {
-        distSquared -= (s.y - C2.y) * (s.y - C2.y);
-    }
-    if (s.z < C1.z) {
-        distSquared -= (s.z - C1.z) * (s.z - C1.z);
-    } else if (s.z > C2.z) {
-        distSquared -= (s.z - C2.z) * (s.z - C2.z);
+
+    float dmin= 0.0f;
+    for(int i =0; i<3;++i){
+        if(s[i]<C1[i]) {
+            dmin +=(s[i] - C1[i])*(s[i]-C1[i]);
+        }else if (s[i]>C2[i]){
+            dmin +=(s[i]-C2[i])*(s[i]-C2[i]);
+        }
     }
 
-    if (distSquared > 0) {
+    if (dmin <= distSquared) {
         //cube intersect sphere
         if (child0 == NULL) {
             //check if any particle is inside the cube
-            glm::vec3 tr = glm::vec3(outModel[3][0], outModel[3][1], outModel[3][2]);
             for (auto i : p) {
-                glm::vec3 pos = i->getPosition() + tr;
+                glm::vec3 pos = glm::vec3(outModel*glm::vec4(i->getPosition(), 1));
                 if (C1.x <= pos.x && pos.x <= C2.x && C1.y <= pos.y && pos.y <= C2.y && C1.z <= pos.z &&
                     pos.z <= C2.z) {
-                    std::cout << "COLLISION" << std::endl;
+                    //let's find the intersection point between the velocity of the particle and
+                    //the cube
+                    std::cout<<"collision "<<pos.x<<std::endl;
+                    //front and back faces
+                    glm::vec3 cNormal(0,0, 1);
+                    glm::vec3 rDir = glm::normalize(-i->getVelocity());
+                    glm::vec3 current=pos;
+                    //checking if the vectors are parallel
+                    if(glm::dot(cNormal, rDir)!=0){
+                        //front face
+                        glm::vec3 front = pointPlaneProjection(pos, cNormal, C2);
+                        //inside face?
+                        if(!(front.x<C1.x || front.x > C2.x || front.y<C1.y || front.y>C2.y)){
+                            current = front;
+                            glm::vec3 back= pointPlaneProjection(pos, cNormal, C1);
+                            //inside face?
+                            if(!(back.x < C1.x || back.x > C2.x || back.y < C1.y || back.y > C2.y)){
+                                //closer?
+                                if(glm::length(pos - back) < glm::length(pos - current)){
+                                    current = back;
+                                }
+                            }
+                        }
+                    }
+
+                    //left and right faces
+                    cNormal = glm::vec3(1,0,0);
+                    if(glm::dot(cNormal, rDir)!=0){
+                        glm::vec3 left = pointPlaneProjection(pos, cNormal, C1);
+                        glm::vec3 right = pointPlaneProjection(pos, cNormal, C2);
+                        //inside left face?
+                        if(!(left.z<C1.z || left.z > C2.z || left.y<C1.y || left.y>C2.y)) {
+                            if(glm::length(pos-left)<glm::length(pos-current)){
+                                current = left;
+                            }
+                        }
+                        //inside right face
+                        if(!(right.z<C1.z || right.z > C2.z || right.y<C1.y || right.y>C2.y)) {
+                            if(glm::length(pos-right)<glm::length(pos-current)){
+                                current = right;
+                            }
+                        }
+                    }
+
+                    //top and bottom faces
+                    cNormal = glm::vec3(0,1,0);
+                    if(glm::dot(cNormal, rDir)!=0){
+                        glm::vec3 top = pointPlaneProjection(pos, cNormal, C1);
+                        glm::vec3 bottom = pointPlaneProjection(pos, cNormal, C2);
+                        //inside top face?
+                        if(!(top.x<C1.x || top.x > C2.x || top.z<C1.z || top.z>C2.z)) {
+                            if(glm::length(pos-top)<glm::length(pos-current)){
+                                current = top;
+                            }
+                        }
+                        //inside bottom face?
+                        if(!(bottom.x<C1.x || bottom.x > C2.x || bottom.z<C1.z || bottom.z>C2.z)) {
+                            if(glm::length(pos-bottom)<glm::length(pos-current)){
+                                current = bottom;
+                            }
+                        }
+                    }
+
+                    //let's set the collision force for the particle
+                    //since I have no indication what k should be I will wing it
+                    i->setCollisionForce(256000.0f*(current-pos));
                 }
             }
 
@@ -459,13 +514,13 @@ void sphereBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
     glm::vec3 s = glm::vec3(actualModel[3][0], actualModel[3][1], actualModel[3][2]);
     float r = actualModel[0][0] / 2.0f;
 
-    float spherePlaneDistance = 0.0f;
+    float spherePlaneDistance;
     float width = obj->getVertexBuffer()[6];
     float depth = obj->getVertexBuffer()[8];
     glm::vec3 C1(-width, 0.0, -depth);
     glm::vec3 C2(width, 0.0, depth);
     C1 = glm::vec3(obj->getModel() * (glm::vec4(C1, 1.0)));
-    C1.y-=1.0;
+    C1.y-=.1;
     C2 = glm::vec3(obj->getModel() * (glm::vec4(C2, 1.0)));
 
     spherePlaneDistance = glm::dot((s-C2), glm::vec3(0.0,1.0,0.0));
@@ -474,12 +529,18 @@ void sphereBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
         //cube intersect sphere
         if (child0 == NULL) {
             //check if any particle is inside the plane
-            glm::vec3 tr = glm::vec3(outModel[3][0], outModel[3][1], outModel[3][2]);
             for (auto i : p) {
-                glm::vec3 pos = i->getPosition() + tr;
+                glm::vec3 pos = glm::vec3(outModel*glm::vec4(i->getPosition(), 1));
                 if (C1.x <= pos.x && pos.x <= C2.x && C1.y <= pos.y && pos.y <= C2.y && C1.z <= pos.z &&
                     pos.z <= C2.z) {
-                    std::cout << "COLLISION" << std::endl;
+                    //response for the collision
+                    //glm::vec3 intersectionPoint = planeVectorIntersection(pos, glm::normalize(-i->getVelocity()), glm::vec3(0,1,0), C2);
+                    //little trick for better visualization
+                    //basically the object will be slightly above the plane
+                    glm::vec3 trick = C2;
+                    trick.y+=0.1;
+                    glm::vec3 intersectionPoint = pointPlaneProjection(pos, glm::vec3(0,1,0), trick);
+                    i->setCollisionForce(3000.0f*(intersectionPoint-pos));
                 }
             }
 

@@ -7,10 +7,54 @@ bool threadShouldLive = false;
 
 std::thread sim;
 
+std::thread collThread;
+
+std::thread updateBvh;
+
+std::thread updateBuffers;
+
 std::thread dragThread;
 
 
 void timer_start(unsigned int interval, const std::vector<net *> &list, const std::vector<collidable *> &collList) {
+    unsigned int collInterval = 8 * interval;
+    //thread that checks collision
+    collThread = std::thread([collInterval, list, collList]() {
+        while (threadShouldLive) {
+            for (auto i : list) {
+                for (auto j :collList) {
+                    i->detectCollision(j);
+                }
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(collInterval));
+        }
+    });
+    collThread.detach();
+
+    //update bvh
+    updateBvh = std::thread([list, collInterval]() {
+        while (threadShouldLive) {
+            for (auto i :list) {
+                i->getBvh()->update();
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(collInterval));
+        }
+    });
+    updateBvh.detach();
+
+    //update buffer
+    unsigned int upInt = 16;
+    updateBuffers = std::thread([list, upInt] {
+        while (threadShouldLive) {
+            for (auto i : list) {
+                i->updateBuffer();
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(upInt));
+        }
+    });
+    updateBuffers.detach();
+
+    //main animation thread
     sim = std::thread([interval, list, collList]() {
         static int counter = 0;
         while (threadShouldLive) {
@@ -19,26 +63,6 @@ void timer_start(unsigned int interval, const std::vector<net *> &list, const st
             }
 
             counter++;
-
-            //every 15 millisecond rebuild the bvh
-            if (counter % 8 == 0) {
-                for (auto i:list) {
-                    i->getBvh()->update();
-                }
-                for (auto i : list) {
-                    for (auto j :collList){
-                        i->detectCollision(j);
-                    }
-                }
-            }
-
-            //16 milliseconds ~= 60 frame per second
-            if (counter == 16) {
-                for (auto i : list) {
-                    i->updateBuffer();
-                }
-                counter = 0;
-            }
             std::this_thread::sleep_for(std::chrono::milliseconds(interval));
         }
         std::cout << "The thread should be dead now" << std::endl;
@@ -99,8 +123,6 @@ void dragMouse(mouseIntersectStruct obj) {
 }
 
 //dragging deformable objects
-//TODO: problem, the BVH go insane when I move it around
-//sol1: rebuilt the sphere for each bvh element, probably won't work correctly
 void dragMouse(helperStruct obj) {
     dragThread = std::thread([obj]() {
         //make all of the special point normal
@@ -122,7 +144,7 @@ void dragMouse(helperStruct obj) {
             obj.point->setPosition(obj.point->getPosition() + translation);
 
             //update bvh
-            obj.obj->getBvh()->update();
+            //obj.obj->getBvh()->update();
 
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }

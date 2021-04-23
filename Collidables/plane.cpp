@@ -55,6 +55,8 @@ plane::plane(float width, float depth, glm::mat4 model, glm::vec3 colour,  glm::
             normalBuffer[i]=0.0f;
         }
     }
+
+    setGLuint();
 }
 
 mouseIntersectStruct plane::isHovered(glm::vec3 origin, glm::vec3 direction) {

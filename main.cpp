@@ -99,6 +99,8 @@ int main() {
     model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
     model = glm::translate(model, glm::vec3(0,0,0));
 
+    //4 5
+    //for the cube using a 40 by 50 grid is better but it burns the cpu
     addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition);
    // addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(-4.0f,0.0f,0.0f));
     //addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f), lightPosition);
@@ -136,9 +138,9 @@ int main() {
     //Collidables
     std::vector<collidable *> collObjects;
     //sphere
-    addColl(&collObjects, 0, lightPosition);
+    //addColl(&collObjects, 0, lightPosition);
     //cube
-    //addColl(&collObjects,1, lightPosition);
+    addColl(&collObjects,1, lightPosition);
     //plane
     //addColl(&collObjects, 2, lightPosition);
     std::cout<<"init successful"<<std::endl;
@@ -184,6 +186,11 @@ int main() {
                 threadShouldLive=true;
                 shouldSimulate=false;
                 timer_start(1, objectList, collObjects);
+            }
+            if(ImGui::Button("drop cloth")){
+                for(auto i: objectList){
+                    i->emptySpecialParticles();
+                }
             }
             if(ImGui::Button("Set wind")){
                 for(auto i: objectList) {

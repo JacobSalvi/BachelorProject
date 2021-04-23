@@ -157,25 +157,6 @@ void addColl(std::vector<collidable *> * list, int type, glm::vec3 lPos){
 
     }
 
-    GLuint collVertex;
-    glGenBuffers(1, &collVertex);
-    glBindBuffer(GL_ARRAY_BUFFER, collVertex);
-    glBufferData(GL_ARRAY_BUFFER, coll->getSize(), coll->getVertexBuffer(), GL_DYNAMIC_DRAW);
-
-    GLuint collColour;
-    glGenBuffers(1, &collColour);
-    glBindBuffer(GL_ARRAY_BUFFER, collColour);
-    glBufferData(GL_ARRAY_BUFFER, coll->getSize(), coll->getColorBuffer(), GL_STATIC_DRAW);
-
-    GLuint collNormal;
-    glGenBuffers(1, &collNormal);
-    glBindBuffer(GL_ARRAY_BUFFER, collNormal);
-    glBufferData(GL_ARRAY_BUFFER, coll->getSize(), coll->getNormalBuffer(), GL_STATIC_DRAW);
-
-    coll->setCollVertex(collVertex);
-    coll->setCollColour(collColour);
-    coll->setCollNormal(collNormal);
-
     list->push_back(coll);
 }
 
@@ -222,8 +203,8 @@ glm::vec3 planeVectorIntersection(glm::vec3 rayOrigin, glm::vec3 rayDirection, g
 }
 
 //compute projection of point onto plane
-glm::vec3 pointPlaneProjection(glm::vec3 point, glm::vec3 planeNormal){
-    return point - glm::dot(point, planeNormal) * planeNormal;
+glm::vec3 pointPlaneProjection(glm::vec3 point, glm::vec3 planeNormal, glm::vec3 planePoint){
+    return point - glm::dot(point - planePoint, planeNormal) * planeNormal;
 }
 
 bool vectorContains(std::vector<particle *> v, particle * e){

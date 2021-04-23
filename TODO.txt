@@ -1,14 +1,13 @@
-add collision
+add collision, new thread for collision detection?
+might make the code faster
 
 add other deformable simple primitives
-
-add damping coefficent
 
 //optional but would make the code cleaner
 refactor classes hierarchy and files
 
 //quality of life stuff
-also add a skybox
+add a skybox
 
 //tool mesh-> tethraedon TetGen
 //libigl

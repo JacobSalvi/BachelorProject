@@ -35,7 +35,7 @@ mouseIntersectStruct isMouseOverColl(glm::vec3 origin, glm::vec3 direction, std:
 helperStruct isMouseOverDeformable(glm::vec3 origin, glm::vec3 direction, std::vector<net *> * list);
 
 glm::vec3 planeVectorIntersection(glm::vec3 rayOrigin, glm::vec3 rayDirection, glm::vec3 planeNormal, glm::vec3 planePoint);
-glm::vec3 pointPlaneProjection(glm::vec3 point, glm::vec3 planeNormal);
+glm::vec3 pointPlaneProjection(glm::vec3 point, glm::vec3 planeNormal, glm::vec3 planePoint);
 
 //utilities
 //I can't figure out how to use std::find

@@ -98,6 +98,8 @@ cube::cube(glm::mat4 model, glm::vec3 colour, glm::vec3 lPos) : collidable(colou
             }
         }
     }
+
+    setGLuint();
 }
 
 int cube::getSize() {
