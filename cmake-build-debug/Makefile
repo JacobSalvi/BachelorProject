@@ -190,19 +190,6 @@ projectPleaseWork/fast:
 .PHONY : projectPleaseWork/fast
 
 #=============================================================================
-# Target rules for targets named ANTTWEAKBAR_116_OGLCORE_GLFW
-
-# Build rule for target.
-ANTTWEAKBAR_116_OGLCORE_GLFW: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ANTTWEAKBAR_116_OGLCORE_GLFW
-.PHONY : ANTTWEAKBAR_116_OGLCORE_GLFW
-
-# fast build rule for target.
-ANTTWEAKBAR_116_OGLCORE_GLFW/fast:
-	$(MAKE) $(MAKESILENT) -f external/CMakeFiles/ANTTWEAKBAR_116_OGLCORE_GLFW.dir/build.make external/CMakeFiles/ANTTWEAKBAR_116_OGLCORE_GLFW.dir/build
-.PHONY : ANTTWEAKBAR_116_OGLCORE_GLFW/fast
-
-#=============================================================================
 # Target rules for targets named GLEW_1130
 
 # Build rule for target.
@@ -565,58 +552,6 @@ assimp: cmake_check_build_system
 assimp/fast:
 	$(MAKE) $(MAKESILENT) -f external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/build.make external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/build
 .PHONY : assimp/fast
-
-#=============================================================================
-# Target rules for targets named BulletSoftBody
-
-# Build rule for target.
-BulletSoftBody: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 BulletSoftBody
-.PHONY : BulletSoftBody
-
-# fast build rule for target.
-BulletSoftBody/fast:
-	$(MAKE) $(MAKESILENT) -f external/bullet-2.81-rev2613/src/BulletSoftBody/CMakeFiles/BulletSoftBody.dir/build.make external/bullet-2.81-rev2613/src/BulletSoftBody/CMakeFiles/BulletSoftBody.dir/build
-.PHONY : BulletSoftBody/fast
-
-#=============================================================================
-# Target rules for targets named BulletCollision
-
-# Build rule for target.
-BulletCollision: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 BulletCollision
-.PHONY : BulletCollision
-
-# fast build rule for target.
-BulletCollision/fast:
-	$(MAKE) $(MAKESILENT) -f external/bullet-2.81-rev2613/src/BulletCollision/CMakeFiles/BulletCollision.dir/build.make external/bullet-2.81-rev2613/src/BulletCollision/CMakeFiles/BulletCollision.dir/build
-.PHONY : BulletCollision/fast
-
-#=============================================================================
-# Target rules for targets named BulletDynamics
-
-# Build rule for target.
-BulletDynamics: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 BulletDynamics
-.PHONY : BulletDynamics
-
-# fast build rule for target.
-BulletDynamics/fast:
-	$(MAKE) $(MAKESILENT) -f external/bullet-2.81-rev2613/src/BulletDynamics/CMakeFiles/BulletDynamics.dir/build.make external/bullet-2.81-rev2613/src/BulletDynamics/CMakeFiles/BulletDynamics.dir/build
-.PHONY : BulletDynamics/fast
-
-#=============================================================================
-# Target rules for targets named LinearMath
-
-# Build rule for target.
-LinearMath: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 LinearMath
-.PHONY : LinearMath
-
-# fast build rule for target.
-LinearMath/fast:
-	$(MAKE) $(MAKESILENT) -f external/bullet-2.81-rev2613/src/LinearMath/CMakeFiles/LinearMath.dir/build.make external/bullet-2.81-rev2613/src/LinearMath/CMakeFiles/LinearMath.dir/build
-.PHONY : LinearMath/fast
 
 BVH/BVH.o: BVH/BVH.cpp.o
 
@@ -1225,12 +1160,7 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... uninstall"
-	@echo "... ANTTWEAKBAR_116_OGLCORE_GLFW"
-	@echo "... BulletCollision"
-	@echo "... BulletDynamics"
-	@echo "... BulletSoftBody"
 	@echo "... GLEW_1130"
-	@echo "... LinearMath"
 	@echo "... assimp"
 	@echo "... boing"
 	@echo "... clipboard"

@@ -158,10 +158,10 @@ sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : p(particles) 
     }
 
     //recursively make children
-    child0 = !v0.empty() ? new sphereBVH(v0, childRow) : NULL;
-    child1 = !v1.empty() ? new sphereBVH(v1, childRow) : NULL;
-    child2 = !v2.empty() ? new sphereBVH(v2, childRow) : NULL;
-    child3 = !v3.empty() ? new sphereBVH(v3, childRow) : NULL;
+    child0 = !v0.empty() ? new sphereBVH(v0, childRow) : nullptr;
+    child1 = !v1.empty() ? new sphereBVH(v1, childRow) : nullptr;
+    child2 = !v2.empty() ? new sphereBVH(v2, childRow) : nullptr;
+    child3 = !v3.empty() ? new sphereBVH(v3, childRow) : nullptr;
 
     //sphere and model matrix for the sphere
     glm::mat4 internalSphereModel = glm::mat4(1);
@@ -175,16 +175,16 @@ sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : p(particles) 
 void sphereBVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programId, bool wireFrame,
                        glm::mat4 model) {
     sphereShown->render(ProjectionMatrix, ViewMatrix, programId, wireFrame, model);
-    if (child0 != NULL) {
+    if (child0 != nullptr) {
         child0->render(ProjectionMatrix, ViewMatrix, programId, wireFrame, model);
     }
-    if (child1 != NULL) {
+    if (child1 != nullptr) {
         child1->render(ProjectionMatrix, ViewMatrix, programId, wireFrame, model);
     }
-    if (child2 != NULL) {
+    if (child2 != nullptr) {
         child2->render(ProjectionMatrix, ViewMatrix, programId, wireFrame, model);
     }
-    if (child3 != NULL) {
+    if (child3 != nullptr) {
         child3->render(ProjectionMatrix, ViewMatrix, programId, wireFrame, model);
     }
 
@@ -202,7 +202,7 @@ helperStruct sphereBVH::rayIntersect(glm::vec3 origin, glm::vec3 direction, glm:
     //do we intersect the sphere?
     if (sphereBVH::sphereShown->rayIntersect(origin, direction, model)) {
         //are we a leaf?
-        if (child0 == NULL) {
+        if (child0 == nullptr) {
             //must invert the model matrix
             glm::mat4 M_ = glm::inverse(model);
             glm::vec4 orHelper = M_ * glm::vec4(origin, 1.0f);
@@ -277,19 +277,19 @@ helperStruct sphereBVH::rayIntersect(glm::vec3 origin, glm::vec3 direction, glm:
             if (tmp.isMouseOver) {
                 return tmp;
             }
-            if (child1 != NULL) {
+            if (child1 != nullptr) {
                 tmp = child1->rayIntersect(origin, direction, model);
                 if (tmp.isMouseOver) {
                     return tmp;
                 }
             }
-            if (child2 != NULL) {
+            if (child2 != nullptr) {
                 tmp = child2->rayIntersect(origin, direction, model);
                 if (tmp.isMouseOver) {
                     return tmp;
                 }
             }
-            if (child3 != NULL) {
+            if (child3 != nullptr) {
                 tmp = child3->rayIntersect(origin, direction, model);
                 if (tmp.isMouseOver) {
                     return tmp;
@@ -306,7 +306,8 @@ void sphereBVH::update() {
     particle *p1;
     particle *p2;
     float furthestDistance = -1.0f;
-    for (int i = 0; i < sphereBVH::p.size() - 1; ++i) {
+    //TODO: maybe size -1
+    for (int i = 0; i < sphereBVH::p.size(); ++i) {
         for (int j = i + 1; j < sphereBVH::p.size(); ++j) {
             particle *first = sphereBVH::p[i];
             particle *second = sphereBVH::p[j];
@@ -338,10 +339,10 @@ void sphereBVH::update() {
     sphereBVH::sphereShown->setModel(internalSphereModel);
 
     //update children
-    if (sphereBVH::child0 != NULL) sphereBVH::child0->update();
-    if (sphereBVH::child1 != NULL) sphereBVH::child1->update();
-    if (sphereBVH::child2 != NULL) sphereBVH::child2->update();
-    if (sphereBVH::child3 != NULL) sphereBVH::child3->update();
+    if (sphereBVH::child0 != nullptr) sphereBVH::child0->update();
+    if (sphereBVH::child1 != nullptr) sphereBVH::child1->update();
+    if (sphereBVH::child2 != nullptr) sphereBVH::child2->update();
+    if (sphereBVH::child3 != nullptr) sphereBVH::child3->update();
 }
 
 void sphereBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
@@ -360,7 +361,7 @@ void sphereBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
     if (glm::length(s1 - s2) <= r1 + r2) {
         //we are intersecting the BVH, potentially intersecting the cloth
         //if we are a leaf check if we actually intersect the clot
-        if (child0 == NULL) {
+        if (child0 == nullptr) {
             //instead of doing some complicated sphere-triangle collision detection
             //I simply check if one of the particles is inside the sphere
             for (auto i : p) {
@@ -379,15 +380,15 @@ void sphereBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
 
                     //let's set the collision force for the particle
                     //since I have no indication what k should be I will wing it
-                    i->setCollisionForce(4000.0f*(intersectionPoint-point));
+                    i->setCollisionForce(3000.0f*(intersectionPoint-point));
                 }
             }
         } else {
             //otherwise recursively check the children
-            if (sphereBVH::child0 != NULL) sphereBVH::child0->detectCollisionSphere(outModel, obj);
-            if (sphereBVH::child1 != NULL) sphereBVH::child1->detectCollisionSphere(outModel, obj);
-            if (sphereBVH::child2 != NULL) sphereBVH::child2->detectCollisionSphere(outModel, obj);
-            if (sphereBVH::child3 != NULL) sphereBVH::child3->detectCollisionSphere(outModel, obj);
+            if (sphereBVH::child0 != nullptr) sphereBVH::child0->detectCollisionSphere(outModel, obj);
+            if (sphereBVH::child1 != nullptr) sphereBVH::child1->detectCollisionSphere(outModel, obj);
+            if (sphereBVH::child2 != nullptr) sphereBVH::child2->detectCollisionSphere(outModel, obj);
+            if (sphereBVH::child3 != nullptr) sphereBVH::child3->detectCollisionSphere(outModel, obj);
         }
     }
 }
@@ -417,7 +418,7 @@ void sphereBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
 
     if (dmin <= distSquared) {
         //cube intersect sphere
-        if (child0 == NULL) {
+        if (child0 == nullptr) {
             //check if any particle is inside the cube
             for (auto i : p) {
                 glm::vec3 pos = glm::vec3(outModel*glm::vec4(i->getPosition(), 1));
@@ -493,10 +494,10 @@ void sphereBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
             }
 
         } else {
-            if (sphereBVH::child0 != NULL) sphereBVH::child0->detectCollisionCube(outModel, obj);
-            if (sphereBVH::child1 != NULL) sphereBVH::child1->detectCollisionCube(outModel, obj);
-            if (sphereBVH::child2 != NULL) sphereBVH::child2->detectCollisionCube(outModel, obj);
-            if (sphereBVH::child3 != NULL) sphereBVH::child3->detectCollisionCube(outModel, obj);
+            if (sphereBVH::child0 != nullptr) sphereBVH::child0->detectCollisionCube(outModel, obj);
+            if (sphereBVH::child1 != nullptr) sphereBVH::child1->detectCollisionCube(outModel, obj);
+            if (sphereBVH::child2 != nullptr) sphereBVH::child2->detectCollisionCube(outModel, obj);
+            if (sphereBVH::child3 != nullptr) sphereBVH::child3->detectCollisionCube(outModel, obj);
         }
     }
 }
@@ -527,7 +528,7 @@ void sphereBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
 
     if (-r<spherePlaneDistance && spherePlaneDistance<r) {
         //cube intersect sphere
-        if (child0 == NULL) {
+        if (child0 == nullptr) {
             //check if any particle is inside the plane
             for (auto i : p) {
                 glm::vec3 pos = glm::vec3(outModel*glm::vec4(i->getPosition(), 1));
@@ -545,10 +546,14 @@ void sphereBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
             }
 
         } else {
-            if (sphereBVH::child0 != NULL) sphereBVH::child0->detectCollisionPlane(outModel, obj);
-            if (sphereBVH::child1 != NULL) sphereBVH::child1->detectCollisionPlane(outModel, obj);
-            if (sphereBVH::child2 != NULL) sphereBVH::child2->detectCollisionPlane(outModel, obj);
-            if (sphereBVH::child3 != NULL) sphereBVH::child3->detectCollisionPlane(outModel, obj);
+            if (sphereBVH::child0 != nullptr) sphereBVH::child0->detectCollisionPlane(outModel, obj);
+            if (sphereBVH::child1 != nullptr) sphereBVH::child1->detectCollisionPlane(outModel, obj);
+            if (sphereBVH::child2 != nullptr) sphereBVH::child2->detectCollisionPlane(outModel, obj);
+            if (sphereBVH::child3 != nullptr) sphereBVH::child3->detectCollisionPlane(outModel, obj);
         }
     }
+}
+
+sphereBVH::sphereBVH() {
+
 }

@@ -1,4 +1,7 @@
-add other deformable simple primitives
+add deformable sphere
+
+cube collision rework
+friction
 
 //optional but would make the code cleaner
 refactor classes hierarchy and files

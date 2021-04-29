@@ -54,10 +54,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "../external/CMakeLists.txt"
   "../external/assimp-3.0.1270/code/CMakeLists.txt"
   "../external/assimp-3.0.1270/contrib/zlib/CMakeLists.txt"
-  "../external/bullet-2.81-rev2613/src/BulletCollision/CMakeLists.txt"
-  "../external/bullet-2.81-rev2613/src/BulletDynamics/CMakeLists.txt"
-  "../external/bullet-2.81-rev2613/src/BulletSoftBody/CMakeLists.txt"
-  "../external/bullet-2.81-rev2613/src/LinearMath/CMakeLists.txt"
   "../external/glfw-3.1.2/CMake/MacOSXBundleInfo.plist.in"
   "../external/glfw-3.1.2/CMakeLists.txt"
   "../external/glfw-3.1.2/cmake_uninstall.cmake.in"
@@ -86,16 +82,11 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "external/glfw-3.1.2/tests/CMakeFiles/CMakeDirectoryInformation.cmake"
   "external/assimp-3.0.1270/contrib/zlib/CMakeFiles/CMakeDirectoryInformation.cmake"
   "external/assimp-3.0.1270/code/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "external/bullet-2.81-rev2613/src/BulletSoftBody/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "external/bullet-2.81-rev2613/src/BulletCollision/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "external/bullet-2.81-rev2613/src/BulletDynamics/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "external/bullet-2.81-rev2613/src/LinearMath/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/projectPleaseWork.dir/DependInfo.cmake"
-  "external/CMakeFiles/ANTTWEAKBAR_116_OGLCORE_GLFW.dir/DependInfo.cmake"
   "external/CMakeFiles/GLEW_1130.dir/DependInfo.cmake"
   "external/glfw-3.1.2/CMakeFiles/uninstall.dir/DependInfo.cmake"
   "external/glfw-3.1.2/src/CMakeFiles/glfw.dir/DependInfo.cmake"
@@ -124,8 +115,4 @@ set(CMAKE_DEPEND_INFO_FILES
   "external/glfw-3.1.2/tests/CMakeFiles/clipboard.dir/DependInfo.cmake"
   "external/assimp-3.0.1270/contrib/zlib/CMakeFiles/zlib.dir/DependInfo.cmake"
   "external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/DependInfo.cmake"
-  "external/bullet-2.81-rev2613/src/BulletSoftBody/CMakeFiles/BulletSoftBody.dir/DependInfo.cmake"
-  "external/bullet-2.81-rev2613/src/BulletCollision/CMakeFiles/BulletCollision.dir/DependInfo.cmake"
-  "external/bullet-2.81-rev2613/src/BulletDynamics/CMakeFiles/BulletDynamics.dir/DependInfo.cmake"
-  "external/bullet-2.81-rev2613/src/LinearMath/CMakeFiles/LinearMath.dir/DependInfo.cmake"
   )

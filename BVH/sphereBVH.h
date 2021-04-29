@@ -31,6 +31,9 @@ private:
 public:
     sphereBVH(std::vector<particle *> particles, int row);
 
+    //for debugging stuff
+    sphereBVH();
+
     void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programId, bool wireFrame, glm::mat4 model);
 
     sphere *getSphereShown() const;

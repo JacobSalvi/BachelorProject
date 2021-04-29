@@ -2,7 +2,7 @@
 #include "deformableObjects.h"
 
 deformableObjects::deformableObjects(float gravity, const glm::mat4 &modelMatrix, const glm::vec3 &lightPos) :
-gravity(gravity), modelMatrix(modelMatrix), lightPos(lightPos) {}
+gravity(gravity), modelMatrix(modelMatrix), lightPos(lightPos), wind(glm::vec3(0.0f,0.0f,0.0f)) {}
 
 int deformableObjects::getSize() {
     return 0;

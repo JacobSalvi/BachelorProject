@@ -109,7 +109,7 @@ int main() {
     //deformable sphere
     glm::mat4 sMod(1);
     sMod = glm::translate(sMod, glm::vec3(-3, 0, 0));
-    //addDefSphere(&objectList, glm::vec3(0,1,0), sMod ,lightPosition);
+    addDefSphere(&objectList, glm::vec3(0,1,0), sMod ,lightPosition);
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);

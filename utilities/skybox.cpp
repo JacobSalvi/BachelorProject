@@ -3,47 +3,42 @@
 skybox::skybox(GLuint pID) : programID(pID) {
     skybox::vertexBuffer = new float[108];
     float helper[108] = {
-            -1.0f, 1.0f, -1.0f,
-            -1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-            1.0f, 1.0f, -1.0f,
-            -1.0f, 1.0f, -1.0f,
-
-            -1.0f, -1.0f, 1.0f,
-            -1.0f, -1.0f, -1.0f,
-            -1.0f, 1.0f, -1.0f,
-            -1.0f, 1.0f, -1.0f,
-            -1.0f, 1.0f, 1.0f,
-            -1.0f, -1.0f, 1.0f,
-
-            1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-
-            -1.0f, -1.0f, 1.0f,
-            -1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, -1.0f, 1.0f,
-            -1.0f, -1.0f, 1.0f,
-
-            -1.0f, 1.0f, -1.0f,
-            1.0f, 1.0f, -1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f, -1.0f,
-
-            -1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f, 1.0f,
-            1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f, 1.0f,
-            1.0f, -1.0f, 1.0f
+            -0.5, 0.5, 0.5, // front face
+            -0.5, -0.5, 0.5,
+            0.5, -0.5, 0.5,
+            -0.5, 0.5, 0.5,
+            0.5, -0.5, 0.5,
+            0.5, 0.5, 0.5,
+            0.5, -0.5, -0.5,// back face
+            -0.5, -0.5, -0.5,
+            -0.5, 0.5, -0.5,
+            0.5, 0.5, -0.5,
+            0.5, -0.5, -0.5,
+            -0.5, 0.5, -0.5,
+            0.5, -0.5, 0.5,// right face
+            0.5, -0.5, -0.5,
+            0.5, 0.5, -0.5,
+            0.5, 0.5, 0.5,
+            0.5, -0.5, 0.5,
+            0.5, 0.5, -0.5,
+            -0.5, 0.5, -0.5,// left face
+            -0.5, -0.5, -0.5,
+            -0.5, -0.5, 0.5,
+            -0.5, 0.5, -0.5,
+            -0.5, -0.5, 0.5,
+            -0.5, 0.5, 0.5,
+            -0.5, 0.5, 0.5, //top face
+            0.5, 0.5, -0.5,
+            -0.5, 0.5, -0.5,
+            -0.5, 0.5, 0.5,
+            0.5, 0.5, 0.5,
+            0.5, 0.5, -0.5,
+            -0.5, -0.5, 0.5, //bottom face
+            -0.5, -0.5, -0.5,
+            0.5, -0.5, -0.5,
+            -0.5, -0.5, 0.5,
+            0.5, -0.5, -0.5,
+            0.5, -0.5, 0.5
     };
     for (int i = 0; i < 108; ++i) {
         skybox::vertexBuffer[i] = helper[i];
@@ -72,7 +67,8 @@ skybox::~skybox() = default;
 void skybox::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, glm::vec3 cPos) {
 
     glUseProgram(skybox::programID);
-    glDepthFunc(GL_LEQUAL);
+    glEnable(GL_CULL_FACE);
+    //glDepthFunc(GL_LEQUAL);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
@@ -81,8 +77,8 @@ void skybox::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, glm::vec3 
     GLuint projectionUn = glGetUniformLocation(programID, "projectionMatrix");
     glm::mat4 model(1);
     model = glm::translate(model, cPos);
-    glUniformMatrix4fv(modelUn, 1, GL_FALSE, &model[0][0]);
-    glUniformMatrix4fv(viewUn, 1, GL_FALSE, &glm::mat4(glm::mat3(ViewMatrix))[0][0]);
+    //glUniformMatrix4fv(modelUn, 1, GL_FALSE, &model[0][0]);
+    glUniformMatrix4fv(viewUn, 1, GL_FALSE, &ViewMatrix[0][0]);
     glUniformMatrix4fv(projectionUn, 1, GL_FALSE, &ProjectionMatrix[0][0]);
 
     glEnableVertexAttribArray(0);
@@ -90,10 +86,10 @@ void skybox::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, glm::vec3 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
 
     glDrawArrays(GL_TRIANGLES, 0, 36);
-    glDepthFunc(GL_LESS);
+    //glDepthFunc(GL_LESS);
+    glDisable(GL_CULL_FACE);
 
     glDisableVertexAttribArray(0);
-    glDepthFunc(GL_LESS);
 }
 
 void skybox::loadTexture() {
@@ -105,7 +101,7 @@ void skybox::loadTexture() {
     for (unsigned int i = 0; i < faces.size(); i++) {
         unsigned char *data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
         if (data) {
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
                          data);
             stbi_image_free(data);
         } else {
@@ -119,5 +115,5 @@ void skybox::loadTexture() {
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-    skybox::textureID=tmp;
+    skybox::textureID = tmp;
 }

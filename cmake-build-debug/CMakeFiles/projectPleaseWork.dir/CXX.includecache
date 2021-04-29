@@ -736,14 +736,6 @@ assert.h
 imgui_user.h
 ../imgui/imgui_user.h
 
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.cpp
-glm/gtc/matrix_transform.hpp
--
-sphereBVH.h
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
-../utilities/helperFunctions.h
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.h
-
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
 ../Bodies/Solid/Sphere.h
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
@@ -769,6 +761,12 @@ spring.hpp
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.h
 ../../shaders/helperStruct.h
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
+
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.cpp
+deformableSphere.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.h
+../../utilities/helperFunctions.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/utilities/helperFunctions.h
 
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.h
 deformableObjects.h

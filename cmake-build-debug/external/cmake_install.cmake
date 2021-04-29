@@ -47,23 +47,3 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/code/cmake_install.cmake")
 endif()
 
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/bullet-2.81-rev2613/src/BulletSoftBody/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/bullet-2.81-rev2613/src/BulletCollision/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/bullet-2.81-rev2613/src/BulletDynamics/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/bullet-2.81-rev2613/src/LinearMath/cmake_install.cmake")
-endif()
-
