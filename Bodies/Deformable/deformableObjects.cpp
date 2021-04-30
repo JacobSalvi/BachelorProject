@@ -117,7 +117,7 @@ void deformableObjects::updateBuffer() {}
 
 void deformableObjects::detectCollision(collidable *obj) {}
 
-sphereBVH *deformableObjects::getBvh() const {
+BVH *deformableObjects::getBvh() const {
     return nullptr;
 }
 

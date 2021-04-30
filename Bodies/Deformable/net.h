@@ -2,13 +2,13 @@
 #ifndef CODE_NET_H
 #define CODE_NET_H
 
-#include "../../BVH/sphereBVH.h"
+#include "../../BVH/clothBVH.h"
 //#include "../../shaders/helperStruct.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include "deformableObjects.h"
 
-class sphereBVH;
+class clothBVH;
 //struct helperStruct;
 
 //simple object made of particles and spring
@@ -33,7 +33,7 @@ private:
     int integrator;
 
     //BVH
-    sphereBVH * bvh;
+    clothBVH * bvh;
 
 public:
     //assumption:
@@ -96,7 +96,7 @@ public:
 
     void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programID) override;
 
-    sphereBVH *getBvh() const override;
+    clothBVH *getBvh() const override;
 
     helperStruct isHovered(glm::vec3 origin, glm::vec3 direction) override;
 

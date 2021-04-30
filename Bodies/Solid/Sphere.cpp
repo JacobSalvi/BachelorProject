@@ -164,3 +164,45 @@ int sphere::returnType() {
     return 0;
 }
 
+mouseIntersectStruct sphere::isHovered(glm::vec3 origin, glm::vec3 direction, glm::mat4 superModel) {
+    //return struct
+    mouseIntersectStruct toReturn;
+    toReturn.isMouseOver = false;
+
+    //i don't even know
+    glm::mat4 whatEven = superModel*getModel();
+
+    //sphere center
+    glm::vec3 center(whatEven[3][0], whatEven[3][1], whatEven[3][2]);
+
+    //transformation into local coordinate system
+    glm::mat4 M_ = glm::inverse(whatEven);
+    glm::vec4 orHelper = M_ * glm::vec4(origin, 1.0f);
+    glm::vec3 origin_(orHelper.x, orHelper.y, orHelper.z);
+    glm::vec4 dirHelper = M_ * glm::vec4(direction, 0.0f);
+    glm::vec3 d_(dirHelper.x, dirHelper.y, dirHelper.z);
+    d_ = glm::normalize(d_);
+
+    float t = -glm::dot(origin_, d_);
+
+    float d2 = glm::dot(origin_, origin_) - t * t;
+
+    if (d2 > 1.0f) {
+        //no intersection
+        return toReturn;
+    } else {
+        //intersection
+        float dt = sqrt(1.0 - d2);
+        float t1 = t - dt;
+
+        //intersected point on the sphere
+        glm::vec3 p_ = origin_ + t1 * d_;
+
+        //savings the intersection data in the struct
+        toReturn.isMouseOver = true;
+        toReturn.point = glm::vec3(whatEven * glm::vec4(p_, 1.0f));
+
+        return toReturn;
+    }
+}
+

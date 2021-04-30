@@ -37,9 +37,9 @@ add_executable(projectPleaseWork
         Bodies/Solid/collidable.h Bodies/Solid/Sphere.cpp Bodies/Solid/Sphere.h Bodies/Solid/cube.cpp Bodies/Solid/cube.h
         Bodies/Solid/plane.cpp Bodies/Solid/plane.h
         utilities/helperFunctions.cpp shaders/helperStruct.h utilities/helperFunctions.h Bodies/Solid/mouseIntersectStruct.h
-        BVH/BVH.cpp BVH/BVH.h BVH/sphereBVH.cpp BVH/sphereBVH.h utilities/multiThreading.h utilities/multiThreading.cpp
+        BVH/clothBVH.cpp BVH/clothBVH.h utilities/multiThreading.h utilities/multiThreading.cpp
         utilities/skybox.cpp utilities/skybox.h utilities/stb_image.h Bodies/Deformable/deformableSphere.cpp
-        Bodies/Deformable/deformableSphere.h Bodies/Deformable/deformableObjects.cpp Bodies/Deformable/deformableObjects.h)
+        Bodies/Deformable/deformableSphere.h Bodies/Deformable/deformableObjects.cpp Bodies/Deformable/deformableObjects.h BVH/defSphereBVH.cpp BVH/defSphereBVH.h BVH/BVH.cpp BVH/BVH.h)
 
 target_link_libraries(projectPleaseWork
         ${ALL_LIBS}

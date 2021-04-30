@@ -1,9 +1,9 @@
 #include <glm/gtc/matrix_transform.hpp>
-#include "sphereBVH.h"
+#include "clothBVH.h"
 #include "../utilities/helperFunctions.h"
 
 
-sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : p(particles) {
+clothBVH::clothBVH(std::vector<particle *> particles, int row) : BVH(particles) {
     //needed information
     glm::vec3 p0 = particles[0]->getPosition();
     glm::vec3 direction = particles[particles.size() - 1]->getPosition() - p0;
@@ -11,7 +11,7 @@ sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : p(particles) 
     //get radius
     float r = glm::length(direction);
     r /= 2.0f;
-    sphereBVH::radius = r;
+    clothBVH::radius = r;
     //get center
     glm::vec3 c = p0 + r * glm::normalize(direction);
 
@@ -25,7 +25,7 @@ sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : p(particles) 
         //I discovered painstakingly that the order of operations matters
         internalSphereModel = glm::translate(internalSphereModel, c);
         internalSphereModel = glm::scale(internalSphereModel, glm::vec3(2.0 * r, 2.0 * r, 2.0 * r));
-        sphereBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(0, 0, 0));
+        clothBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(0, 0, 0));
         return;
     }
 
@@ -158,22 +158,22 @@ sphereBVH::sphereBVH(std::vector<particle *> particles, int row) : p(particles) 
     }
 
     //recursively make children
-    child0 = !v0.empty() ? new sphereBVH(v0, childRow) : nullptr;
-    child1 = !v1.empty() ? new sphereBVH(v1, childRow) : nullptr;
-    child2 = !v2.empty() ? new sphereBVH(v2, childRow) : nullptr;
-    child3 = !v3.empty() ? new sphereBVH(v3, childRow) : nullptr;
+    child0 = !v0.empty() ? new clothBVH(v0, childRow) : nullptr;
+    child1 = !v1.empty() ? new clothBVH(v1, childRow) : nullptr;
+    child2 = !v2.empty() ? new clothBVH(v2, childRow) : nullptr;
+    child3 = !v3.empty() ? new clothBVH(v3, childRow) : nullptr;
 
     //sphere and model matrix for the sphere
     glm::mat4 internalSphereModel = glm::mat4(1);
     internalSphereModel = glm::translate(internalSphereModel, c);
     internalSphereModel = glm::scale(internalSphereModel, glm::vec3(2.0 * r, 2.0 * r, 2.0 * r));
 
-    sphereBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(-4, 10, 5));
+    clothBVH::sphereShown = new sphere(10, internalSphereModel, glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(-4, 10, 5));
 
 }
 
-void sphereBVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programId, bool wireFrame,
-                       glm::mat4 model) {
+void clothBVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programId, bool wireFrame,
+                      glm::mat4 model) {
     sphereShown->render(ProjectionMatrix, ViewMatrix, programId, wireFrame, model);
     if (child0 != nullptr) {
         child0->render(ProjectionMatrix, ViewMatrix, programId, wireFrame, model);
@@ -190,17 +190,13 @@ void sphereBVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint 
 
 }
 
-sphere *sphereBVH::getSphereShown() const {
-    return sphereShown;
-}
-
-helperStruct sphereBVH::rayIntersect(glm::vec3 origin, glm::vec3 direction, glm::mat4 model) {
+helperStruct clothBVH::rayIntersect(glm::vec3 origin, glm::vec3 direction, glm::mat4 model) {
     //to make the compiler happy while I code
     helperStruct toReturn;
     toReturn.isMouseOver = false;
 
     //do we intersect the sphere?
-    if (sphereBVH::sphereShown->rayIntersect(origin, direction, model)) {
+    if (clothBVH::sphereShown->rayIntersect(origin, direction, model)) {
         //are we a leaf?
         if (child0 == nullptr) {
             //must invert the model matrix
@@ -300,17 +296,17 @@ helperStruct sphereBVH::rayIntersect(glm::vec3 origin, glm::vec3 direction, glm:
     return toReturn;
 }
 
-void sphereBVH::update() {
+void clothBVH::update() {
     //basically recreate the sphere
     //find the two point that are the furthest apart
     particle *p1;
     particle *p2;
     float furthestDistance = -1.0f;
     //TODO: maybe size -1
-    for (int i = 0; i < sphereBVH::p.size(); ++i) {
-        for (int j = i + 1; j < sphereBVH::p.size(); ++j) {
-            particle *first = sphereBVH::p[i];
-            particle *second = sphereBVH::p[j];
+    for (int i = 0; i < clothBVH::p.size(); ++i) {
+        for (int j = i + 1; j < clothBVH::p.size(); ++j) {
+            particle *first = clothBVH::p[i];
+            particle *second = clothBVH::p[j];
             float tmp = glm::length(first->getPosition() - second->getPosition());
             if (tmp > furthestDistance) {
                 furthestDistance = tmp;
@@ -326,7 +322,7 @@ void sphereBVH::update() {
     //new sphere radius
     float r = glm::length(direction);
     r /= 2.0f;
-    sphereBVH::radius = r;
+    clothBVH::radius = r;
     //new sphere center
     glm::vec3 c = p1->getPosition() + r * glm::normalize(direction);
 
@@ -336,16 +332,16 @@ void sphereBVH::update() {
     //I discovered painstakingly that the order of operations matters
     internalSphereModel = glm::translate(internalSphereModel, c);
     internalSphereModel = glm::scale(internalSphereModel, glm::vec3(2.0 * r, 2.0 * r, 2.0 * r));
-    sphereBVH::sphereShown->setModel(internalSphereModel);
+    clothBVH::sphereShown->setModel(internalSphereModel);
 
     //update children
-    if (sphereBVH::child0 != nullptr) sphereBVH::child0->update();
-    if (sphereBVH::child1 != nullptr) sphereBVH::child1->update();
-    if (sphereBVH::child2 != nullptr) sphereBVH::child2->update();
-    if (sphereBVH::child3 != nullptr) sphereBVH::child3->update();
+    if (clothBVH::child0 != nullptr) clothBVH::child0->update();
+    if (clothBVH::child1 != nullptr) clothBVH::child1->update();
+    if (clothBVH::child2 != nullptr) clothBVH::child2->update();
+    if (clothBVH::child3 != nullptr) clothBVH::child3->update();
 }
 
-void sphereBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
+void clothBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
     //the internal model plus our model give us the position of the sphere
     glm::mat4 internalModel = sphereShown->getModel();
     glm::mat4 actualModel = outModel * internalModel;
@@ -380,20 +376,20 @@ void sphereBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
 
                     //let's set the collision force for the particle
                     //since I have no indication what k should be I will wing it
-                    i->setCollisionForce(3000.0f*(intersectionPoint-point));
+                    i->setCollisionForce(2000.0f*(intersectionPoint-point));
                 }
             }
         } else {
             //otherwise recursively check the children
-            if (sphereBVH::child0 != nullptr) sphereBVH::child0->detectCollisionSphere(outModel, obj);
-            if (sphereBVH::child1 != nullptr) sphereBVH::child1->detectCollisionSphere(outModel, obj);
-            if (sphereBVH::child2 != nullptr) sphereBVH::child2->detectCollisionSphere(outModel, obj);
-            if (sphereBVH::child3 != nullptr) sphereBVH::child3->detectCollisionSphere(outModel, obj);
+            if (clothBVH::child0 != nullptr) clothBVH::child0->detectCollisionSphere(outModel, obj);
+            if (clothBVH::child1 != nullptr) clothBVH::child1->detectCollisionSphere(outModel, obj);
+            if (clothBVH::child2 != nullptr) clothBVH::child2->detectCollisionSphere(outModel, obj);
+            if (clothBVH::child3 != nullptr) clothBVH::child3->detectCollisionSphere(outModel, obj);
         }
     }
 }
 
-void sphereBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
+void clothBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
     //the internal model plus our model give us the position of the sphere
     glm::mat4 internalModel = sphereShown->getModel();
     glm::mat4 actualModel = outModel * internalModel;
@@ -494,10 +490,10 @@ void sphereBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
             }
 
         } else {
-            if (sphereBVH::child0 != nullptr) sphereBVH::child0->detectCollisionCube(outModel, obj);
-            if (sphereBVH::child1 != nullptr) sphereBVH::child1->detectCollisionCube(outModel, obj);
-            if (sphereBVH::child2 != nullptr) sphereBVH::child2->detectCollisionCube(outModel, obj);
-            if (sphereBVH::child3 != nullptr) sphereBVH::child3->detectCollisionCube(outModel, obj);
+            if (clothBVH::child0 != nullptr) clothBVH::child0->detectCollisionCube(outModel, obj);
+            if (clothBVH::child1 != nullptr) clothBVH::child1->detectCollisionCube(outModel, obj);
+            if (clothBVH::child2 != nullptr) clothBVH::child2->detectCollisionCube(outModel, obj);
+            if (clothBVH::child3 != nullptr) clothBVH::child3->detectCollisionCube(outModel, obj);
         }
     }
 }
@@ -507,7 +503,7 @@ void sphereBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
 //that has no height, for the sake of the collision detection
 //I am gonna give it an artificial height
 //so basically it is the same as a cube/box
-void sphereBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
+void clothBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
     //the internal model plus our model give us the position of the sphere
     glm::mat4 internalModel = sphereShown->getModel();
     glm::mat4 actualModel = outModel * internalModel;
@@ -546,14 +542,10 @@ void sphereBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
             }
 
         } else {
-            if (sphereBVH::child0 != nullptr) sphereBVH::child0->detectCollisionPlane(outModel, obj);
-            if (sphereBVH::child1 != nullptr) sphereBVH::child1->detectCollisionPlane(outModel, obj);
-            if (sphereBVH::child2 != nullptr) sphereBVH::child2->detectCollisionPlane(outModel, obj);
-            if (sphereBVH::child3 != nullptr) sphereBVH::child3->detectCollisionPlane(outModel, obj);
+            if (clothBVH::child0 != nullptr) clothBVH::child0->detectCollisionPlane(outModel, obj);
+            if (clothBVH::child1 != nullptr) clothBVH::child1->detectCollisionPlane(outModel, obj);
+            if (clothBVH::child2 != nullptr) clothBVH::child2->detectCollisionPlane(outModel, obj);
+            if (clothBVH::child3 != nullptr) clothBVH::child3->detectCollisionPlane(outModel, obj);
         }
     }
-}
-
-sphereBVH::sphereBVH() {
-
 }

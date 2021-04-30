@@ -1,6 +1,7 @@
 
 #include "deformableSphere.h"
 #include "../../utilities/helperFunctions.h"
+#include "../../BVH/defSphereBVH.h"
 
 //sorting based on y
 bool sortHelperY(particle *a, particle *b) {
@@ -16,8 +17,8 @@ bool sortHelperAngle(particle *a, particle *b) {
     return angle1 < angle2;
 }
 
-deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) : deformableObjects(-1.0f, mod,
-                                                                                                       lPos), size(6) {
+deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) : deformableObjects(-3.0f, mod,
+                                                                                                       lPos), size(8) {
     //I fear that a too detailed sphere might
     //burn my cpu, so for now it will have size of <10
     vertexBuffer = new float[size * size * 18];
@@ -27,9 +28,7 @@ deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPo
     //the same vertex in the particles
     std::vector<particle *> helper;
 
-    int vertPos = 0;
     int colPos = 0;
-    int id = 0;
     float step = (float) 1 / size;
     float u = 0.0f;
     for (int i = 0; i < size; ++i) {
@@ -53,44 +52,11 @@ deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPo
             double z3 = t * sin(2 * M_PI * (u + step));
             double y3 = cos(M_PI * (v + step));
 
-//            vertexBuffer[vertPos++] = x1;
-//            vertexBuffer[vertPos++] = y1;
-//            vertexBuffer[vertPos++] = z1;
-//
-//            vertexBuffer[vertPos++] = x3;
-//            vertexBuffer[vertPos++] = y3;
-//            vertexBuffer[vertPos++] = z3;
-//
-//            vertexBuffer[vertPos++] = x2;
-//            vertexBuffer[vertPos++] = y2;
-//            vertexBuffer[vertPos++] = z2;
-//
-//            vertexBuffer[vertPos++] = x1;
-//            vertexBuffer[vertPos++] = y1;
-//            vertexBuffer[vertPos++] = z1;
-//
-//            vertexBuffer[vertPos++] = x4;
-//            vertexBuffer[vertPos++] = y4;
-//            vertexBuffer[vertPos++] = z4;
-//
-//            vertexBuffer[vertPos++] = x3;
-//            vertexBuffer[vertPos++] = y3;
-//            vertexBuffer[vertPos++] = z3;
-
             //add particles
             particle *p1 = new particle(glm::vec3(x1 / 2.0f, y1 / 2.0f, z1 / 2.0f), 1.0f);
             particle *p2 = new particle(glm::vec3(x2 / 2.0f, y2 / 2.0f, z2 / 2.0f), 1.0f);
             particle *p3 = new particle(glm::vec3(x3 / 2.0f, y3 / 2.0f, z3 / 2.0f), 1.0f);
             particle *p4 = new particle(glm::vec3(x4 / 2.0f, y4 / 2.0f, z4 / 2.0f), 1.0f);
-
-            //set id
-            if (id == 0) {
-                specialParticles.push_back(p1);
-            }
-//            p1->setId(id++);
-//            p2->setId(id++);
-//            p3->setId(id++);
-//            p4->setId(id++);
 
             helper.push_back(p1);
             helper.push_back(p2);
@@ -138,7 +104,6 @@ deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPo
         std::sort(helper.begin() + 1 + i * size, helper.begin() + 1 + (i + 1) * size, sortHelperAngle);
     }
 
-    std::cout << "helper has size: " << helper.size() << std::endl;
     //set the id in a meaningful way
     //and finally set the particle vector
     for (int i = 0; i < helper.size(); ++i) {
@@ -150,20 +115,16 @@ deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPo
         particles.push_back(helper[i]);
     }
 
+    specialParticles.push_back(particles[0]);
+
     //springs
     for (int i = 0; i < particles.size(); ++i) {
         for (int j = i + 1; j < particles.size(); ++j) {
             float dist = glm::length(particles[i]->getPosition() - particles[j]->getPosition());
-            springs.push_back(new spring(dist, 20, .95, particles[i], particles[j]));
+            springs.push_back(new spring(dist, 50, .2, particles[i], particles[j]));
         }
     }
 
-    std::cout << "number of springs: " << springs.size() << std::endl;
-
-    //unit sphere
-//    for (int i = 0; i < size * size * 18; ++i) {
-//        vertexBuffer[i] = vertexBuffer[i] / 2.0f;
-//    }
     updateBuffer();
 
     //normals are the same as the vertex
@@ -171,13 +132,8 @@ deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPo
 
     setGLuint();
 
-    //temporary stuff to avoid crashes
-    std::vector<particle *> name;
-    name.push_back(new particle(glm::vec3(0, 0, 0), 1));
-    name.push_back(new particle(glm::vec3(0, 1, 0), 1));
-    name.push_back(new particle(glm::vec3(0, 1, 1), 1));
-    name.push_back(new particle(glm::vec3(0, 0, 1), 1));
-    bvh = new sphereBVH(name, 2);
+    //making the bvh
+    bvh = new defSphereBVH(particles, 0.5f, glm::vec3(0.0f,0.0f,0.0f));
 }
 
 void deformableSphere::setGLuint() {
@@ -212,63 +168,68 @@ int deformableSphere::getNumberOfVertices() {
 
 void deformableSphere::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programID) {
     deformableObjects::render(ProjectionMatrix, ViewMatrix, programID);
+#if 0
+    bvh->render(ProjectionMatrix, ViewMatrix, programID, true, getModelMatrix());
+#endif
 }
 
 helperStruct deformableSphere::isHovered(glm::vec3 origin, glm::vec3 direction) {
+    helperStruct toReturn = deformableSphere::bvh->rayIntersect(origin, direction, modelMatrix);
+    return toReturn;
 //return struct
-    helperStruct toReturn;
-    toReturn.isMouseOver = false;
-
-    //i don't even know
-    glm::mat4 whatEven = getModelMatrix();
-
-    //sphere center
-    glm::vec3 center(whatEven[3][0], whatEven[3][1], whatEven[3][2]);
-
-    //transformation into local coordinate system
-    glm::mat4 M_ = glm::inverse(whatEven);
-    glm::vec4 orHelper = M_ * glm::vec4(origin, 1.0f);
-    glm::vec3 origin_(orHelper.x, orHelper.y, orHelper.z);
-    glm::vec4 dirHelper = M_ * glm::vec4(direction, 0.0f);
-    glm::vec3 d_(dirHelper.x, dirHelper.y, dirHelper.z);
-    d_ = glm::normalize(d_);
-
-    float t = -glm::dot(origin_, d_);
-
-    float d2 = glm::dot(origin_, origin_) - t * t;
-
-    if (d2 > 1.0f) {
-        //no intersection
-        return toReturn;
-    } else {
-        //intersection
-        float dt = sqrt(1.0 - d2);
-        float t1 = t - dt;
-
-        //intersected point on the sphere
-        glm::vec3 p_ = origin_ + t1 * d_;
-        float distance = 10000.0f;
-        particle *closest;
-
-        for (auto i : particles) {
-            if (glm::length(i->getPosition() - p_) <= distance) {
-                closest = i;
-                distance = glm::length(i->getPosition() - p_);
-            }
-        }
-
-        //savings the intersection data in the struct
-        toReturn.isMouseOver = true;
-        toReturn.point = closest;
-        return toReturn;
-    }
+//    helperStruct toReturn;
+//    toReturn.isMouseOver = false;
+//
+//    //i don't even know
+//    glm::mat4 whatEven = getModelMatrix();
+//
+//    //sphere center
+//    glm::vec3 center(whatEven[3][0], whatEven[3][1], whatEven[3][2]);
+//
+//    //transformation into local coordinate system
+//    glm::mat4 M_ = glm::inverse(whatEven);
+//    glm::vec4 orHelper = M_ * glm::vec4(origin, 1.0f);
+//    glm::vec3 origin_(orHelper.x, orHelper.y, orHelper.z);
+//    glm::vec4 dirHelper = M_ * glm::vec4(direction, 0.0f);
+//    glm::vec3 d_(dirHelper.x, dirHelper.y, dirHelper.z);
+//    d_ = glm::normalize(d_);
+//
+//    float t = -glm::dot(origin_, d_);
+//
+//    float d2 = glm::dot(origin_, origin_) - t * t;
+//
+//    if (d2 > 1.0f) {
+//        //no intersection
+//        return toReturn;
+//    } else {
+//        //intersection
+//        float dt = sqrt(1.0 - d2);
+//        float t1 = t - dt;
+//
+//        //intersected point on the sphere
+//        glm::vec3 p_ = origin_ + t1 * d_;
+//        float distance = 10000.0f;
+//        particle *closest;
+//
+//        for (auto i : particles) {
+//            if (glm::length(i->getPosition() - p_) <= distance) {
+//                closest = i;
+//                distance = glm::length(i->getPosition() - p_);
+//            }
+//        }
+//
+//        //savings the intersection data in the struct
+//        toReturn.isMouseOver = true;
+//        toReturn.point = closest;
+//        return toReturn;
+//    }
 }
 
 void deformableSphere::integrate(float timeDelta) {
     deformableSphere::rungeKutta(timeDelta);
 }
 
-sphereBVH *deformableSphere::getBvh() const {
+BVH *deformableSphere::getBvh() const {
     return bvh;
 }
 
@@ -327,7 +288,6 @@ void deformableSphere::rungeKutta(float timeDelta) {
 // total number of particles
 // 2 + size*(size-1)
 //number of triangles (size^2)*2
-//TODO: luci sminchie da riparare
 void deformableSphere::updateBuffer() {
     int currPart = 0;
     int pos = 0;
@@ -449,4 +409,31 @@ void deformableSphere::reset() {
 
     //reset vertexbuffer
     deformableSphere::updateBuffer();
+
+    //reset bvh
+    bvh->update();
+}
+
+deformableSphere::~deformableSphere() {
+    std::cout<<"def sphere destroyed"<<std::endl;
+}
+
+void deformableSphere::detectCollision(collidable *obj) {
+    switch(obj->returnType()){
+        case 0:
+            //collision with sphere
+            deformableSphere::bvh->detectCollisionSphere(modelMatrix, obj);
+            break;
+        case 1:
+            //collision with cube
+            deformableSphere::bvh->detectCollisionCube(modelMatrix, obj);
+            break;
+        case 2:
+            //collision with plane
+            deformableSphere::bvh->detectCollisionPlane(modelMatrix, obj);
+            break;
+        default:
+            std::cout<<"something went wrong"<<std::endl;
+            break;
+    }
 }

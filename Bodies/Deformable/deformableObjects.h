@@ -7,11 +7,11 @@
 #include "particle.h"
 #include "spring.hpp"
 #include "../Solid/collidable.h"
-#include "../../BVH/sphereBVH.h"
+#include "../../BVH/BVH.h"
 #include "../../shaders/helperStruct.h"
 
 
-class sphereBVH;
+class BVH;
 struct helperStruct;
 
 class deformableObjects {
@@ -89,7 +89,7 @@ public:
 
     virtual void detectCollision(collidable * obj);
 
-    virtual sphereBVH *getBvh() const;
+    virtual BVH *getBvh() const;
 
     virtual void reset();
 

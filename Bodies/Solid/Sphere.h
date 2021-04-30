@@ -25,6 +25,8 @@ public:
 
     mouseIntersectStruct isHovered(glm::vec3 origin, glm::vec3 direction) override;
 
+    mouseIntersectStruct isHovered(glm::vec3 origin, glm::vec3 direction, glm::mat4 superModel);
+
     int returnType() override;
 };
 

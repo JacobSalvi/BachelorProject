@@ -111,7 +111,7 @@ deformableObjects(gravity, mod, lPos), row(row), col(col), integrator(integrator
 //    net::modelMatrix=model;
 
     //bounding volume hierarchy
-    net::bvh=new sphereBVH(particles, row);
+    net::bvh=new clothBVH(particles, row);
 
     //normal
     //the cloth are always initially created as vertical planes
@@ -427,7 +427,7 @@ GLuint net::getColour() const {
     return colour;
 }
 
-sphereBVH *net::getBvh() const {
+clothBVH *net::getBvh() const {
     return bvh;
 }
 

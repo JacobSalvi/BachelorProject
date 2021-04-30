@@ -580,32 +580,59 @@ BVH/BVH.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.s
 .PHONY : BVH/BVH.cpp.s
 
-BVH/sphereBVH.o: BVH/sphereBVH.cpp.o
+BVH/clothBVH.o: BVH/clothBVH.cpp.o
 
-.PHONY : BVH/sphereBVH.o
+.PHONY : BVH/clothBVH.o
 
 # target to build an object file
-BVH/sphereBVH.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o
-.PHONY : BVH/sphereBVH.cpp.o
+BVH/clothBVH.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/clothBVH.cpp.o
+.PHONY : BVH/clothBVH.cpp.o
 
-BVH/sphereBVH.i: BVH/sphereBVH.cpp.i
+BVH/clothBVH.i: BVH/clothBVH.cpp.i
 
-.PHONY : BVH/sphereBVH.i
+.PHONY : BVH/clothBVH.i
 
 # target to preprocess a source file
-BVH/sphereBVH.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.i
-.PHONY : BVH/sphereBVH.cpp.i
+BVH/clothBVH.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/clothBVH.cpp.i
+.PHONY : BVH/clothBVH.cpp.i
 
-BVH/sphereBVH.s: BVH/sphereBVH.cpp.s
+BVH/clothBVH.s: BVH/clothBVH.cpp.s
 
-.PHONY : BVH/sphereBVH.s
+.PHONY : BVH/clothBVH.s
 
 # target to generate assembly for a file
-BVH/sphereBVH.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.s
-.PHONY : BVH/sphereBVH.cpp.s
+BVH/clothBVH.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/clothBVH.cpp.s
+.PHONY : BVH/clothBVH.cpp.s
+
+BVH/defSphereBVH.o: BVH/defSphereBVH.cpp.o
+
+.PHONY : BVH/defSphereBVH.o
+
+# target to build an object file
+BVH/defSphereBVH.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/defSphereBVH.cpp.o
+.PHONY : BVH/defSphereBVH.cpp.o
+
+BVH/defSphereBVH.i: BVH/defSphereBVH.cpp.i
+
+.PHONY : BVH/defSphereBVH.i
+
+# target to preprocess a source file
+BVH/defSphereBVH.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/defSphereBVH.cpp.i
+.PHONY : BVH/defSphereBVH.cpp.i
+
+BVH/defSphereBVH.s: BVH/defSphereBVH.cpp.s
+
+.PHONY : BVH/defSphereBVH.s
+
+# target to generate assembly for a file
+BVH/defSphereBVH.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/defSphereBVH.cpp.s
+.PHONY : BVH/defSphereBVH.cpp.s
 
 Bodies/Deformable/deformableObjects.o: Bodies/Deformable/deformableObjects.cpp.o
 
@@ -1191,9 +1218,12 @@ help:
 	@echo "... BVH/BVH.o"
 	@echo "... BVH/BVH.i"
 	@echo "... BVH/BVH.s"
-	@echo "... BVH/sphereBVH.o"
-	@echo "... BVH/sphereBVH.i"
-	@echo "... BVH/sphereBVH.s"
+	@echo "... BVH/clothBVH.o"
+	@echo "... BVH/clothBVH.i"
+	@echo "... BVH/clothBVH.s"
+	@echo "... BVH/defSphereBVH.o"
+	@echo "... BVH/defSphereBVH.i"
+	@echo "... BVH/defSphereBVH.s"
 	@echo "... Bodies/Deformable/deformableObjects.o"
 	@echo "... Bodies/Deformable/deformableObjects.i"
 	@echo "... Bodies/Deformable/deformableObjects.s"

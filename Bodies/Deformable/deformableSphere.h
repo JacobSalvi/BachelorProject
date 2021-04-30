@@ -11,9 +11,11 @@ private:
     //everytime we reset the object
     std::vector<glm::vec3> resetPos;
 
-    sphereBVH * bvh;
+    BVH * bvh;
 public:
     deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos);
+
+    virtual ~deformableSphere();
 
     void setGLuint() override;
 
@@ -27,13 +29,15 @@ public:
 
     helperStruct isHovered(glm::vec3 origin, glm::vec3 direction) override;
 
-    sphereBVH * getBvh() const override;
+    BVH * getBvh() const override;
 
     void rungeKutta(float timeDelta);
 
     void updateBuffer() override;
 
     void reset() override;
+
+    void detectCollision(collidable * obj) override;
 
 };
 

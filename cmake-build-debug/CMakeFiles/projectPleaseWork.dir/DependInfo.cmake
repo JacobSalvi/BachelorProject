@@ -5,7 +5,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o"
-  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/sphereBVH.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/BVH/sphereBVH.cpp.o"
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/clothBVH.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/BVH/clothBVH.cpp.o"
+  "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/defSphereBVH.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/BVH/defSphereBVH.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableSphere.cpp.o"
   "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.cpp" "/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o"

@@ -102,14 +102,16 @@ int main() {
 
     //standard: 4 5
     //for the cube using a 40 by 50 grid is better but it burns the cpu
-    //addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition);
+    addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition);
     //addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), model, lightPosition);
     //addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f), lightPosition);
 
     //deformable sphere
     glm::mat4 sMod(1);
     sMod = glm::translate(sMod, glm::vec3(-3, 0, 0));
-    addDefSphere(&objectList, glm::vec3(0,1,0), sMod ,lightPosition);
+    addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
+    sMod = glm::translate(sMod, glm::vec3(1,0,0));
+    addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -192,7 +194,7 @@ int main() {
                 shouldSimulate=false;
                 timer_start(1, objectList, collObjects);
             }
-            if(ImGui::Button("drop cloth")){
+            if(ImGui::Button("Drop")){
                 for(auto i: objectList){
                     i->emptySpecialParticles();
                 }

@@ -1,32 +1,24 @@
+
 #include "BVH.h"
 
-#include <utility>
+BVH::BVH(std::vector<particle *> part) :p(part){}
 
-
-
-BVH *BVH::getChild0() const {
-    return child0;
+sphere *BVH::getSphereShown() const {
+    return sphereShown;
 }
 
-BVH *BVH::getChild1() const {
-    return child1;
-}
+void BVH::update() {}
 
-BVH::BVH(BVH *child0, BVH *child1, BVH *child2, BVH *child3) :  child0(child0), child1(child1), child2(child2),
-                                                                                       child3(child3) {}
+void BVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {}
 
-BVH *BVH::getChild2() const {
-    return child2;
-}
+void BVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {}
 
-BVH *BVH::getChild3() const {
-    return child3;
-}
+void BVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {}
 
-BVH::BVH(std::vector<particle *> p) :p(std::move(p)){}
+void BVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programId, bool wireFrame, glm::mat4 model) {}
 
-void BVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, bool wireFrame, glm::mat4 model) {
-
+helperStruct BVH::rayIntersect(glm::vec3 origin, glm::vec3 direction, glm::mat4 model) {
+    return helperStruct();
 }
 
 

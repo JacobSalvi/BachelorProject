@@ -1,19 +1,28 @@
 #ifndef CODE_BVH_H
 #define CODE_BVH_H
-
-#include <GL/glew.h>
-#include <glm/glm.hpp>
-
-#include <vector>
+#include <glm/gtc/matrix_transform.hpp>
+#include "vector"
 #include "../Bodies/Deformable/particle.h"
+#include "../Bodies/Solid/Sphere.h"
 #include "../shaders/helperStruct.h"
 
-//bounding volume hierarchy needed to avoid
-//turning the cpu in a toaster
 
-//TODO: sphere? boxes? convex hull?
+struct helperStruct;
+
 class BVH {
 protected:
+    //particles
+    std::vector<particle *> p;
+
+
+    //center and radius of the sphere
+    glm::vec3 center;
+    float radius;
+
+    //actual sphere that will be shown
+    //since I already have a class for this I  could as well use it
+    sphere *sphereShown;
+
     //four children
     //if child0 is NULL, we have a lead
     BVH * child0=NULL;
@@ -21,26 +30,24 @@ protected:
     BVH * child2=NULL;
     BVH * child3=NULL;
 
-    //particles
-    std::vector<particle *> p;
-
 public:
-    BVH(std::vector<particle *> p);
+    BVH(std::vector<particle *> part);
 
+    sphere *getSphereShown() const;
 
-    BVH(BVH *child0, BVH *child1, BVH *child2, BVH *child3);
+    //virtual stuff
+    virtual void update();
 
-    BVH *getChild0() const;
+    virtual void detectCollisionSphere(glm::mat4 outModel, collidable * obj);
 
-    BVH *getChild1() const;
+    virtual void detectCollisionCube(glm::mat4 outModel, collidable * obj);
 
-    BVH *getChild2() const;
+    virtual void detectCollisionPlane(glm::mat4 outModel, collidable * obj);
 
-    BVH *getChild3() const;
+    virtual void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programId, bool wireFrame, glm::mat4 model);
 
-    virtual void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint triangleMatrixID, bool wireFrame, glm::mat4 model);
+    virtual helperStruct rayIntersect(glm::vec3 origin, glm::vec3 direction, glm::mat4 model);
 
-    //irtual helperStruct rayIntersect(glm::vec3 origin, glm::vec3 direction, glm::mat4 model);
 };
 
 
