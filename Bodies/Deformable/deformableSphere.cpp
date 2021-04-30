@@ -17,9 +17,9 @@ bool sortHelperAngle(particle *a, particle *b) {
 }
 
 deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) : deformableObjects(-1.0f, mod,
-                                                                                                       lPos), size(5) {
+                                                                                                       lPos), size(6) {
     //I fear that a too detailed sphere might
-    //burn my cpu, so for now it will have size of 10
+    //burn my cpu, so for now it will have size of <10
     vertexBuffer = new float[size * size * 18];
     colorBuffer = new float[size * size * 18];
 
@@ -53,29 +53,29 @@ deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPo
             double z3 = t * sin(2 * M_PI * (u + step));
             double y3 = cos(M_PI * (v + step));
 
-            vertexBuffer[vertPos++] = x1;
-            vertexBuffer[vertPos++] = y1;
-            vertexBuffer[vertPos++] = z1;
-
-            vertexBuffer[vertPos++] = x3;
-            vertexBuffer[vertPos++] = y3;
-            vertexBuffer[vertPos++] = z3;
-
-            vertexBuffer[vertPos++] = x2;
-            vertexBuffer[vertPos++] = y2;
-            vertexBuffer[vertPos++] = z2;
-
-            vertexBuffer[vertPos++] = x1;
-            vertexBuffer[vertPos++] = y1;
-            vertexBuffer[vertPos++] = z1;
-
-            vertexBuffer[vertPos++] = x4;
-            vertexBuffer[vertPos++] = y4;
-            vertexBuffer[vertPos++] = z4;
-
-            vertexBuffer[vertPos++] = x3;
-            vertexBuffer[vertPos++] = y3;
-            vertexBuffer[vertPos++] = z3;
+//            vertexBuffer[vertPos++] = x1;
+//            vertexBuffer[vertPos++] = y1;
+//            vertexBuffer[vertPos++] = z1;
+//
+//            vertexBuffer[vertPos++] = x3;
+//            vertexBuffer[vertPos++] = y3;
+//            vertexBuffer[vertPos++] = z3;
+//
+//            vertexBuffer[vertPos++] = x2;
+//            vertexBuffer[vertPos++] = y2;
+//            vertexBuffer[vertPos++] = z2;
+//
+//            vertexBuffer[vertPos++] = x1;
+//            vertexBuffer[vertPos++] = y1;
+//            vertexBuffer[vertPos++] = z1;
+//
+//            vertexBuffer[vertPos++] = x4;
+//            vertexBuffer[vertPos++] = y4;
+//            vertexBuffer[vertPos++] = z4;
+//
+//            vertexBuffer[vertPos++] = x3;
+//            vertexBuffer[vertPos++] = y3;
+//            vertexBuffer[vertPos++] = z3;
 
             //add particles
             particle *p1 = new particle(glm::vec3(x1 / 2.0f, y1 / 2.0f, z1 / 2.0f), 1.0f);
@@ -87,10 +87,10 @@ deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPo
             if (id == 0) {
                 specialParticles.push_back(p1);
             }
-            p1->setId(id++);
-            p2->setId(id++);
-            p3->setId(id++);
-            p4->setId(id++);
+//            p1->setId(id++);
+//            p2->setId(id++);
+//            p3->setId(id++);
+//            p4->setId(id++);
 
             helper.push_back(p1);
             helper.push_back(p2);
@@ -130,7 +130,7 @@ deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPo
     // we can sort the particle by y and counter clock wise rotation
     std::sort(helper.begin(), helper.end(), sortHelperY);
     //it bugged me to see the approximation
-    helper[helper.size() - 1]->setPosition(glm::vec3(0, 0.5, 0));
+    helper[helper.size() - 1]->setPosition(glm::vec3(0, -0.5, 0));
 
     //sorting based on the counter clockwise order
     //the first and last particle are ok
@@ -143,22 +143,28 @@ deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPo
     //and finally set the particle vector
     for (int i = 0; i < helper.size(); ++i) {
         helper[i]->setId(i);
+        //printPoint(helper[i]->getPosition(), "point i is");
+        //for the reset
+        resetPos.push_back(helper[i]->getPosition());
+
+        particles.push_back(helper[i]);
     }
 
     //springs
     for (int i = 0; i < particles.size(); ++i) {
         for (int j = i + 1; j < particles.size(); ++j) {
             float dist = glm::length(particles[i]->getPosition() - particles[j]->getPosition());
-            springs.push_back(new spring(dist, 100, .95, particles[i], particles[j]));
+            springs.push_back(new spring(dist, 20, .95, particles[i], particles[j]));
         }
     }
 
-    std::cout<<"number of springs: "<<springs.size()<<std::endl;
+    std::cout << "number of springs: " << springs.size() << std::endl;
 
     //unit sphere
-    for (int i = 0; i < size * size * 18; ++i) {
-        vertexBuffer[i] = vertexBuffer[i] / 2.0f;
-    }
+//    for (int i = 0; i < size * size * 18; ++i) {
+//        vertexBuffer[i] = vertexBuffer[i] / 2.0f;
+//    }
+    updateBuffer();
 
     //normals are the same as the vertex
     normalBuffer = vertexBuffer;
@@ -267,7 +273,6 @@ sphereBVH *deformableSphere::getBvh() const {
 }
 
 void deformableSphere::rungeKutta(float timeDelta) {
-
     std::vector<glm::vec3> a1;
     std::vector<glm::vec3> a2;
     //gravity
@@ -317,112 +322,131 @@ void deformableSphere::rungeKutta(float timeDelta) {
             particles[i]->setVelocity(vel);
         }
     }
-
 }
 
+// total number of particles
+// 2 + size*(size-1)
+//number of triangles (size^2)*2
+//TODO: luci sminchie da riparare
 void deformableSphere::updateBuffer() {
+    int currPart = 0;
     int pos = 0;
-    for (int i = 0; i < particles.size(); i += 4) {
-        glm::vec3 p0 = particles[i]->getPosition();
-        glm::vec3 p1 = particles[i + 1]->getPosition();
-        glm::vec3 p2 = particles[i + 2]->getPosition();
-        glm::vec3 p3 = particles[i + 3]->getPosition();
+    while (currPart < particles.size()) {
+        //top point
+        if (currPart == 0) {
+            glm::vec3 top = particles[0]->getPosition();
+            for (int i = 1; i <= size; ++i) {
+                glm::vec3 l;
+                glm::vec3 r;
+                if (i == size) {
+                    l = particles[i]->getPosition();
+                    r = particles[1]->getPosition();
+                } else {
+                    l = particles[i]->getPosition();
+                    r = particles[i + 1]->getPosition();
+                }
+                vertexBuffer[pos++] = top.x;
+                vertexBuffer[pos++] = top.y;
+                vertexBuffer[pos++] = top.z;
 
-        vertexBuffer[pos++] = p0[0];
-        vertexBuffer[pos++] = p0[1];
-        vertexBuffer[pos++] = p0[2];
+                vertexBuffer[pos++] = l.x;
+                vertexBuffer[pos++] = l.y;
+                vertexBuffer[pos++] = l.z;
 
-        vertexBuffer[pos++] = p2[0];
-        vertexBuffer[pos++] = p2[1];
-        vertexBuffer[pos++] = p2[2];
+                vertexBuffer[pos++] = r.x;
+                vertexBuffer[pos++] = r.y;
+                vertexBuffer[pos++] = r.z;
+            }
+            currPart++;
+        } else if (currPart == particles.size() - 1 - size) {
+            //last layer
+            glm::vec3 bottom = particles[particles.size() - 1]->getPosition();
+            for (int i = currPart; i < currPart + size; ++i) {
+                glm::vec3 l;
+                glm::vec3 r;
+                if (i == particles.size() - 2) {
+                    l = particles[i]->getPosition();
+                    r = particles[currPart]->getPosition();
+                } else {
+                    l = particles[i]->getPosition();
+                    r = particles[i + 1]->getPosition();
+                }
+                vertexBuffer[pos++] = l.x;
+                vertexBuffer[pos++] = l.y;
+                vertexBuffer[pos++] = l.z;
 
-        vertexBuffer[pos++] = p1[0];
-        vertexBuffer[pos++] = p1[1];
-        vertexBuffer[pos++] = p1[2];
+                vertexBuffer[pos++] = bottom.x;
+                vertexBuffer[pos++] = bottom.y;
+                vertexBuffer[pos++] = bottom.z;
 
-        vertexBuffer[pos++] = p0[0];
-        vertexBuffer[pos++] = p0[1];
-        vertexBuffer[pos++] = p0[2];
+                vertexBuffer[pos++] = r.x;
+                vertexBuffer[pos++] = r.y;
+                vertexBuffer[pos++] = r.z;
+            }
+            break;
+        } else {
+            //layers in between
+            glm::vec3 tl;
+            glm::vec3 bl;
+            glm::vec3 tr;
+            glm::vec3 br;
+            if(currPart%size==0) {
+                tl=particles[currPart]->getPosition();
+                bl=particles[currPart+size]->getPosition();
+                tr=particles[currPart+1-size]->getPosition();
+                br=particles[currPart+1]->getPosition();
 
-        vertexBuffer[pos++] = p3[0];
-        vertexBuffer[pos++] = p3[1];
-        vertexBuffer[pos++] = p3[2];
+            }else{
+                tl=particles[currPart]->getPosition();
+                tr=particles[currPart+1]->getPosition();
+                bl=particles[currPart+size]->getPosition();
+                br=particles[currPart+size+1]->getPosition();
+            }
+            //the two triangles now
+            vertexBuffer[pos++] = tl.x;
+            vertexBuffer[pos++] = tl.y;
+            vertexBuffer[pos++] = tl.z;
 
-        vertexBuffer[pos++] = p2[0];
-        vertexBuffer[pos++] = p2[1];
-        vertexBuffer[pos++] = p2[2];
+            vertexBuffer[pos++] = bl.x;
+            vertexBuffer[pos++] = bl.y;
+            vertexBuffer[pos++] = bl.z;
+
+            vertexBuffer[pos++] = tr.x;
+            vertexBuffer[pos++] = tr.y;
+            vertexBuffer[pos++] = tr.z;
+
+            vertexBuffer[pos++] = tr.x;
+            vertexBuffer[pos++] = tr.y;
+            vertexBuffer[pos++] = tr.z;
+
+            vertexBuffer[pos++] = bl.x;
+            vertexBuffer[pos++] = bl.y;
+            vertexBuffer[pos++] = bl.z;
+
+            vertexBuffer[pos++] = br.x;
+            vertexBuffer[pos++] = br.y;
+            vertexBuffer[pos++] = br.z;
+            currPart++;
+        }
     }
 }
 
 void deformableSphere::reset() {
-    int vertPos = 0;
-    int id = 0;
-    float step = (float) 1 / size;
-    float u = 0.0f;
-    for (int i = 0; i < size; ++i) {
-        float v = 0.0f;
-        for (int j = 0; j < size; ++j) {
-            double t = sin(M_PI * v);
-            double x1 = t * cos(2 * M_PI * u) / 2.0f;
-            double z1 = t * sin(2 * M_PI * u) / 2.0f;
-            double y1 = cos(M_PI * v) / 2.0f;
-
-            double x4 = t * cos(2 * M_PI * (u + step)) / 2.0f;
-            double z4 = t * sin(2 * M_PI * (u + step)) / 2.0f;
-            double y4 = cos(M_PI * v) / 2.0f;
-
-            t = sin(M_PI * (v + step));
-            double x2 = t * cos(2 * M_PI * u) / 2.0f;
-            double z2 = t * sin(2 * M_PI * u) / 2.0f;
-            double y2 = cos(M_PI * (v + step)) / 2.0f;
-
-            double x3 = t * cos(2 * M_PI * (u + step)) / 2.0f;
-            double z3 = t * sin(2 * M_PI * (u + step)) / 2.0f;
-            double y3 = cos(M_PI * (v + step)) / 2.0f;
-
-            vertexBuffer[vertPos++] = x1;
-            vertexBuffer[vertPos++] = y1;
-            vertexBuffer[vertPos++] = z1;
-
-            //reset particles
-            particles[id]->setPosition(glm::vec3(x1, y1, z1));
-            particles[id]->setForce(glm::vec3(0, 0, 0));
-            particles[id++]->setVelocity(glm::vec3(0, 0, 0));
-
-            particles[id]->setPosition(glm::vec3(x2, y2, z2));
-            particles[id]->setForce(glm::vec3(0, 0, 0));
-            particles[id++]->setVelocity(glm::vec3(0, 0, 0));
-
-            particles[id]->setPosition(glm::vec3(x3, y3, z3));
-            particles[id]->setForce(glm::vec3(0, 0, 0));
-            particles[id++]->setVelocity(glm::vec3(0, 0, 0));
-
-            particles[id]->setPosition(glm::vec3(x4, y4, z4));
-            particles[id]->setForce(glm::vec3(0, 0, 0));
-            particles[id++]->setVelocity(glm::vec3(0, 0, 0));
-
-
-            vertexBuffer[vertPos++] = x3;
-            vertexBuffer[vertPos++] = y3;
-            vertexBuffer[vertPos++] = z3;
-
-            vertexBuffer[vertPos++] = x2;
-            vertexBuffer[vertPos++] = y2;
-            vertexBuffer[vertPos++] = z2;
-
-            vertexBuffer[vertPos++] = x1;
-            vertexBuffer[vertPos++] = y1;
-            vertexBuffer[vertPos++] = z1;
-
-            vertexBuffer[vertPos++] = x4;
-            vertexBuffer[vertPos++] = y4;
-            vertexBuffer[vertPos++] = z4;
-
-            vertexBuffer[vertPos++] = x3;
-            vertexBuffer[vertPos++] = y3;
-            vertexBuffer[vertPos++] = z3;
-            v += step;
-        }
-        u += step;
+    //reset particles position velocity and force
+    for(int i=0; i<particles.size();++i){
+        particles[i]->setPosition(resetPos[i]);
+        particles[i]->setVelocity(glm::vec3(0.0f,0.0f,0.0f));
+        particles[i]->setForce(glm::vec3(0.0f,0.0f,0.0f));
     }
+
+    //reset wind and gravity
+    deformableSphere::wind= glm::vec3(0,0,0);
+    deformableSphere::gravity=-1;
+
+    //reset hanging particle
+    deformableSphere::specialParticles.clear();
+    deformableSphere::specialParticles.push_back(particles[0]);
+
+    //reset vertexbuffer
+    deformableSphere::updateBuffer();
 }

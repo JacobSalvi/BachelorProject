@@ -7,6 +7,10 @@ class deformableSphere : public deformableObjects{
 private:
     int size;
 
+    //to avoid recalculating all of the positions
+    //everytime we reset the object
+    std::vector<glm::vec3> resetPos;
+
     sphereBVH * bvh;
 public:
     deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos);
