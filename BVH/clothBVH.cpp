@@ -354,6 +354,9 @@ void clothBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
     //printPoint(s2, "???");
     float r2 = obj->getModel()[0][0] / 2.0f;
 
+    //cheating a little
+    r2+=0.1;
+
     if (glm::length(s1 - s2) <= r1 + r2) {
         //we are intersecting the BVH, potentially intersecting the cloth
         //if we are a leaf check if we actually intersect the clot
@@ -376,7 +379,7 @@ void clothBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
 
                     //let's set the collision force for the particle
                     //since I have no indication what k should be I will wing it
-                    i->setCollisionForce(2000.0f*(intersectionPoint-point));
+                    i->setCollisionForce(100.0f*(intersectionPoint-point));
                 }
             }
         } else {
@@ -398,8 +401,8 @@ void clothBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
     float r = actualModel[0][0] / 2.0f;
 
     float distSquared = r * r;
-    glm::vec3 C1(-0.5, -0.5, -0.5);
-    glm::vec3 C2(0.5, 0.5, 0.5);
+    glm::vec3 C1(-0.6, -0.6, -0.6);
+    glm::vec3 C2(0.6, 0.6, 0.6);
     C1 = glm::vec3(obj->getModel() * (glm::vec4(C1, 1.0)));
     C2 = glm::vec3(obj->getModel() * (glm::vec4(C2, 1.0)));
 
@@ -416,6 +419,7 @@ void clothBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
         //cube intersect sphere
         if (child0 == nullptr) {
             //check if any particle is inside the cube
+            //TODO: stupid triangle triangle intersection
             for (auto i : p) {
                 glm::vec3 pos = glm::vec3(outModel*glm::vec4(i->getPosition(), 1));
                 if (C1.x <= pos.x && pos.x <= C2.x && C1.y <= pos.y && pos.y <= C2.y && C1.z <= pos.z &&

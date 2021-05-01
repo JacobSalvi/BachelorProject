@@ -97,7 +97,7 @@ int main() {
     //nvm, it worked
     std::vector<deformableObjects *> objectList;
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
+    model = glm::scale(model, glm::vec3(0.3,0.3,0.2));
     model = glm::translate(model, glm::vec3(0,0,0));
 
     //standard: 4 5
@@ -145,9 +145,9 @@ int main() {
     //Collidables
     std::vector<collidable *> collObjects;
     //sphere
-    addColl(&collObjects, 0, lightPosition);
+    //addColl(&collObjects, 0, lightPosition);
     //cube
-    //addColl(&collObjects,1, lightPosition);
+    addColl(&collObjects,1, lightPosition);
     //plane
     addColl(&collObjects, 2, lightPosition);
     std::cout<<"init successful"<<std::endl;
@@ -158,7 +158,7 @@ int main() {
     ImGui::StyleColorsDark();
     static int azimuthal = 90;
     static int polar = 90;
-    static float distance = 10.0f;
+    static float distance = 5.0f;
     static float wind[3]= {0.0f,0.0f,-1.0f};
     static float mass =1.0f;
     static float gravity = -1.0f;
@@ -273,9 +273,12 @@ int main() {
         glm::mat4 ViewMatrix = getViewMatrix();
 
         //Triangle
-        glUseProgram(triangleProgramID);
+        //glUseProgram(triangleProgramID);
         //to have a double faced surface
         glDisable(GL_CULL_FACE);
+
+        //I am not sure why rendering it first fixes everything but it does
+        sky->render(ProjectionMatrix, ViewMatrix);
 
         //drawing all of the objects
         for(int i=0; i<objectList.size();++i){
@@ -287,14 +290,11 @@ int main() {
 //                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture3, textureId3, programId);
 //            }
             objectList[i]->render(ProjectionMatrix, ViewMatrix, lightSysId);
-            //objectList[i]->getBvh()->render(ProjectionMatrix, ViewMatrix, lightSysId, true, glm::mat4(1));
         }
 
         for(auto i : collObjects){
             i->render(ProjectionMatrix, ViewMatrix, lightSysId, false);
         }
-
-        //sky->render(ProjectionMatrix, ViewMatrix, getCameraPosition());
 
         //gui stuff
         ImGui::Render();

@@ -23,7 +23,7 @@ public:
     ~skybox();
 
     //unexpectedly the render functions renders stuff
-    void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, glm::vec3 cPos);
+    void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix);
 
     //to load the skybox texture
     void loadTexture();
