@@ -750,6 +750,10 @@ vector
 BVH.h
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.h
 
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableCube.h
+deformableObjects.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h
+
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h
 GL/glew.h
 -
@@ -793,6 +797,10 @@ iostream
 -
 particle.h
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h
+
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/texturedCloth.h
+net.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.h
 
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
 glm/glm.hpp
@@ -929,8 +937,12 @@ imgui.h
 -
 ../Bodies/Deformable/net.h
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.h
+../Bodies/Deformable/texturedCloth.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/texturedCloth.h
 ../Bodies/Deformable/deformableSphere.h
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.h
+../Bodies/Deformable/deformableCube.h
+/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableCube.h
 ../shaders/helperStruct.h
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
 ../Bodies/Solid/Sphere.h

@@ -1714,6 +1714,12 @@
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/defSphereBVH.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableCube.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableCube.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.cpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>
@@ -1742,6 +1748,12 @@
 			<Option target="projectPleaseWork"/>
 		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/texturedCloth.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/texturedCloth.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.cpp">

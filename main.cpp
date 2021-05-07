@@ -108,10 +108,14 @@ int main() {
 
     //deformable sphere
     glm::mat4 sMod(1);
-    sMod = glm::translate(sMod, glm::vec3(-3, 0, 0));
+    sMod = glm::translate(sMod, glm::vec3(-3.4, 3, 0));
     addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
     sMod = glm::translate(sMod, glm::vec3(1,0,0));
-    addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
+    //addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
+
+    //deformable cube
+    sMod=glm::mat4(1);
+    //addDefCube(&objectList, glm::vec3(1,1,1), sMod, lightPosition);
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -122,7 +126,6 @@ int main() {
 
     //infinite wisdom
     GLuint programId = LoadShaders("shaders/vertexShader.vertexshader", "shaders/fragmentShader.fragmentshader");
-    GLuint matrixId = glGetUniformLocation(programId, "MVP");
     GLuint texture = loadDDS("shaders/idk.DDS");
     GLuint textureId = glGetUniformLocation(programId, "myTextureSampler");
     GLuint texture2 = loadDDS("shaders/dak2.DDS");
@@ -131,7 +134,9 @@ int main() {
     GLuint textureId3 = glGetUniformLocation(programId, "myTextureSampler");
 
     std::vector<helperStruct *> cultureList;
-//    culture(&objectList, glm::vec3(-8.0f, 0.0f,0.0f));
+    glm::mat4 cultureMod(1);
+    cultureMod = glm::translate(cultureMod, glm::vec3(1, 0,0));
+    //culture(&objectList, texture, textureId, cultureMod, lightPosition, programId);
 //    culture(&objectList, glm::vec3(0.0f, 0.0f,0.0f));
 //    culture(&objectList, glm::vec3(8.0f, 0.0f,0.0f));
 
@@ -145,9 +150,9 @@ int main() {
     //Collidables
     std::vector<collidable *> collObjects;
     //sphere
-    //addColl(&collObjects, 0, lightPosition);
+    addColl(&collObjects, 0, lightPosition);
     //cube
-    addColl(&collObjects,1, lightPosition);
+    //addColl(&collObjects,1, lightPosition);
     //plane
     addColl(&collObjects, 2, lightPosition);
     std::cout<<"init successful"<<std::endl;
@@ -158,7 +163,7 @@ int main() {
     ImGui::StyleColorsDark();
     static int azimuthal = 90;
     static int polar = 90;
-    static float distance = 5.0f;
+    static float distance = 7.0f;
     static float wind[3]= {0.0f,0.0f,-1.0f};
     static float mass =1.0f;
     static float gravity = -1.0f;
@@ -168,7 +173,6 @@ int main() {
     GLuint skyboxProgramID = LoadShaders("shaders/skybox.vertexshader","shaders/skybox.fragmentshader");
     skybox * sky = new skybox(skyboxProgramID);
 
-    int sphereMv =4;
     do {
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -282,13 +286,6 @@ int main() {
 
         //drawing all of the objects
         for(int i=0; i<objectList.size();++i){
-//            if(i==0){
-//                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture, textureId, programId);
-//            }else if(i==1){
-//                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture2, textureId2, programId);
-//            }else{
-//                drawCulture(ProjectionMatrix, ViewMatrix, matrixId, objectList[i], texture3, textureId3, programId);
-//            }
             objectList[i]->render(ProjectionMatrix, ViewMatrix, lightSysId);
         }
 

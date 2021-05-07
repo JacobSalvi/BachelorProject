@@ -2,109 +2,11 @@
 
 #include "helperFunctions.h"
 
-//TODO: rework how to do cultural stuff
-#if 0
-//culture
-void culture(std::vector<helperStruct *> *list, glm::vec3 tr){
-    net * tmp = new net(1.0f, 3,7, 0, glm::vec3(2.0f,0.0f,0.0f), -1.0f, tr);
-
-    //my wisdom knows no limit
-    // = 12*(row-1)(col-1)
-    float uv[144];
-
-    int pos = 0;
-    for(int i=0; i<6; ++i){
-        for(int j=0; j<2; ++j){
-            //first triangle first vertex
-
-            uv[pos++]=float(j)/2.0f;
-            uv[pos++]=1.0f-float(i)/6.0f;
-
-            //first triangle second vertex
-            uv[pos++]=float(j)/2.0f;
-            uv[pos++]=1.0f-float(i+1)/6.0f;
-
-            //first triangle third vertex
-            uv[pos++]=float(j+1)/2.0f;
-            uv[pos++]=1.0f-float(i+1)/6.0f;
-
-            //second triangle first vertex
-            uv[pos++]=float(j)/2.0f;
-            uv[pos++]=1.0f-float(i)/6.0f;
-
-            //second triangle second vertex
-            uv[pos++]=float(j+1)/2.0f;
-            uv[pos++]=1.0f-float(i+1)/6.0f;
-
-            //second triangle third vertex
-            uv[pos++]=float(j+1)/2.0f;
-            uv[pos++]=1.0f-float(i)/6.0f;
-        }
-    }
-
-    GLuint vertexbuffer;
-    glGenBuffers(1, &vertexbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glBufferData(GL_ARRAY_BUFFER, tmp->getSize(), tmp->getVertexBuffer(), GL_DYNAMIC_DRAW);
-
-    GLuint uvbuffer;
-    glGenBuffers(1, &uvbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_DYNAMIC_DRAW);
-
-    auto * str = new helperStruct;
-    str->cloth=tmp;
-    str->vertex=vertexbuffer;
-    str->color=uvbuffer;
-    str->tr=tr;
-    list->push_back(str);
+//new culture
+void culture(std::vector<deformableObjects *> *list, GLuint texture, GLuint textureId, glm::mat4 mod, glm::vec3 lPos, GLuint pID){
+    texturedCloth * tmp = new texturedCloth(1.0f, texture, textureId, glm::vec3(2.0f,0.0f,0.0f), -1.0f, mod, lPos, pID);
+    list->push_back(tmp);
 }
-
-void drawCulture(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint MatrixID, helperStruct* obj, GLuint texture, GLuint textureId, GLuint program){
-    glUseProgram(program);
-    glm::mat4 ModelMatrix = glm::mat4(1.0);
-    ModelMatrix=glm::translate(ModelMatrix, obj->tr);
-    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
-    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-
-    // Bind our texture in Texture Unit 0
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    // Set our "myTextureSampler" sampler to use Texture Unit 0
-    glUniform1i(textureId, 0);
-
-    // 1rst attribute buffer : vertices
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, obj->vertex);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, obj->cloth->getSize(), obj->cloth->getVertexBuffer());
-    glVertexAttribPointer(
-            0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void*)0            // array buffer offset
-    );
-
-    // 2nd attribute buffer : UVs
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, obj->color);
-    glVertexAttribPointer(
-            1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-            2,                                // size : U+V => 2
-            GL_FLOAT,                         // type
-            GL_FALSE,                         // normalized?
-            0,                                // stride
-            (void*)0                          // array buffer offset
-    );
-
-    // Draw the triangle !
-    glDrawArrays(GL_TRIANGLES, 0, obj->cloth->getNumberOfVertices()); // 12*3 indices starting at 0 -> 12 triangles
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-}
-#endif
 
 void addCloth(std::vector<deformableObjects *> *list, int col, int row, int in, glm::vec3 colour, glm::mat4 mod, glm::vec3 lPos){
     net * clothNew = new net(0.2f, col, row, in, colour, -1.0f, mod, lPos);
@@ -116,6 +18,12 @@ void addDefSphere(std::vector<deformableObjects *> *list, glm::vec3 colour, glm:
     list->push_back(newSphere);
 }
 
+void addDefCube(std::vector<deformableObjects *> *list, glm::vec3 colour, glm::mat4 mod, glm::vec3 lPos){
+    deformableCube * newCube = new deformableCube(mod, colour, lPos);
+    list->push_back(newCube);
+}
+
+
 //create and add sphere
 //type 0->sphere, 1->cube, 2 plane
 void addColl(std::vector<collidable *> * list, int type, glm::vec3 lPos){
@@ -124,12 +32,13 @@ void addColl(std::vector<collidable *> * list, int type, glm::vec3 lPos){
     switch(type){
         //sphere
         case 0:
-            model = glm::translate(model, glm::vec3(1.0f,1.0f,-1.0f));
-            coll = new sphere(10, model,glm::vec3(1.0f,0.8f,0.8f), lPos);
+            //model = glm::translate(model, glm::vec3(1.0f,1.0f,-1.0f));
+            model = glm::translate(model, glm::vec3(-3.0f,1.0f,0.0f));
+            coll = new sphere(10, model,glm::vec3(1.0f,0.2f,0.2f), lPos);
             break;
             //cube
         case 1:
-            model = glm::translate(model, glm::vec3(1.0f,1.0f,-1.0f));
+            model = glm::translate(model, glm::vec3(-3.0f,1.0f,0.0f));
             coll = new cube(model,glm::vec3(1.0f,1.0f,0.4f), lPos);
             break;
             //plane

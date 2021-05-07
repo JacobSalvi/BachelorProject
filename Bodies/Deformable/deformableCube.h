@@ -1,21 +1,21 @@
+#ifndef CODE_DEFORMABLECUBE_H
+#define CODE_DEFORMABLECUBE_H
 
-#ifndef CODE_DEFORMABLESPHERE_H
-#define CODE_DEFORMABLESPHERE_H
+
 #include "deformableObjects.h"
 
-class deformableSphere : public deformableObjects{
+class deformableCube : public deformableObjects{
 private:
     int size;
 
-    //to avoid recalculating all of the positions
-    //everytime we reset the object
     std::vector<glm::vec3> resetPos;
 
     BVH * bvh;
 public:
-    deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos);
 
-    virtual ~deformableSphere();
+    deformableCube(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos);
+
+    virtual ~deformableCube();
 
     void setGLuint() override;
 
@@ -41,4 +41,4 @@ public:
 };
 
 
-#endif //CODE_DEFORMABLESPHERE_H
+#endif //CODE_DEFORMABLECUBE_H

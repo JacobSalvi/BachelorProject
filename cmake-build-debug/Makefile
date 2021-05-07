@@ -634,6 +634,33 @@ BVH/defSphereBVH.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/defSphereBVH.cpp.s
 .PHONY : BVH/defSphereBVH.cpp.s
 
+Bodies/Deformable/deformableCube.o: Bodies/Deformable/deformableCube.cpp.o
+
+.PHONY : Bodies/Deformable/deformableCube.o
+
+# target to build an object file
+Bodies/Deformable/deformableCube.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.o
+.PHONY : Bodies/Deformable/deformableCube.cpp.o
+
+Bodies/Deformable/deformableCube.i: Bodies/Deformable/deformableCube.cpp.i
+
+.PHONY : Bodies/Deformable/deformableCube.i
+
+# target to preprocess a source file
+Bodies/Deformable/deformableCube.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.i
+.PHONY : Bodies/Deformable/deformableCube.cpp.i
+
+Bodies/Deformable/deformableCube.s: Bodies/Deformable/deformableCube.cpp.s
+
+.PHONY : Bodies/Deformable/deformableCube.s
+
+# target to generate assembly for a file
+Bodies/Deformable/deformableCube.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.s
+.PHONY : Bodies/Deformable/deformableCube.cpp.s
+
 Bodies/Deformable/deformableObjects.o: Bodies/Deformable/deformableObjects.cpp.o
 
 .PHONY : Bodies/Deformable/deformableObjects.o
@@ -768,6 +795,33 @@ Bodies/Deformable/spring.s: Bodies/Deformable/spring.cpp.s
 Bodies/Deformable/spring.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.s
 .PHONY : Bodies/Deformable/spring.cpp.s
+
+Bodies/Deformable/texturedCloth.o: Bodies/Deformable/texturedCloth.cpp.o
+
+.PHONY : Bodies/Deformable/texturedCloth.o
+
+# target to build an object file
+Bodies/Deformable/texturedCloth.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o
+.PHONY : Bodies/Deformable/texturedCloth.cpp.o
+
+Bodies/Deformable/texturedCloth.i: Bodies/Deformable/texturedCloth.cpp.i
+
+.PHONY : Bodies/Deformable/texturedCloth.i
+
+# target to preprocess a source file
+Bodies/Deformable/texturedCloth.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.i
+.PHONY : Bodies/Deformable/texturedCloth.cpp.i
+
+Bodies/Deformable/texturedCloth.s: Bodies/Deformable/texturedCloth.cpp.s
+
+.PHONY : Bodies/Deformable/texturedCloth.s
+
+# target to generate assembly for a file
+Bodies/Deformable/texturedCloth.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.s
+.PHONY : Bodies/Deformable/texturedCloth.cpp.s
 
 Bodies/Solid/Sphere.o: Bodies/Solid/Sphere.cpp.o
 
@@ -1224,6 +1278,9 @@ help:
 	@echo "... BVH/defSphereBVH.o"
 	@echo "... BVH/defSphereBVH.i"
 	@echo "... BVH/defSphereBVH.s"
+	@echo "... Bodies/Deformable/deformableCube.o"
+	@echo "... Bodies/Deformable/deformableCube.i"
+	@echo "... Bodies/Deformable/deformableCube.s"
 	@echo "... Bodies/Deformable/deformableObjects.o"
 	@echo "... Bodies/Deformable/deformableObjects.i"
 	@echo "... Bodies/Deformable/deformableObjects.s"
@@ -1239,6 +1296,9 @@ help:
 	@echo "... Bodies/Deformable/spring.o"
 	@echo "... Bodies/Deformable/spring.i"
 	@echo "... Bodies/Deformable/spring.s"
+	@echo "... Bodies/Deformable/texturedCloth.o"
+	@echo "... Bodies/Deformable/texturedCloth.i"
+	@echo "... Bodies/Deformable/texturedCloth.s"
 	@echo "... Bodies/Solid/Sphere.o"
 	@echo "... Bodies/Solid/Sphere.i"
 	@echo "... Bodies/Solid/Sphere.s"

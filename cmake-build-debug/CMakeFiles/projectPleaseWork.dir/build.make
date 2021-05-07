@@ -376,6 +376,32 @@ CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.cpp -o CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.s
 
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o: ../Bodies/Deformable/texturedCloth.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/texturedCloth.cpp
+
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/texturedCloth.cpp > CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.i
+
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/texturedCloth.cpp -o CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.s
+
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.o: CMakeFiles/projectPleaseWork.dir/flags.make
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.o: ../Bodies/Deformable/deformableCube.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.o -c /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableCube.cpp
+
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableCube.cpp > CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.i
+
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableCube.cpp -o CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.s
+
 # Object files for target projectPleaseWork
 projectPleaseWork_OBJECTS = \
 "CMakeFiles/projectPleaseWork.dir/main.cpp.o" \
@@ -400,7 +426,9 @@ projectPleaseWork_OBJECTS = \
 "CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableSphere.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o" \
 "CMakeFiles/projectPleaseWork.dir/BVH/defSphereBVH.cpp.o" \
-"CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o"
+"CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o" \
+"CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o" \
+"CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.o"
 
 # External object files for target projectPleaseWork
 projectPleaseWork_EXTERNAL_OBJECTS =
@@ -428,11 +456,13 @@ projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformable
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/BVH/defSphereBVH.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o
+projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o
+projectPleaseWork: CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.o
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/build.make
 projectPleaseWork: external/glfw-3.1.2/src/libglfw3.a
 projectPleaseWork: external/libGLEW_1130.a
 projectPleaseWork: CMakeFiles/projectPleaseWork.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Linking CXX executable projectPleaseWork"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Linking CXX executable projectPleaseWork"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/projectPleaseWork.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

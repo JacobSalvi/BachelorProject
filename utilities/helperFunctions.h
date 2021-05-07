@@ -15,19 +15,21 @@
 using namespace glm;
 
 #include "../Bodies/Deformable/net.h"
+#include "../Bodies/Deformable/texturedCloth.h"
 #include "../Bodies/Deformable/deformableSphere.h"
+#include "../Bodies/Deformable/deformableCube.h"
 #include "../shaders/helperStruct.h"
 #include "../Bodies/Solid/Sphere.h"
 #include "../Bodies/Solid/cube.h"
 #include "../Bodies/Solid/plane.h"
 
 //culture stuff
-void culture(std::vector<helperStruct *> *list, glm::vec3 tr);
-void drawCulture(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint MatrixID, helperStruct* obj, GLuint texture, GLuint textureId, GLuint program);
+void culture(std::vector<deformableObjects *> *list, GLuint texture, GLuint textureId, glm::mat4 mod, glm::vec3 lPos, GLuint pID);
 
 //cloth
 void addCloth(std::vector<deformableObjects *> *list, int col, int row, int in, glm::vec3 colour, glm::mat4 mod, glm::vec3 lPos);
 void addDefSphere(std::vector<deformableObjects *> *list, glm::vec3 colour, glm::mat4 mod, glm::vec3 lPos);
+void addDefCube(std::vector<deformableObjects *> *list, glm::vec3 colour, glm::mat4 mod, glm::vec3 lPos);
 
 //collidables
 void addColl(std::vector<collidable *> * list, int type, glm::vec3 lPos);

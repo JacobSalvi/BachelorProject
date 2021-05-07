@@ -18,9 +18,9 @@ bool sortHelperAngle(particle *a, particle *b) {
 }
 
 deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) : deformableObjects(-3.0f, mod,
-                                                                                                       lPos), size(8) {
+                                                                                                       lPos), size(10) {
     //I fear that a too detailed sphere might
-    //burn my cpu, so for now it will have size of <10
+    //burn my cpu, so for now it will have size <10
     vertexBuffer = new float[size * size * 18];
     colorBuffer = new float[size * size * 18];
 
@@ -29,7 +29,7 @@ deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPo
     std::vector<particle *> helper;
 
     int colPos = 0;
-    float step = (float) 1 / size;
+    float step = (float) 1.0f / (float)size;
     float u = 0.0f;
     for (int i = 0; i < size; ++i) {
         float v = 0.0f;
@@ -53,10 +53,10 @@ deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPo
             double y3 = cos(M_PI * (v + step));
 
             //add particles
-            particle *p1 = new particle(glm::vec3(x1 / 2.0f, y1 / 2.0f, z1 / 2.0f), 1.0f);
-            particle *p2 = new particle(glm::vec3(x2 / 2.0f, y2 / 2.0f, z2 / 2.0f), 1.0f);
-            particle *p3 = new particle(glm::vec3(x3 / 2.0f, y3 / 2.0f, z3 / 2.0f), 1.0f);
-            particle *p4 = new particle(glm::vec3(x4 / 2.0f, y4 / 2.0f, z4 / 2.0f), 1.0f);
+            auto *p1 = new particle(glm::vec3(x1 / 2.0f, y1 / 2.0f, z1 / 2.0f), 1.0f);
+            auto *p2 = new particle(glm::vec3(x2 / 2.0f, y2 / 2.0f, z2 / 2.0f), 1.0f);
+            auto *p3 = new particle(glm::vec3(x3 / 2.0f, y3 / 2.0f, z3 / 2.0f), 1.0f);
+            auto *p4 = new particle(glm::vec3(x4 / 2.0f, y4 / 2.0f, z4 / 2.0f), 1.0f);
 
             helper.push_back(p1);
             helper.push_back(p2);
@@ -401,7 +401,7 @@ void deformableSphere::reset() {
 
     //reset wind and gravity
     deformableSphere::wind= glm::vec3(0,0,0);
-    deformableSphere::gravity=-1;
+    deformableSphere::gravity=-3;
 
     //reset hanging particle
     deformableSphere::specialParticles.clear();

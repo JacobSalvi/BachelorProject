@@ -48,12 +48,12 @@ skybox::skybox(GLuint pID) : programID(pID) {
     //right, left, top, bottom, front and back
     //in that order
     skybox::faces = {
-            "shaders/sb.png",
-            "shaders/sb.png",
-            "shaders/sb.png",
-            "shaders/sb.png",
-            "shaders/sb.png",
-            "shaders/sb.png"};
+            "shaders/n_L.png",
+            "shaders/p_R.png",
+            "shaders/n_B.png",
+            "shaders/n_D.png",
+            "shaders/p_U.png",
+            "shaders/p_F.png"};
 
     loadTexture();
 
