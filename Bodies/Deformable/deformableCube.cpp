@@ -1,7 +1,8 @@
 
 #include "deformableCube.h"
-#include "../../BVH/defSphereBVH.h"
 #include "../utilities/helperFunctions.h"
+#include "../../BVH/defCubeBVH.h"
+#include <map>
 
 deformableCube::~deformableCube() {
     std::cout<<"deformable cube destroyed"<<std::endl;
@@ -10,12 +11,12 @@ deformableCube::~deformableCube() {
 // a cube is a sort of grid of inner smaller cubes
 // also it is a cube of side 1
 deformableCube::deformableCube(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) :
-    size(3), deformableObjects(-1, mod, lPos) {
+    size(3), deformableObjects(-5, mod, lPos) {
     //we have 6 faces, each face has size^2 sub squares in it
     // each sub square is formed by 2 triangle
-    deformableCube::vertexBuffer = new float[6*2*3*size*size];
-    deformableCube::colorBuffer = new float[6*2*3*size*size];
-    deformableCube::normalBuffer = new float[6*2*3*size*size];
+    deformableCube::vertexBuffer = new float[6*2*9*size*size];
+    deformableCube::colorBuffer = new float[6*2*9*size*size];
+    deformableCube::normalBuffer = new float[6*2*9*size*size];
 
     float mass = 1.0f;
     int id=0;
@@ -25,7 +26,6 @@ deformableCube::deformableCube(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) :
         for(float x=0; x<=compar; ++x){
             for(float z=0; z<=compar; ++z){
                 glm::vec3 idk(x/compar, y/compar, z/compar);
-                printPoint(idk, "");
                 deformableCube::resetPos.push_back(idk);
                 auto * toAdd = new particle(idk , mass);
                 toAdd->setId(id++);
@@ -34,17 +34,23 @@ deformableCube::deformableCube(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) :
         }
     }
 
+    //initially hung particles
+    specialParticles.push_back(deformableCube::particles[(size+1)*(size+1)*size]);
+    specialParticles.push_back(deformableCube::particles[(size+1)*(size+1)*size+size]);
+    specialParticles.push_back(deformableCube::particles[id-size-1]);
+    specialParticles.push_back(deformableCube::particles[id-1]);
+
     //setting up the springs
     for (int i = 0; i < particles.size(); ++i) {
         for (int j = i + 1; j < particles.size(); ++j) {
             float dist = glm::length(particles[i]->getPosition() - particles[j]->getPosition());
-            springs.push_back(new spring(dist, 50, .2, particles[i], particles[j]));
+            springs.push_back(new spring(dist, 60, .2, particles[i], particles[j]));
         }
     }
 
     //colour buffer
     int pos=0;
-    for(int i=0; i<36*size*size;++i){
+    for(int i=0; i<6*2*9*size*size;++i){
         if(i%3==0){
             deformableCube::colorBuffer[pos++]=color.x;
         }else if(i%3==1){
@@ -54,28 +60,27 @@ deformableCube::deformableCube(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) :
         }
     }
 
-    //normal buffer
+    //tmp normal buffer
     pos=0;
-    for(int i=0; i<36*size*size;++i){
+    for(int i=0; i<6*2*9*size*size;++i){
         if(i%3==0){
-            deformableCube::normalBuffer[pos++]=color.x;
+            deformableCube::normalBuffer[pos++]=0;
         }else if(i%3==1){
-            deformableCube::normalBuffer[pos++]=color.y;
+            deformableCube::normalBuffer[pos++]=-1;
         }else{
-            deformableCube::normalBuffer[pos++]=color.z;
+            deformableCube::normalBuffer[pos++]=0;
         }
     }
-
-
-    //stuff for openGL
-    setGLuint();
 
     //compute vertex/normal buffer
     updateBuffer();
 
+    //stuff for openGL
+    setGLuint();
+
     //bvh
     //making the bvh
-    bvh = new defSphereBVH(particles, 0.5f, glm::vec3(0.0f,0.0f,0.0f));
+    bvh = new defCubeBVH(particles, sqrt(3.0f/4.0f), glm::vec3(0.5f,0.5f,0.5f));
 }
 
 void deformableCube::setGLuint() {
@@ -108,15 +113,21 @@ void deformableCube::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GL
 }
 
 int deformableCube::getSize() {
-    return sizeof(float)*36*size*size;
+    return sizeof(float)*6*2*9*size*size;
 }
 
 int deformableCube::getNumberOfVertices() {
-    return 36*size*size;
+    return 6*2*9*size*size;
 }
 
 // this is a bit of a mess
+// TODO: find a way for this function to take less than a million lines
+//number of particles per face = (size+1)^2
+//order top bottom left right front back
 void deformableCube::updateBuffer() {
+    //a map to (well) map the id of the particles to the normal they should have
+    std::map<int, glm::vec3> helper;
+
     int pos =0;
     //top face
     for(int i=0; i<size;++i){
@@ -129,6 +140,14 @@ void deformableCube::updateBuffer() {
             glm::vec3 br = deformableCube::particles[i+(size+1)*(j+1)]->getPosition();
             //top right
             glm::vec3 tr = deformableCube::particles[i+(size+1)*(j+1)+1]->getPosition();
+
+            glm::vec3 bottomNormal = glm::normalize(glm::cross(tl-bl, bl-br));
+            glm::vec3 topNormal = glm::normalize(glm::cross(br-bl, tr-br));
+
+            helper[i+(size+1)*j]+=bottomNormal;
+            helper[i+(size+1)*j+1]+=bottomNormal+topNormal;
+            helper[i+(size+1)*(j+1)]+=bottomNormal+topNormal;
+            helper[i+(size+1)*(j+1)+1]+=topNormal;
 
             //first triangle
             deformableCube::vertexBuffer[pos++]=bl.x;
@@ -161,15 +180,23 @@ void deformableCube::updateBuffer() {
     //bottom face
     for(int i=0; i<size;++i){
         for(int j=0; j<size;++j){
-            int helper = (size+1)+(size+1)*size;
+            int tmp = (size+1)*(size+1)*size;
             //bottom left
-            glm::vec3 bl = deformableCube::particles[helper+i+(size+1)*j]->getPosition();
+            glm::vec3 bl = deformableCube::particles[tmp+i+(size+1)*j]->getPosition();
             //top left
-            glm::vec3 tl = deformableCube::particles[helper+i+(size+1)*j+1]->getPosition();
+            glm::vec3 tl = deformableCube::particles[tmp+i+(size+1)*j+1]->getPosition();
             //bottom right
-            glm::vec3 br = deformableCube::particles[helper+i+(size+1)*(j+1)]->getPosition();
+            glm::vec3 br = deformableCube::particles[tmp+i+(size+1)*(j+1)]->getPosition();
             //top right
-            glm::vec3 tr = deformableCube::particles[helper+i+(size+1)*(j+1)+1]->getPosition();
+            glm::vec3 tr = deformableCube::particles[tmp+i+(size+1)*(j+1)+1]->getPosition();
+
+            glm::vec3 bottomNormal = glm::normalize(glm::cross(bl-tl, bl-br));
+            glm::vec3 topNormal = glm::normalize(glm::cross(tl-br, tr-br));
+
+            helper[tmp+i+(size+1)*j]+=bottomNormal;
+            helper[tmp+i+(size+1)*j+1]+=bottomNormal+topNormal;
+            helper[tmp+i+(size+1)*(j+1)]+=bottomNormal+topNormal;
+            helper[tmp+i+(size+1)*(j+1)+1]+=topNormal;
 
             //first triangle
             deformableCube::vertexBuffer[pos++]=bl.x;
@@ -203,14 +230,21 @@ void deformableCube::updateBuffer() {
     for(int i =0; i<size;++i){
         for(int j=0; j<size;++j){
             //bottom left
-            glm::vec3 bl = deformableCube::particles[i*(size+1)*(size+1)+j]->getPosition();
+            glm::vec3 bl = deformableCube::particles[i+(size+1)*(size+1)*j]->getPosition();
 
+            glm::vec3 br = deformableCube::particles[i+(size+1)*(size+1)*(j+1)]->getPosition();
 
-            glm::vec3 br = deformableCube::particles[i*(size+1)*(size+1)+j+1]->getPosition();
+            glm::vec3 tl = deformableCube::particles[i+1+(size+1)*(size+1)*j]->getPosition();
 
-            glm::vec3 tl = deformableCube::particles[(i+1)*(size+1)*(size+1)+j]->getPosition();
+            glm::vec3 tr = deformableCube::particles[i+1+(size+1)*(size+1)*(j+1)]->getPosition();
 
-            glm::vec3 tr = deformableCube::particles[(i+1)*(size+1)*(size+1)+j+1]->getPosition();
+            glm::vec3 bottomNormal = glm::normalize(glm::cross(bl-tl, bl-br));
+            glm::vec3 topNormal = glm::normalize(glm::cross(tl-br, tr-br));
+
+            helper[i+(size+1)*(size+1)*j]+=bottomNormal;
+            helper[i+(size+1)*(size+1)*(j+1)]+=bottomNormal+topNormal;
+            helper[i+1+(size+1)*(size+1)*j]+=bottomNormal+topNormal;
+            helper[i+1+(size+1)*(size+1)*(j+1)]+=topNormal;
 
             //first triangle
             deformableCube::vertexBuffer[pos++]=bl.x;
@@ -221,7 +255,9 @@ void deformableCube::updateBuffer() {
             deformableCube::vertexBuffer[pos++]=br.y;
             deformableCube::vertexBuffer[pos++]=br.z;
 
-
+            deformableCube::vertexBuffer[pos++]=tl.x;
+            deformableCube::vertexBuffer[pos++]=tl.y;
+            deformableCube::vertexBuffer[pos++]=tl.z;
 
             //second triangle
             deformableCube::vertexBuffer[pos++]=br.x;
@@ -241,15 +277,23 @@ void deformableCube::updateBuffer() {
     //right face
     for(int i =0; i<size;++i){
         for(int j=0; j<size;++j){
-            int helper = (size+1)*size;
+            int tmp = (size+1)*size;
             //bottom left
-            glm::vec3 bl = deformableCube::particles[helper+i*(size+1)*(size+1)+j]->getPosition();
+            glm::vec3 bl = deformableCube::particles[tmp+i*(size+1)*(size+1)+j]->getPosition();
 
-            glm::vec3 br = deformableCube::particles[helper+i*(size+1)*(size+1)+j+1]->getPosition();
+            glm::vec3 br = deformableCube::particles[tmp+i*(size+1)*(size+1)+j+1]->getPosition();
 
-            glm::vec3 tl = deformableCube::particles[helper+(i+1)*(size+1)*(size+1)+j]->getPosition();
+            glm::vec3 tl = deformableCube::particles[tmp+(i+1)*(size+1)*(size+1)+j]->getPosition();
 
-            glm::vec3 tr = deformableCube::particles[helper+(i+1)*(size+1)*(size+1)+j+1]->getPosition();
+            glm::vec3 tr = deformableCube::particles[tmp+(i+1)*(size+1)*(size+1)+j+1]->getPosition();
+
+            glm::vec3 bottomNormal = glm::normalize(glm::cross(bl-tl, bl-br));
+            glm::vec3 topNormal = glm::normalize(glm::cross(tl-br, tr-br));
+
+            helper[tmp+i*(size+1)*(size+1)+j]+=bottomNormal;
+            helper[tmp+i*(size+1)*(size+1)+j+1]+=bottomNormal+topNormal;
+            helper[tmp+(i+1)*(size+1)*(size+1)+j]+=bottomNormal+topNormal;
+            helper[tmp+(i+1)*(size+1)*(size+1)+j+1]+=topNormal;
 
             //first triangle
             deformableCube::vertexBuffer[pos++]=bl.x;
@@ -282,14 +326,22 @@ void deformableCube::updateBuffer() {
     //front face
     for(int i=0; i<size;++i){
         for(int j=0; j<size;++j){
-            int helper = (size+1)*(size+1)*size;
-            glm::vec3 bl = deformableCube::particles[helper-(size+1)*(size+1)*i+(size+1)*j]->getPosition();
+            int tmp = (size+1)*(size+1)*size;
+            glm::vec3 bl = deformableCube::particles[tmp-(size+1)*(size+1)*i+(size+1)*j]->getPosition();
 
-            glm::vec3 br = deformableCube::particles[helper-(size+1)*(size+1)*i+(size+1)*(j+1)]->getPosition();
+            glm::vec3 br = deformableCube::particles[tmp-(size+1)*(size+1)*i+(size+1)*(j+1)]->getPosition();
 
-            glm::vec3 tl = deformableCube::particles[helper-(size+1)*(size+1)*(i+1)+(size+1)*j]->getPosition();
+            glm::vec3 tl = deformableCube::particles[tmp-(size+1)*(size+1)*(i+1)+(size+1)*j]->getPosition();
 
-            glm::vec3 tr = deformableCube::particles[helper-(size+1)*(size+1)*(i+1)+(size+1)*(j+1)]->getPosition();
+            glm::vec3 tr = deformableCube::particles[tmp-(size+1)*(size+1)*(i+1)+(size+1)*(j+1)]->getPosition();
+
+            glm::vec3 bottomNormal = glm::normalize(glm::cross(bl-tl, bl-br));
+            glm::vec3 topNormal = glm::normalize(glm::cross(tl-br, tr-br));
+
+            helper[tmp-(size+1)*(size+1)*i+(size+1)*j]+=bottomNormal;
+            helper[tmp-(size+1)*(size+1)*i+(size+1)*(j+1)]+=bottomNormal+topNormal;
+            helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*j]+=bottomNormal+topNormal;
+            helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*(j+1)]+=topNormal;
 
             //first triangle
             deformableCube::vertexBuffer[pos++]=bl.x;
@@ -322,14 +374,22 @@ void deformableCube::updateBuffer() {
     //back face
     for(int i=0; i<size;++i){
         for(int j=0; j<size;++j){
-            int helper = size+(size+1)*(size+1)*size;
-            glm::vec3 bl = deformableCube::particles[helper-(size+1)*(size+1)*i+(size+1)*j]->getPosition();
+            int tmp = size+(size+1)*(size+1)*size;
+            glm::vec3 bl = deformableCube::particles[tmp-(size+1)*(size+1)*i+(size+1)*j]->getPosition();
 
-            glm::vec3 br = deformableCube::particles[helper-(size+1)*(size+1)*i+(size+1)*(j+1)]->getPosition();
+            glm::vec3 br = deformableCube::particles[tmp-(size+1)*(size+1)*i+(size+1)*(j+1)]->getPosition();
 
-            glm::vec3 tl = deformableCube::particles[helper-(size+1)*(size+1)*(i+1)+(size+1)*j]->getPosition();
+            glm::vec3 tl = deformableCube::particles[tmp-(size+1)*(size+1)*(i+1)+(size+1)*j]->getPosition();
 
-            glm::vec3 tr = deformableCube::particles[helper-(size+1)*(size+1)*(i+1)+(size+1)*(j+1)]->getPosition();
+            glm::vec3 tr = deformableCube::particles[tmp-(size+1)*(size+1)*(i+1)+(size+1)*(j+1)]->getPosition();
+
+            glm::vec3 bottomNormal = glm::normalize(glm::cross(tl-bl, bl-br));
+            glm::vec3 topNormal = glm::normalize(glm::cross(br-tl, tr-br));
+
+            helper[tmp-(size+1)*(size+1)*i+(size+1)*j]+=bottomNormal;
+            helper[tmp-(size+1)*(size+1)*i+(size+1)*(j+1)]+=bottomNormal+topNormal;
+            helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*j]+=bottomNormal+topNormal;
+            helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*(j+1)]+=topNormal;
 
             //first triangle
             deformableCube::vertexBuffer[pos++]=bl.x;
@@ -359,6 +419,249 @@ void deformableCube::updateBuffer() {
         }
     }
 
+    //adding normals normals
+    pos=0;
+    //top face
+    for(int i=0; i<size;++i){
+        for(int j=0; j<size;++j){
+            //bottom left
+            glm::vec3 bl = glm::normalize(helper[i+(size+1)*j]);
+            //top left
+            glm::vec3 tl = glm::normalize(helper[i+(size+1)*j+1]);
+            //bottom right
+            glm::vec3 br = glm::normalize(helper[i+(size+1)*(j+1)]);
+            //top right
+            glm::vec3 tr = glm::normalize(helper[i+(size+1)*(j+1)+1]);
+
+            //first triangle
+            deformableCube::normalBuffer[pos++]=bl.x;
+            deformableCube::normalBuffer[pos++]=bl.y;
+            deformableCube::normalBuffer[pos++]=bl.z;
+
+            deformableCube::normalBuffer[pos++]=br.x;
+            deformableCube::normalBuffer[pos++]=br.y;
+            deformableCube::normalBuffer[pos++]=br.z;
+
+            deformableCube::normalBuffer[pos++]=tl.x;
+            deformableCube::normalBuffer[pos++]=tl.y;
+            deformableCube::normalBuffer[pos++]=tl.z;
+
+            //second triangle
+            deformableCube::normalBuffer[pos++]=br.x;
+            deformableCube::normalBuffer[pos++]=br.y;
+            deformableCube::normalBuffer[pos++]=br.z;
+
+            deformableCube::normalBuffer[pos++]=tr.x;
+            deformableCube::normalBuffer[pos++]=tr.y;
+            deformableCube::normalBuffer[pos++]=tr.z;
+
+            deformableCube::normalBuffer[pos++]=tl.x;
+            deformableCube::normalBuffer[pos++]=tl.y;
+            deformableCube::normalBuffer[pos++]=tl.z;
+        }
+    }
+
+    //bottom face
+    for(int i=0; i<size;++i){
+        for(int j=0; j<size;++j){
+            int tmp = (size+1)*(size+1)*size;
+            //bottom left
+            glm::vec3 bl = glm::normalize(helper[tmp+i+(size+1)*j]);
+            //top left
+            glm::vec3 tl = glm::normalize(helper[tmp+i+(size+1)*j+1]);
+            //bottom right
+            glm::vec3 br = glm::normalize(helper[tmp+i+(size+1)*(j+1)]);
+            //top right
+            glm::vec3 tr = glm::normalize(helper[tmp+i+(size+1)*(j+1)+1]);
+
+            //first triangle
+            deformableCube::normalBuffer[pos++]=bl.x;
+            deformableCube::normalBuffer[pos++]=bl.y;
+            deformableCube::normalBuffer[pos++]=bl.z;
+
+            deformableCube::normalBuffer[pos++]=br.x;
+            deformableCube::normalBuffer[pos++]=br.y;
+            deformableCube::normalBuffer[pos++]=br.z;
+
+            deformableCube::normalBuffer[pos++]=tl.x;
+            deformableCube::normalBuffer[pos++]=tl.y;
+            deformableCube::normalBuffer[pos++]=tl.z;
+
+            //second triangle
+            deformableCube::normalBuffer[pos++]=br.x;
+            deformableCube::normalBuffer[pos++]=br.y;
+            deformableCube::normalBuffer[pos++]=br.z;
+
+            deformableCube::normalBuffer[pos++]=tr.x;
+            deformableCube::normalBuffer[pos++]=tr.y;
+            deformableCube::normalBuffer[pos++]=tr.z;
+
+            deformableCube::normalBuffer[pos++]=tl.x;
+            deformableCube::normalBuffer[pos++]=tl.y;
+            deformableCube::normalBuffer[pos++]=tl.z;
+        }
+    }
+
+    //left face
+    for(int i =0; i<size;++i){
+        for(int j=0; j<size;++j){
+            //bottom left
+            glm::vec3 bl = glm::normalize(helper[i+(size+1)*(size+1)*j]);
+
+            glm::vec3 br = glm::normalize(helper[i+(size+1)*(size+1)*(j+1)]);
+
+            glm::vec3 tl = glm::normalize(helper[i+1+(size+1)*(size+1)*j]);
+
+            glm::vec3 tr = glm::normalize(helper[i+1+(size+1)*(size+1)*(j+1)]);
+
+            //first triangle
+            deformableCube::normalBuffer[pos++]=bl.x;
+            deformableCube::normalBuffer[pos++]=bl.y;
+            deformableCube::normalBuffer[pos++]=bl.z;
+
+            deformableCube::normalBuffer[pos++]=br.x;
+            deformableCube::normalBuffer[pos++]=br.y;
+            deformableCube::normalBuffer[pos++]=br.z;
+
+            deformableCube::normalBuffer[pos++]=tl.x;
+            deformableCube::normalBuffer[pos++]=tl.y;
+            deformableCube::normalBuffer[pos++]=tl.z;
+
+            //second triangle
+            deformableCube::normalBuffer[pos++]=br.x;
+            deformableCube::normalBuffer[pos++]=br.y;
+            deformableCube::normalBuffer[pos++]=br.z;
+
+            deformableCube::normalBuffer[pos++]=tr.x;
+            deformableCube::normalBuffer[pos++]=tr.y;
+            deformableCube::normalBuffer[pos++]=tr.z;
+
+            deformableCube::normalBuffer[pos++]=tl.x;
+            deformableCube::normalBuffer[pos++]=tl.y;
+            deformableCube::normalBuffer[pos++]=tl.z;
+        }
+    }
+
+    //right face
+    for(int i =0; i<size;++i){
+        for(int j=0; j<size;++j){
+            int tmp = (size+1)*size;
+            //bottom left
+            glm::vec3 bl = glm::normalize(helper[tmp+i*(size+1)*(size+1)+j]);
+
+            glm::vec3 br = glm::normalize(helper[tmp+i*(size+1)*(size+1)+j+1]);
+
+            glm::vec3 tl = glm::normalize(helper[tmp+(i+1)*(size+1)*(size+1)+j]);
+
+            glm::vec3 tr = glm::normalize(helper[tmp+(i+1)*(size+1)*(size+1)+j+1]);
+
+            //first triangle
+            deformableCube::normalBuffer[pos++]=bl.x;
+            deformableCube::normalBuffer[pos++]=bl.y;
+            deformableCube::normalBuffer[pos++]=bl.z;
+
+            deformableCube::normalBuffer[pos++]=br.x;
+            deformableCube::normalBuffer[pos++]=br.y;
+            deformableCube::normalBuffer[pos++]=br.z;
+
+            deformableCube::normalBuffer[pos++]=tl.x;
+            deformableCube::normalBuffer[pos++]=tl.y;
+            deformableCube::normalBuffer[pos++]=tl.z;
+
+            //second triangle
+            deformableCube::normalBuffer[pos++]=br.x;
+            deformableCube::normalBuffer[pos++]=br.y;
+            deformableCube::normalBuffer[pos++]=br.z;
+
+            deformableCube::normalBuffer[pos++]=tr.x;
+            deformableCube::normalBuffer[pos++]=tr.y;
+            deformableCube::normalBuffer[pos++]=tr.z;
+
+            deformableCube::normalBuffer[pos++]=tl.x;
+            deformableCube::normalBuffer[pos++]=tl.y;
+            deformableCube::normalBuffer[pos++]=tl.z;
+        }
+    }
+
+    //front face
+    for(int i=0; i<size;++i){
+        for(int j=0; j<size;++j){
+            int tmp = (size+1)*(size+1)*size;
+            glm::vec3 bl = glm::normalize(helper[tmp-(size+1)*(size+1)*i+(size+1)*j]);
+
+            glm::vec3 br = glm::normalize(helper[tmp-(size+1)*(size+1)*i+(size+1)*(j+1)]);
+
+            glm::vec3 tl = glm::normalize(helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*j]);
+
+            glm::vec3 tr = glm::normalize(helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*(j+1)]);
+
+            //first triangle
+            deformableCube::normalBuffer[pos++]=bl.x;
+            deformableCube::normalBuffer[pos++]=bl.y;
+            deformableCube::normalBuffer[pos++]=bl.z;
+
+            deformableCube::normalBuffer[pos++]=br.x;
+            deformableCube::normalBuffer[pos++]=br.y;
+            deformableCube::normalBuffer[pos++]=br.z;
+
+            deformableCube::normalBuffer[pos++]=tl.x;
+            deformableCube::normalBuffer[pos++]=tl.y;
+            deformableCube::normalBuffer[pos++]=tl.z;
+
+            //second triangle
+            deformableCube::normalBuffer[pos++]=br.x;
+            deformableCube::normalBuffer[pos++]=br.y;
+            deformableCube::normalBuffer[pos++]=br.z;
+
+            deformableCube::normalBuffer[pos++]=tr.x;
+            deformableCube::normalBuffer[pos++]=tr.y;
+            deformableCube::normalBuffer[pos++]=tr.z;
+
+            deformableCube::normalBuffer[pos++]=tl.x;
+            deformableCube::normalBuffer[pos++]=tl.y;
+            deformableCube::normalBuffer[pos++]=tl.z;
+        }
+    }
+
+    //back face
+    for(int i=0; i<size;++i){
+        for(int j=0; j<size;++j){
+            int tmp = size+(size+1)*(size+1)*size;
+            glm::vec3 bl = glm::normalize(helper[tmp-(size+1)*(size+1)*i+(size+1)*j]);
+
+            glm::vec3 br = glm::normalize(helper[tmp-(size+1)*(size+1)*i+(size+1)*(j+1)]);
+
+            glm::vec3 tl = glm::normalize(helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*j]);
+
+            glm::vec3 tr = glm::normalize(helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*(j+1)]);
+
+            //first triangle
+            deformableCube::normalBuffer[pos++]=bl.x;
+            deformableCube::normalBuffer[pos++]=bl.y;
+            deformableCube::normalBuffer[pos++]=bl.z;
+
+            deformableCube::normalBuffer[pos++]=br.x;
+            deformableCube::normalBuffer[pos++]=br.y;
+            deformableCube::normalBuffer[pos++]=br.z;
+
+            deformableCube::normalBuffer[pos++]=tl.x;
+            deformableCube::normalBuffer[pos++]=tl.y;
+            deformableCube::normalBuffer[pos++]=tl.z;
+
+            //second triangle
+            deformableCube::normalBuffer[pos++]=br.x;
+            deformableCube::normalBuffer[pos++]=br.y;
+            deformableCube::normalBuffer[pos++]=br.z;
+
+            deformableCube::normalBuffer[pos++]=tr.x;
+            deformableCube::normalBuffer[pos++]=tr.y;
+            deformableCube::normalBuffer[pos++]=tr.z;
+
+            deformableCube::normalBuffer[pos++]=tl.x;
+            deformableCube::normalBuffer[pos++]=tl.y;
+            deformableCube::normalBuffer[pos++]=tl.z;
+        }
+    }
 }
 
 void deformableCube::reset() {
@@ -371,13 +674,16 @@ void deformableCube::reset() {
 
     //reset wind and gravity
     deformableCube::wind= glm::vec3(0,0,0);
-    deformableCube::gravity=-1;
+    deformableCube::gravity=-5;
 
     //reset hanging particle
     deformableCube::specialParticles.clear();
-    deformableCube::specialParticles.push_back(particles[0]);
+    specialParticles.push_back(deformableCube::particles[(size+1)*(size+1)*size]);
+    specialParticles.push_back(deformableCube::particles[(size+1)*(size+1)*size+size]);
+    specialParticles.push_back(deformableCube::particles[(size+1)*(size+1)*(size+1)-1-size]);
+    specialParticles.push_back(deformableCube::particles[(size+1)*(size+1)*(size+1)-1]);
 
-    //reset vertexbuffer
+    //reset vertex buffer
     deformableCube::updateBuffer();
 
     //reset bvh
@@ -385,11 +691,59 @@ void deformableCube::reset() {
 }
 
 void deformableCube::integrate(float timeDelta) {
-    deformableObjects::integrate(timeDelta);
+    deformableCube::rungeKutta(timeDelta);
 }
 
 void deformableCube::rungeKutta(float timeDelta) {
+    std::vector<glm::vec3> a1;
+    std::vector<glm::vec3> a2;
+    //gravity
+    for (int i = 0; i < particles.size(); ++i) {
+        a1.push_back(particles[i]->getVelocity());
+        particles[i]->setForce(deformableCube::wind + glm::vec3(0.0f, deformableCube::gravity, 0.0f));
+    }
 
+    //iterating through the springs to add the force due to
+    //springs elongation/compression
+    for (int i = 0; i < springs.size(); ++i) {
+        //update both particles
+        springs[i]->updateParticlesForce();
+    }
+
+    for (int i = 0; i < particles.size(); ++i) {
+        particles[i]->addForce(particles[i]->getCollisionForce());
+        a2.push_back(particles[i]->getForce() / particles[i]->getMass());
+    }
+
+    //second evaluation of the forces
+    for (int i = 0; i < particles.size(); ++i) {
+        particles[i]->setForce(deformableCube::wind + glm::vec3(0.0f, deformableCube::gravity, 0.0f) +
+                               particles[i]->getCollisionForce());
+        particles[i]->resetCollisionForce();
+    }
+
+    for (int i = 0; i < springs.size(); ++i) {
+        //indices of the particles
+        int part1 = springs[i]->getPart1Id();
+        int part2 = springs[i]->getPart2Id();
+        springs[i]->rungeKuttaHelper((timeDelta / 2.0f) * a1[part1], (timeDelta / 2.0f) * a1[part2],
+                                     (timeDelta / 2.0f) * a2[part1], (timeDelta / 2.0f) * a2[part2]);
+    }
+
+    for (int i = 0; i < particles.size(); ++i) {
+        if (!vectorContains(specialParticles, particles[i])) {
+            glm::vec3 vel = particles[i]->getVelocity();
+
+            //updating position
+            glm::vec3 pos = particles[i]->getPosition();
+            pos += timeDelta * (vel + (timeDelta / 2.0f) * a2[particles[i]->getId()]);
+            particles[i]->setPosition(pos);
+
+            //updating velocity
+            vel += timeDelta * (particles[i]->getForce() / particles[i]->getMass());
+            particles[i]->setVelocity(vel);
+        }
+    }
 }
 
 void deformableCube::detectCollision(collidable *obj) {
@@ -397,11 +751,12 @@ void deformableCube::detectCollision(collidable *obj) {
 }
 
 BVH *deformableCube::getBvh() const {
-    return deformableObjects::getBvh();
+    return deformableCube::bvh;
 }
 
 helperStruct deformableCube::isHovered(glm::vec3 origin, glm::vec3 direction) {
-    return deformableObjects::isHovered(origin, direction);
+    helperStruct toReturn = deformableCube::bvh->rayIntersect(origin, direction, modelMatrix);
+    return toReturn;
 }
 
 

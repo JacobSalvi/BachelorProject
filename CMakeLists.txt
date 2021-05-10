@@ -39,7 +39,9 @@ add_executable(projectPleaseWork
         utilities/helperFunctions.cpp shaders/helperStruct.h utilities/helperFunctions.h Bodies/Solid/mouseIntersectStruct.h
         BVH/clothBVH.cpp BVH/clothBVH.h utilities/multiThreading.h utilities/multiThreading.cpp
         utilities/skybox.cpp utilities/skybox.h utilities/stb_image.h Bodies/Deformable/deformableSphere.cpp
-        Bodies/Deformable/deformableSphere.h Bodies/Deformable/deformableObjects.cpp Bodies/Deformable/deformableObjects.h BVH/defSphereBVH.cpp BVH/defSphereBVH.h BVH/BVH.cpp BVH/BVH.h Bodies/Deformable/texturedCloth.cpp Bodies/Deformable/texturedCloth.h Bodies/Deformable/deformableCube.cpp Bodies/Deformable/deformableCube.h)
+        Bodies/Deformable/deformableSphere.h Bodies/Deformable/deformableObjects.cpp Bodies/Deformable/deformableObjects.h
+        BVH/defSphereBVH.cpp BVH/defSphereBVH.h BVH/BVH.cpp BVH/BVH.h Bodies/Deformable/texturedCloth.cpp Bodies/Deformable/texturedCloth.h
+        Bodies/Deformable/deformableCube.cpp Bodies/Deformable/deformableCube.h BVH/defCubeBVH.cpp BVH/defCubeBVH.h)
 
 target_link_libraries(projectPleaseWork
         ${ALL_LIBS}
@@ -54,6 +56,7 @@ add_definitions(
 )
 
 set(CMAKE_CXX_STANDARD 11)
+# -O3/-O2 for optimization
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 

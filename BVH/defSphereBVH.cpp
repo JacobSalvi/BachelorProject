@@ -152,7 +152,7 @@ void defSphereBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
     glm::vec3 C1(-width, 0.0, -depth);
     glm::vec3 C2(width, 0.0, depth);
     C1 = glm::vec3(obj->getModel() * (glm::vec4(C1, 1.0)));
-    C1.y-=.5;
+    C1.y-=0.5;
     C2 = glm::vec3(obj->getModel() * (glm::vec4(C2, 1.0)));
 
     spherePlaneDistance = glm::dot((s-C2), glm::vec3(0.0,1.0,0.0));
@@ -168,7 +168,7 @@ void defSphereBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
                     glm::vec3 trick = C2;
                     trick.y+=0.1;
                     glm::vec3 intersectionPoint = pointPlaneProjection(pos, glm::vec3(0,1,0), trick);
-                    i->setCollisionForce(3000.0f*(intersectionPoint-pos));
+                    i->setCollisionForce(30000.0f*(intersectionPoint-pos));
                 }
             }
 

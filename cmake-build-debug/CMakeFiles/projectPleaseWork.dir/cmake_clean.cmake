@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/projectPleaseWork.dir/BVH/BVH.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/BVH/clothBVH.cpp.o"
+  "CMakeFiles/projectPleaseWork.dir/BVH/defCubeBVH.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/BVH/defSphereBVH.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o"

@@ -1,5 +1,3 @@
-add deformable sphere
-
 cube collision rework
 friction
 
@@ -8,11 +6,6 @@ TBN matrix
 //optional but would make the code cleaner
 refactor classes hierarchy and files
 
-//quality of life stuff
-add a skybox
-
 //tool mesh-> tethraedon TetGen
 //libigl
 //tethraedalize.h
-
-//23 meeting

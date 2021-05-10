@@ -1708,6 +1708,12 @@
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/clothBVH.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/defCubeBVH.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/defCubeBVH.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/defSphereBVH.cpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>

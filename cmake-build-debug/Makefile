@@ -607,6 +607,33 @@ BVH/clothBVH.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/clothBVH.cpp.s
 .PHONY : BVH/clothBVH.cpp.s
 
+BVH/defCubeBVH.o: BVH/defCubeBVH.cpp.o
+
+.PHONY : BVH/defCubeBVH.o
+
+# target to build an object file
+BVH/defCubeBVH.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/defCubeBVH.cpp.o
+.PHONY : BVH/defCubeBVH.cpp.o
+
+BVH/defCubeBVH.i: BVH/defCubeBVH.cpp.i
+
+.PHONY : BVH/defCubeBVH.i
+
+# target to preprocess a source file
+BVH/defCubeBVH.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/defCubeBVH.cpp.i
+.PHONY : BVH/defCubeBVH.cpp.i
+
+BVH/defCubeBVH.s: BVH/defCubeBVH.cpp.s
+
+.PHONY : BVH/defCubeBVH.s
+
+# target to generate assembly for a file
+BVH/defCubeBVH.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/defCubeBVH.cpp.s
+.PHONY : BVH/defCubeBVH.cpp.s
+
 BVH/defSphereBVH.o: BVH/defSphereBVH.cpp.o
 
 .PHONY : BVH/defSphereBVH.o
@@ -1275,6 +1302,9 @@ help:
 	@echo "... BVH/clothBVH.o"
 	@echo "... BVH/clothBVH.i"
 	@echo "... BVH/clothBVH.s"
+	@echo "... BVH/defCubeBVH.o"
+	@echo "... BVH/defCubeBVH.i"
+	@echo "... BVH/defCubeBVH.s"
 	@echo "... BVH/defSphereBVH.o"
 	@echo "... BVH/defSphereBVH.i"
 	@echo "... BVH/defSphereBVH.s"

@@ -33,6 +33,7 @@ using namespace glm;
 //I mean it isn't used, Clion even complains about it
 //but without the linker throws a fit
 //whatever hocus pocus it does I don't care as long as it works
+// -> Good Job - Claudio Maggioni, an idiot
 #include "utilities/stb_image.h"
 #include "utilities/skybox.h"
 #include "Bodies/Deformable/deformableSphere.h"
@@ -92,6 +93,7 @@ int main() {
     //glEnable(GL_CULL_FACE);
 
     glm::vec3 lightPosition(-4.0f, 10.0f, 5.0f);
+    //glm::vec3 lightPosition(0.0f, 10.0f, 0.0f);
 
     //This is likely not gonna work
     //nvm, it worked
@@ -102,20 +104,20 @@ int main() {
 
     //standard: 4 5
     //for the cube using a 40 by 50 grid is better but it burns the cpu
-    addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition);
+    //addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition);
     //addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), model, lightPosition);
     //addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f), lightPosition);
 
     //deformable sphere
     glm::mat4 sMod(1);
     sMod = glm::translate(sMod, glm::vec3(-3.4, 3, 0));
-    addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
+    //addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
     sMod = glm::translate(sMod, glm::vec3(1,0,0));
     //addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
 
     //deformable cube
     sMod=glm::mat4(1);
-    //addDefCube(&objectList, glm::vec3(1,1,1), sMod, lightPosition);
+    addDefCube(&objectList, glm::vec3(1,1,1), sMod, lightPosition);
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -150,11 +152,11 @@ int main() {
     //Collidables
     std::vector<collidable *> collObjects;
     //sphere
-    addColl(&collObjects, 0, lightPosition);
+    //addColl(&collObjects, 0, lightPosition);
     //cube
     //addColl(&collObjects,1, lightPosition);
     //plane
-    addColl(&collObjects, 2, lightPosition);
+    //addColl(&collObjects, 2, lightPosition);
     std::cout<<"init successful"<<std::endl;
 
     //gui stuff
@@ -308,7 +310,14 @@ int main() {
 
     //clean up triangle
     glDeleteProgram(triangleProgramID);
+    glDeleteProgram(programId);
+    glDeleteProgram(lightSysId);
     glDeleteVertexArrays(1, &VertexArrayID);
+
+    //killing the threads, in case they were alive
+    threadShouldLive=false;
+    dragThreadShouldLive=false;
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     //clean up the objectList
     for(auto & i : objectList){
@@ -319,10 +328,6 @@ int main() {
     for(auto &i : collObjects){
         delete(i);
     }
-
-    //killing the thread, in case it was alive
-    threadShouldLive=false;
-    dragThreadShouldLive=false;
 
     std::cout << "i don't even know" << std::endl;
     // Close OpenGL window and terminate GLFW
