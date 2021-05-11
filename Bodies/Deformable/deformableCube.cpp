@@ -44,7 +44,7 @@ deformableCube::deformableCube(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) :
     for (int i = 0; i < particles.size(); ++i) {
         for (int j = i + 1; j < particles.size(); ++j) {
             float dist = glm::length(particles[i]->getPosition() - particles[j]->getPosition());
-            springs.push_back(new spring(dist, 60, .2, particles[i], particles[j]));
+            springs.push_back(new spring(dist, 80, .2, particles[i], particles[j]));
         }
     }
 
@@ -120,8 +120,35 @@ int deformableCube::getNumberOfVertices() {
     return 6*2*9*size*size;
 }
 
+int addToBuffer(float * buf, int position, glm::vec3 botL, glm::vec3 botR, glm::vec3 topL, glm::vec3 topR){
+    buf[position++]=botL.x;
+    buf[position++]=botL.y;
+    buf[position++]=botL.z;
+
+    buf[position++]=botR.x;
+    buf[position++]=botR.y;
+    buf[position++]=botR.z;
+
+    buf[position++]=topL.x;
+    buf[position++]=topL.y;
+    buf[position++]=topL.z;
+
+    buf[position++]=botR.x;
+    buf[position++]=botR.y;
+    buf[position++]=botR.z;
+
+    buf[position++]=topR.x;
+    buf[position++]=topR.y;
+    buf[position++]=topR.z;
+
+    buf[position++]=topL.x;
+    buf[position++]=topL.y;
+    buf[position++]=topL.z;
+
+    return position;
+}
+
 // this is a bit of a mess
-// TODO: find a way for this function to take less than a million lines
 //number of particles per face = (size+1)^2
 //order top bottom left right front back
 void deformableCube::updateBuffer() {
@@ -149,31 +176,7 @@ void deformableCube::updateBuffer() {
             helper[i+(size+1)*(j+1)]+=bottomNormal+topNormal;
             helper[i+(size+1)*(j+1)+1]+=topNormal;
 
-            //first triangle
-            deformableCube::vertexBuffer[pos++]=bl.x;
-            deformableCube::vertexBuffer[pos++]=bl.y;
-            deformableCube::vertexBuffer[pos++]=bl.z;
-
-            deformableCube::vertexBuffer[pos++]=br.x;
-            deformableCube::vertexBuffer[pos++]=br.y;
-            deformableCube::vertexBuffer[pos++]=br.z;
-
-            deformableCube::vertexBuffer[pos++]=tl.x;
-            deformableCube::vertexBuffer[pos++]=tl.y;
-            deformableCube::vertexBuffer[pos++]=tl.z;
-
-            //second triangle
-            deformableCube::vertexBuffer[pos++]=br.x;
-            deformableCube::vertexBuffer[pos++]=br.y;
-            deformableCube::vertexBuffer[pos++]=br.z;
-
-            deformableCube::vertexBuffer[pos++]=tr.x;
-            deformableCube::vertexBuffer[pos++]=tr.y;
-            deformableCube::vertexBuffer[pos++]=tr.z;
-
-            deformableCube::vertexBuffer[pos++]=tl.x;
-            deformableCube::vertexBuffer[pos++]=tl.y;
-            deformableCube::vertexBuffer[pos++]=tl.z;
+            pos = addToBuffer(deformableCube::vertexBuffer, pos, bl, br, tl, tr);
         }
     }
 
@@ -198,31 +201,7 @@ void deformableCube::updateBuffer() {
             helper[tmp+i+(size+1)*(j+1)]+=bottomNormal+topNormal;
             helper[tmp+i+(size+1)*(j+1)+1]+=topNormal;
 
-            //first triangle
-            deformableCube::vertexBuffer[pos++]=bl.x;
-            deformableCube::vertexBuffer[pos++]=bl.y;
-            deformableCube::vertexBuffer[pos++]=bl.z;
-
-            deformableCube::vertexBuffer[pos++]=br.x;
-            deformableCube::vertexBuffer[pos++]=br.y;
-            deformableCube::vertexBuffer[pos++]=br.z;
-
-            deformableCube::vertexBuffer[pos++]=tl.x;
-            deformableCube::vertexBuffer[pos++]=tl.y;
-            deformableCube::vertexBuffer[pos++]=tl.z;
-
-            //second triangle
-            deformableCube::vertexBuffer[pos++]=br.x;
-            deformableCube::vertexBuffer[pos++]=br.y;
-            deformableCube::vertexBuffer[pos++]=br.z;
-
-            deformableCube::vertexBuffer[pos++]=tr.x;
-            deformableCube::vertexBuffer[pos++]=tr.y;
-            deformableCube::vertexBuffer[pos++]=tr.z;
-
-            deformableCube::vertexBuffer[pos++]=tl.x;
-            deformableCube::vertexBuffer[pos++]=tl.y;
-            deformableCube::vertexBuffer[pos++]=tl.z;
+            pos = addToBuffer(deformableCube::vertexBuffer, pos, bl, br, tl, tr);
         }
     }
 
@@ -246,31 +225,7 @@ void deformableCube::updateBuffer() {
             helper[i+1+(size+1)*(size+1)*j]+=bottomNormal+topNormal;
             helper[i+1+(size+1)*(size+1)*(j+1)]+=topNormal;
 
-            //first triangle
-            deformableCube::vertexBuffer[pos++]=bl.x;
-            deformableCube::vertexBuffer[pos++]=bl.y;
-            deformableCube::vertexBuffer[pos++]=bl.z;
-
-            deformableCube::vertexBuffer[pos++]=br.x;
-            deformableCube::vertexBuffer[pos++]=br.y;
-            deformableCube::vertexBuffer[pos++]=br.z;
-
-            deformableCube::vertexBuffer[pos++]=tl.x;
-            deformableCube::vertexBuffer[pos++]=tl.y;
-            deformableCube::vertexBuffer[pos++]=tl.z;
-
-            //second triangle
-            deformableCube::vertexBuffer[pos++]=br.x;
-            deformableCube::vertexBuffer[pos++]=br.y;
-            deformableCube::vertexBuffer[pos++]=br.z;
-
-            deformableCube::vertexBuffer[pos++]=tr.x;
-            deformableCube::vertexBuffer[pos++]=tr.y;
-            deformableCube::vertexBuffer[pos++]=tr.z;
-
-            deformableCube::vertexBuffer[pos++]=tl.x;
-            deformableCube::vertexBuffer[pos++]=tl.y;
-            deformableCube::vertexBuffer[pos++]=tl.z;
+            pos = addToBuffer(deformableCube::vertexBuffer, pos, bl, br, tl, tr);
         }
     }
 
@@ -295,31 +250,7 @@ void deformableCube::updateBuffer() {
             helper[tmp+(i+1)*(size+1)*(size+1)+j]+=bottomNormal+topNormal;
             helper[tmp+(i+1)*(size+1)*(size+1)+j+1]+=topNormal;
 
-            //first triangle
-            deformableCube::vertexBuffer[pos++]=bl.x;
-            deformableCube::vertexBuffer[pos++]=bl.y;
-            deformableCube::vertexBuffer[pos++]=bl.z;
-
-            deformableCube::vertexBuffer[pos++]=br.x;
-            deformableCube::vertexBuffer[pos++]=br.y;
-            deformableCube::vertexBuffer[pos++]=br.z;
-
-            deformableCube::vertexBuffer[pos++]=tl.x;
-            deformableCube::vertexBuffer[pos++]=tl.y;
-            deformableCube::vertexBuffer[pos++]=tl.z;
-
-            //second triangle
-            deformableCube::vertexBuffer[pos++]=br.x;
-            deformableCube::vertexBuffer[pos++]=br.y;
-            deformableCube::vertexBuffer[pos++]=br.z;
-
-            deformableCube::vertexBuffer[pos++]=tr.x;
-            deformableCube::vertexBuffer[pos++]=tr.y;
-            deformableCube::vertexBuffer[pos++]=tr.z;
-
-            deformableCube::vertexBuffer[pos++]=tl.x;
-            deformableCube::vertexBuffer[pos++]=tl.y;
-            deformableCube::vertexBuffer[pos++]=tl.z;
+            pos = addToBuffer(deformableCube::vertexBuffer, pos, bl, br, tl, tr);
         }
     }
 
@@ -343,31 +274,7 @@ void deformableCube::updateBuffer() {
             helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*j]+=bottomNormal+topNormal;
             helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*(j+1)]+=topNormal;
 
-            //first triangle
-            deformableCube::vertexBuffer[pos++]=bl.x;
-            deformableCube::vertexBuffer[pos++]=bl.y;
-            deformableCube::vertexBuffer[pos++]=bl.z;
-
-            deformableCube::vertexBuffer[pos++]=br.x;
-            deformableCube::vertexBuffer[pos++]=br.y;
-            deformableCube::vertexBuffer[pos++]=br.z;
-
-            deformableCube::vertexBuffer[pos++]=tl.x;
-            deformableCube::vertexBuffer[pos++]=tl.y;
-            deformableCube::vertexBuffer[pos++]=tl.z;
-
-            //second triangle
-            deformableCube::vertexBuffer[pos++]=br.x;
-            deformableCube::vertexBuffer[pos++]=br.y;
-            deformableCube::vertexBuffer[pos++]=br.z;
-
-            deformableCube::vertexBuffer[pos++]=tr.x;
-            deformableCube::vertexBuffer[pos++]=tr.y;
-            deformableCube::vertexBuffer[pos++]=tr.z;
-
-            deformableCube::vertexBuffer[pos++]=tl.x;
-            deformableCube::vertexBuffer[pos++]=tl.y;
-            deformableCube::vertexBuffer[pos++]=tl.z;
+            pos = addToBuffer(deformableCube::vertexBuffer, pos, bl, br, tl, tr);
         }
     }
 
@@ -391,31 +298,7 @@ void deformableCube::updateBuffer() {
             helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*j]+=bottomNormal+topNormal;
             helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*(j+1)]+=topNormal;
 
-            //first triangle
-            deformableCube::vertexBuffer[pos++]=bl.x;
-            deformableCube::vertexBuffer[pos++]=bl.y;
-            deformableCube::vertexBuffer[pos++]=bl.z;
-
-            deformableCube::vertexBuffer[pos++]=br.x;
-            deformableCube::vertexBuffer[pos++]=br.y;
-            deformableCube::vertexBuffer[pos++]=br.z;
-
-            deformableCube::vertexBuffer[pos++]=tl.x;
-            deformableCube::vertexBuffer[pos++]=tl.y;
-            deformableCube::vertexBuffer[pos++]=tl.z;
-
-            //second triangle
-            deformableCube::vertexBuffer[pos++]=br.x;
-            deformableCube::vertexBuffer[pos++]=br.y;
-            deformableCube::vertexBuffer[pos++]=br.z;
-
-            deformableCube::vertexBuffer[pos++]=tr.x;
-            deformableCube::vertexBuffer[pos++]=tr.y;
-            deformableCube::vertexBuffer[pos++]=tr.z;
-
-            deformableCube::vertexBuffer[pos++]=tl.x;
-            deformableCube::vertexBuffer[pos++]=tl.y;
-            deformableCube::vertexBuffer[pos++]=tl.z;
+            pos = addToBuffer(deformableCube::vertexBuffer, pos, bl, br, tl, tr);
         }
     }
 
@@ -433,31 +316,7 @@ void deformableCube::updateBuffer() {
             //top right
             glm::vec3 tr = glm::normalize(helper[i+(size+1)*(j+1)+1]);
 
-            //first triangle
-            deformableCube::normalBuffer[pos++]=bl.x;
-            deformableCube::normalBuffer[pos++]=bl.y;
-            deformableCube::normalBuffer[pos++]=bl.z;
-
-            deformableCube::normalBuffer[pos++]=br.x;
-            deformableCube::normalBuffer[pos++]=br.y;
-            deformableCube::normalBuffer[pos++]=br.z;
-
-            deformableCube::normalBuffer[pos++]=tl.x;
-            deformableCube::normalBuffer[pos++]=tl.y;
-            deformableCube::normalBuffer[pos++]=tl.z;
-
-            //second triangle
-            deformableCube::normalBuffer[pos++]=br.x;
-            deformableCube::normalBuffer[pos++]=br.y;
-            deformableCube::normalBuffer[pos++]=br.z;
-
-            deformableCube::normalBuffer[pos++]=tr.x;
-            deformableCube::normalBuffer[pos++]=tr.y;
-            deformableCube::normalBuffer[pos++]=tr.z;
-
-            deformableCube::normalBuffer[pos++]=tl.x;
-            deformableCube::normalBuffer[pos++]=tl.y;
-            deformableCube::normalBuffer[pos++]=tl.z;
+            pos = addToBuffer(deformableCube::normalBuffer, pos, bl, br, tl, tr);
         }
     }
 
@@ -474,31 +333,7 @@ void deformableCube::updateBuffer() {
             //top right
             glm::vec3 tr = glm::normalize(helper[tmp+i+(size+1)*(j+1)+1]);
 
-            //first triangle
-            deformableCube::normalBuffer[pos++]=bl.x;
-            deformableCube::normalBuffer[pos++]=bl.y;
-            deformableCube::normalBuffer[pos++]=bl.z;
-
-            deformableCube::normalBuffer[pos++]=br.x;
-            deformableCube::normalBuffer[pos++]=br.y;
-            deformableCube::normalBuffer[pos++]=br.z;
-
-            deformableCube::normalBuffer[pos++]=tl.x;
-            deformableCube::normalBuffer[pos++]=tl.y;
-            deformableCube::normalBuffer[pos++]=tl.z;
-
-            //second triangle
-            deformableCube::normalBuffer[pos++]=br.x;
-            deformableCube::normalBuffer[pos++]=br.y;
-            deformableCube::normalBuffer[pos++]=br.z;
-
-            deformableCube::normalBuffer[pos++]=tr.x;
-            deformableCube::normalBuffer[pos++]=tr.y;
-            deformableCube::normalBuffer[pos++]=tr.z;
-
-            deformableCube::normalBuffer[pos++]=tl.x;
-            deformableCube::normalBuffer[pos++]=tl.y;
-            deformableCube::normalBuffer[pos++]=tl.z;
+            pos = addToBuffer(deformableCube::normalBuffer, pos, bl, br, tl, tr);
         }
     }
 
@@ -514,31 +349,7 @@ void deformableCube::updateBuffer() {
 
             glm::vec3 tr = glm::normalize(helper[i+1+(size+1)*(size+1)*(j+1)]);
 
-            //first triangle
-            deformableCube::normalBuffer[pos++]=bl.x;
-            deformableCube::normalBuffer[pos++]=bl.y;
-            deformableCube::normalBuffer[pos++]=bl.z;
-
-            deformableCube::normalBuffer[pos++]=br.x;
-            deformableCube::normalBuffer[pos++]=br.y;
-            deformableCube::normalBuffer[pos++]=br.z;
-
-            deformableCube::normalBuffer[pos++]=tl.x;
-            deformableCube::normalBuffer[pos++]=tl.y;
-            deformableCube::normalBuffer[pos++]=tl.z;
-
-            //second triangle
-            deformableCube::normalBuffer[pos++]=br.x;
-            deformableCube::normalBuffer[pos++]=br.y;
-            deformableCube::normalBuffer[pos++]=br.z;
-
-            deformableCube::normalBuffer[pos++]=tr.x;
-            deformableCube::normalBuffer[pos++]=tr.y;
-            deformableCube::normalBuffer[pos++]=tr.z;
-
-            deformableCube::normalBuffer[pos++]=tl.x;
-            deformableCube::normalBuffer[pos++]=tl.y;
-            deformableCube::normalBuffer[pos++]=tl.z;
+            pos = addToBuffer(deformableCube::normalBuffer, pos, bl, br, tl, tr);
         }
     }
 
@@ -555,31 +366,7 @@ void deformableCube::updateBuffer() {
 
             glm::vec3 tr = glm::normalize(helper[tmp+(i+1)*(size+1)*(size+1)+j+1]);
 
-            //first triangle
-            deformableCube::normalBuffer[pos++]=bl.x;
-            deformableCube::normalBuffer[pos++]=bl.y;
-            deformableCube::normalBuffer[pos++]=bl.z;
-
-            deformableCube::normalBuffer[pos++]=br.x;
-            deformableCube::normalBuffer[pos++]=br.y;
-            deformableCube::normalBuffer[pos++]=br.z;
-
-            deformableCube::normalBuffer[pos++]=tl.x;
-            deformableCube::normalBuffer[pos++]=tl.y;
-            deformableCube::normalBuffer[pos++]=tl.z;
-
-            //second triangle
-            deformableCube::normalBuffer[pos++]=br.x;
-            deformableCube::normalBuffer[pos++]=br.y;
-            deformableCube::normalBuffer[pos++]=br.z;
-
-            deformableCube::normalBuffer[pos++]=tr.x;
-            deformableCube::normalBuffer[pos++]=tr.y;
-            deformableCube::normalBuffer[pos++]=tr.z;
-
-            deformableCube::normalBuffer[pos++]=tl.x;
-            deformableCube::normalBuffer[pos++]=tl.y;
-            deformableCube::normalBuffer[pos++]=tl.z;
+            pos = addToBuffer(deformableCube::normalBuffer, pos, bl, br, tl, tr);
         }
     }
 
@@ -595,31 +382,7 @@ void deformableCube::updateBuffer() {
 
             glm::vec3 tr = glm::normalize(helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*(j+1)]);
 
-            //first triangle
-            deformableCube::normalBuffer[pos++]=bl.x;
-            deformableCube::normalBuffer[pos++]=bl.y;
-            deformableCube::normalBuffer[pos++]=bl.z;
-
-            deformableCube::normalBuffer[pos++]=br.x;
-            deformableCube::normalBuffer[pos++]=br.y;
-            deformableCube::normalBuffer[pos++]=br.z;
-
-            deformableCube::normalBuffer[pos++]=tl.x;
-            deformableCube::normalBuffer[pos++]=tl.y;
-            deformableCube::normalBuffer[pos++]=tl.z;
-
-            //second triangle
-            deformableCube::normalBuffer[pos++]=br.x;
-            deformableCube::normalBuffer[pos++]=br.y;
-            deformableCube::normalBuffer[pos++]=br.z;
-
-            deformableCube::normalBuffer[pos++]=tr.x;
-            deformableCube::normalBuffer[pos++]=tr.y;
-            deformableCube::normalBuffer[pos++]=tr.z;
-
-            deformableCube::normalBuffer[pos++]=tl.x;
-            deformableCube::normalBuffer[pos++]=tl.y;
-            deformableCube::normalBuffer[pos++]=tl.z;
+            pos = addToBuffer(deformableCube::normalBuffer, pos, bl, br, tl, tr);
         }
     }
 
@@ -635,31 +398,7 @@ void deformableCube::updateBuffer() {
 
             glm::vec3 tr = glm::normalize(helper[tmp-(size+1)*(size+1)*(i+1)+(size+1)*(j+1)]);
 
-            //first triangle
-            deformableCube::normalBuffer[pos++]=bl.x;
-            deformableCube::normalBuffer[pos++]=bl.y;
-            deformableCube::normalBuffer[pos++]=bl.z;
-
-            deformableCube::normalBuffer[pos++]=br.x;
-            deformableCube::normalBuffer[pos++]=br.y;
-            deformableCube::normalBuffer[pos++]=br.z;
-
-            deformableCube::normalBuffer[pos++]=tl.x;
-            deformableCube::normalBuffer[pos++]=tl.y;
-            deformableCube::normalBuffer[pos++]=tl.z;
-
-            //second triangle
-            deformableCube::normalBuffer[pos++]=br.x;
-            deformableCube::normalBuffer[pos++]=br.y;
-            deformableCube::normalBuffer[pos++]=br.z;
-
-            deformableCube::normalBuffer[pos++]=tr.x;
-            deformableCube::normalBuffer[pos++]=tr.y;
-            deformableCube::normalBuffer[pos++]=tr.z;
-
-            deformableCube::normalBuffer[pos++]=tl.x;
-            deformableCube::normalBuffer[pos++]=tl.y;
-            deformableCube::normalBuffer[pos++]=tl.z;
+            pos = addToBuffer(deformableCube::normalBuffer, pos, bl, br, tl, tr);
         }
     }
 }
@@ -747,7 +486,23 @@ void deformableCube::rungeKutta(float timeDelta) {
 }
 
 void deformableCube::detectCollision(collidable *obj) {
-    deformableObjects::detectCollision(obj);
+    switch(obj->returnType()){
+        case 0:
+            //collision with sphere
+            deformableCube::bvh->detectCollisionSphere(modelMatrix, obj);
+            break;
+        case 1:
+            //collision with cube
+            deformableCube::bvh->detectCollisionCube(modelMatrix, obj);
+            break;
+        case 2:
+            //collision with plane
+            deformableCube::bvh->detectCollisionPlane(modelMatrix, obj);
+            break;
+        default:
+            std::cout<<"something went wrong"<<std::endl;
+            break;
+    }
 }
 
 BVH *deformableCube::getBvh() const {

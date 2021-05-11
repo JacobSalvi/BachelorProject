@@ -32,7 +32,7 @@ void addDefSphere(std::vector<deformableObjects *> *list, glm::vec3 colour, glm:
 void addDefCube(std::vector<deformableObjects *> *list, glm::vec3 colour, glm::mat4 mod, glm::vec3 lPos);
 
 //collidables
-void addColl(std::vector<collidable *> * list, int type, glm::vec3 lPos);
+void addColl(std::vector<collidable *> * list, int type, glm::vec3 lPos, glm::vec3 tr);
 
 //dragging
 mouseIntersectStruct isMouseOverColl(glm::vec3 origin, glm::vec3 direction, std::vector<collidable *> * list);

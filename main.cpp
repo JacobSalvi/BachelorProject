@@ -117,6 +117,7 @@ int main() {
 
     //deformable cube
     sMod=glm::mat4(1);
+    sMod = glm::translate(sMod, glm::vec3(-0.0,2,0));
     addDefCube(&objectList, glm::vec3(1,1,1), sMod, lightPosition);
 
     GLuint VertexArrayID;
@@ -152,11 +153,11 @@ int main() {
     //Collidables
     std::vector<collidable *> collObjects;
     //sphere
-    //addColl(&collObjects, 0, lightPosition);
+    addColl(&collObjects, 0, lightPosition, glm::vec3(0.5,0,0.5));
     //cube
-    //addColl(&collObjects,1, lightPosition);
+    //addColl(&collObjects,1, lightPosition, glm::vec3(0.5,0,0.5));
     //plane
-    //addColl(&collObjects, 2, lightPosition);
+    addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
     std::cout<<"init successful"<<std::endl;
 
     //gui stuff
@@ -317,7 +318,8 @@ int main() {
     //killing the threads, in case they were alive
     threadShouldLive=false;
     dragThreadShouldLive=false;
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    //to make sure the threads actually die
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
     //clean up the objectList
     for(auto & i : objectList){
