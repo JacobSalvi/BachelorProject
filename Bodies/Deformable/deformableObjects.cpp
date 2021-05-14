@@ -146,3 +146,7 @@ void deformableObjects::reset() {}
 helperStruct deformableObjects::isHovered(glm::vec3 origin, glm::vec3 direction) {
     return helperStruct();
 }
+
+float deformableObjects::getGravity() const {
+    return gravity;
+}

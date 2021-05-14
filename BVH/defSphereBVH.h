@@ -14,11 +14,11 @@ public:
 
     void update() override;
 
-    void detectCollisionSphere(glm::mat4 outModel, collidable * obj) override;
+    void detectCollisionSphere(glm::mat4 outModel, collidable * obj, float gravity) override;
 
-    void detectCollisionCube(glm::mat4 outModel, collidable * obj) override;
+    void detectCollisionCube(glm::mat4 outModel, collidable * obj, float gravity) override;
 
-    void detectCollisionPlane(glm::mat4 outModel, collidable * obj) override;
+    void detectCollisionPlane(glm::mat4 outModel, collidable * obj, float gravity) override;
 
 };
 

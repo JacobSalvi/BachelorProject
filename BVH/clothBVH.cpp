@@ -18,7 +18,7 @@ clothBVH::clothBVH(std::vector<particle *> particles, int row) : BVH(particles) 
     //no need to divide further
     //create sphere and return
     if (particles.size() == 4) {
-        std::swap(p[2], p[3]);
+        //std::swap(p[2], p[3]);
 
         //sphere and model matrix for the sphere
         glm::mat4 internalSphereModel = glm::mat4(1);
@@ -341,7 +341,7 @@ void clothBVH::update() {
     if (clothBVH::child3 != nullptr) clothBVH::child3->update();
 }
 
-void clothBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
+void clothBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj, float gravity) {
     //the internal model plus our model give us the position of the sphere
     glm::mat4 internalModel = sphereShown->getModel();
     glm::mat4 actualModel = outModel * internalModel;
@@ -384,15 +384,105 @@ void clothBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
             }
         } else {
             //otherwise recursively check the children
-            if (clothBVH::child0 != nullptr) clothBVH::child0->detectCollisionSphere(outModel, obj);
-            if (clothBVH::child1 != nullptr) clothBVH::child1->detectCollisionSphere(outModel, obj);
-            if (clothBVH::child2 != nullptr) clothBVH::child2->detectCollisionSphere(outModel, obj);
-            if (clothBVH::child3 != nullptr) clothBVH::child3->detectCollisionSphere(outModel, obj);
+            if (clothBVH::child0 != nullptr) clothBVH::child0->detectCollisionSphere(outModel, obj, gravity);
+            if (clothBVH::child1 != nullptr) clothBVH::child1->detectCollisionSphere(outModel, obj, gravity);
+            if (clothBVH::child2 != nullptr) clothBVH::child2->detectCollisionSphere(outModel, obj, gravity);
+            if (clothBVH::child3 != nullptr) clothBVH::child3->detectCollisionSphere(outModel, obj, gravity);
         }
     }
 }
 
-void clothBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
+//Plane A
+//massive L
+bool triangleTriangleIntersection(glm::vec3 a,glm::vec3 b, glm::vec3 c, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, glm::vec3 * toRet){
+    glm::vec3 ray = glm::normalize(p2-p1);
+    glm::vec3 ray1 = glm::normalize(p3-p1);
+    glm::vec3 ray2 = glm::normalize(p3-p2);
+    glm::vec3 normal = glm::normalize(glm::cross(b-a, c-a));
+    int sum=0;
+    glm::dot(ray, normal)!=0.0f?sum+=1: sum=sum;
+    glm::dot(ray1, normal)!=0.0f?sum+=1: sum=sum;
+    glm::dot(ray1, normal)!=0.0f?sum+=1: sum=sum;
+    if(sum==0 || sum==1){
+        //we intersect 1 corner or nothing
+        return false;
+    }
+    glm::vec3 helper(0,0,0);
+    glm::vec3 helper1(0,0,0);
+    glm::vec3 common;
+    if(glm::dot(ray, normal)!=0.0f){
+        //calculate intersection with plane
+        glm::vec3 tmp = planeVectorIntersection(p1, ray, normal, a);
+        //check if point in triangle
+        if(pointInTriangle(tmp,a ,b, c)){
+            helper=tmp;
+        }
+
+        if(glm::dot(ray1, normal)!=0.0f){
+            tmp=planeVectorIntersection(p1, ray1, normal, a);
+            if(pointInTriangle(tmp,a ,b, c)){
+                helper1=tmp;
+                common=p1;
+            }
+        }else{
+            tmp=planeVectorIntersection(p2, ray2, normal, a);
+            if(pointInTriangle(tmp, a,b,c)){
+                helper1=tmp;
+                common=p2;
+            }
+        }
+    }else{
+        glm::vec3 tmp=planeVectorIntersection(p1, ray1, normal, a);
+        if(pointInTriangle(tmp,a ,b, c)){
+            helper=tmp;
+        }
+        tmp=planeVectorIntersection(p2, ray2, normal, a);
+        if(pointInTriangle(tmp,a ,b, c)){
+            helper1=tmp;
+        }
+        common=p3;
+    }
+
+    if(glm::length(helper-helper1)==0){
+        return false;
+    }
+    ray=glm::normalize(helper-helper1);
+    ray1=helper1+0.5f*glm::length(helper-helper1)*ray;
+    toRet->x=-common.x+ray1.x;
+    toRet->y=-common.y+ray1.y;
+    toRet->z=-common.z+ray1.z;
+    return true;
+}
+
+//plane B
+void stabbingFace(glm::mat4 mod, glm::vec3 ex0, glm::vec3 ex1, particle * a, particle * b, particle * c){
+    glm::vec3 aPos = glm::vec3(mod*glm::vec4(a->getPosition(), 1));
+    glm::vec3 bPos = glm::vec3(mod*glm::vec4(b->getPosition(), 1));
+    glm::vec3 cPos = glm::vec3(mod*glm::vec4(c->getPosition(), 1));
+    glm::vec3 tmp = planeVectorIntersection(ex0, glm::normalize(ex1-ex0), glm::normalize(glm::cross(bPos-aPos, cPos-aPos)), aPos);
+    //check if tmp in between the 2 extremities
+    if(!(tmp.y>=ex0.y && tmp.y<=ex1.y && tmp.x>=ex0.x  && tmp.x<=ex1.x && tmp.z>=ex0.z && tmp.z<=ex1.z)){
+        return;
+    }
+    //check if tmp is inside the triangle
+    glm::vec3 helper;
+    if(pointInTriangle(tmp, aPos, bPos, cPos)){
+        //check which extreme it is closest to
+        if(glm::length(tmp-ex0)<glm::length(tmp-ex1)){
+            helper=ex0;
+        }else{
+            helper=ex1;
+        }
+        //adjust
+        float coeff = 250.0f;
+        a->setCollisionForce(coeff*(helper-tmp));
+        b->setCollisionForce(coeff*(helper-tmp));
+        c->setCollisionForce(coeff*(helper-tmp));
+    }
+}
+
+
+void clothBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj, float gravity) {
     //the internal model plus our model give us the position of the sphere
     glm::mat4 internalModel = sphereShown->getModel();
     glm::mat4 actualModel = outModel * internalModel;
@@ -418,8 +508,127 @@ void clothBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
     if (dmin <= distSquared) {
         //cube intersect sphere
         if (child0 == nullptr) {
+            particle * bl=p[0];
+            particle * br=p[1];
+            particle * tl=p[2];
+            particle * tr=p[3];
+
+            //possible intersection
+            glm::vec3 * possInt = new glm::vec3;
+
+            //left face
+            glm::vec3 fbl(C1.x, C1.y, C1.z);
+            glm::vec3 fbr(C1.x, C1.y, C2.z);
+            glm::vec3 ftl(C1.x, C2.y, C1.z);
+            glm::vec3 ftr(C1.x, C2.y, C2.z);
+
+            //TODO: compress this so it takes less than 500 lines
+            //y axis
+            stabbingFace(outModel, C1, glm::vec3(C1.x, C2.y, C1.z), bl, br, tl);
+            stabbingFace(outModel, C1, glm::vec3(C1.x, C2.y, C1.z), br, tr, tl);
+
+            stabbingFace(outModel, glm::vec3(C1.x, C1.y, C2.z), glm::vec3(C1.x, C2.y, C2.z), bl, br, tl);
+            stabbingFace(outModel, glm::vec3(C1.x, C1.y, C2.z), glm::vec3(C1.x, C2.y, C2.z), br, tr, tl);
+
+            stabbingFace(outModel, glm::vec3(C2.x, C1.y, C1.z), glm::vec3(C2.x, C2.y, C1.z), bl, br, tl);
+            stabbingFace(outModel, glm::vec3(C2.x, C1.y, C1.z), glm::vec3(C2.x, C2.y, C1.z), br, tr, tl);
+
+            stabbingFace(outModel, glm::vec3(C2.x, C1.y, C2.z), C2, bl, br, tl);
+            stabbingFace(outModel, glm::vec3(C2.x, C1.y, C2.z), C2, br, tr, tl);
+
+            //z axis
+            stabbingFace(outModel, C1, glm::vec3(C1.x, C1.y, C2.z), bl, br, tl);
+            stabbingFace(outModel, C1, glm::vec3(C1.x, C1.y, C2.z), br, tr, tl);
+
+            stabbingFace(outModel, glm::vec3(C1.x, C2.y, C1.z), glm::vec3(C1.x, C2.y, C2.z), bl, br, tl);
+            stabbingFace(outModel, glm::vec3(C1.x, C2.y, C1.z), glm::vec3(C1.x, C2.y, C2.z), br, tr, tl);
+
+            stabbingFace(outModel, glm::vec3(C2.x, C1.y, C1.z), glm::vec3(C2.x, C1.y, C2.z), bl, br, tl);
+            stabbingFace(outModel, glm::vec3(C2.x, C1.y, C1.z), glm::vec3(C2.x, C1.y, C2.z), br, tr, tl);
+
+            stabbingFace(outModel, glm::vec3(C2.x, C2.y, C1.z), C2, bl, br, tl);
+            stabbingFace(outModel, glm::vec3(C2.x, C2.y, C1.z), C2, br, tr, tl);
+
+            //x axis
+            stabbingFace(outModel, C1, glm::vec3(C2.x, C1.y, C1.z), bl, br, tl);
+            stabbingFace(outModel, C1, glm::vec3(C2.x, C1.y, C1.z), br, tr, tl);
+
+            stabbingFace(outModel, glm::vec3(C1.x, C1.y, C2.z), glm::vec3(C2.x, C1.y, C2.z), bl, br, tl);
+            stabbingFace(outModel, glm::vec3(C1.x, C1.y, C2.z), glm::vec3(C2.x, C1.y, C2.z), br, tr, tl);
+
+            stabbingFace(outModel, glm::vec3(C1.x, C2.y, C1.z), glm::vec3(C2.x, C2.y, C1.z), bl, br, tl);
+            stabbingFace(outModel, glm::vec3(C1.x, C2.y, C1.z), glm::vec3(C2.x, C2.y, C1.z), br, tr, tl);
+
+            stabbingFace(outModel, glm::vec3(C1.x, C2.y, C2.z), C2, bl, br, tl);
+            stabbingFace(outModel, glm::vec3(C1.x, C2.y, C2.z), C2, br, tr, tl);
+
+            //additional ones to give a better effect
+            //x
+            glm::vec3 below = glm::vec3(obj->getModel()*glm::vec4(-0.6, -0.6, -0.2, 1));
+            glm::vec3 above = glm::vec3(obj->getModel()*glm::vec4(-0.6, 0.6, -0.2, 1));
+            stabbingFace(outModel, below, above, bl, br, tl);
+            stabbingFace(outModel, below, above, br, tr, tl);
+
+            below = glm::vec3(obj->getModel()*glm::vec4(-0.6, -0.6, 0.2, 1));
+            above = glm::vec3(obj->getModel()*glm::vec4(-0.6, 0.6, 0.2, 1));
+            stabbingFace(outModel, below, above, bl, br, tl);
+            stabbingFace(outModel, below, above, br, tr, tl);
+
+            below = glm::vec3(obj->getModel()*glm::vec4(0.6, -0.6, -0.2, 1));
+            above = glm::vec3(obj->getModel()*glm::vec4(0.6, 0.6, -0.2, 1));
+            stabbingFace(outModel, below, above, bl, br, tl);
+            stabbingFace(outModel, below, above, br, tr, tl);
+
+            below = glm::vec3(obj->getModel()*glm::vec4(0.6, -0.6, 0.2, 1));
+            above = glm::vec3(obj->getModel()*glm::vec4(0.6, 0.6, 0.2, 1));
+            stabbingFace(outModel, below, above, bl, br, tl);
+            stabbingFace(outModel, below, above, br, tr, tl);
+
+            //z
+            below = glm::vec3(obj->getModel()*glm::vec4(-0.6, -0.6, -0.2, 1));
+            above = glm::vec3(obj->getModel()*glm::vec4(0.6, -0.6, -0.2, 1));
+            stabbingFace(outModel, below, above, bl, br, tl);
+            stabbingFace(outModel, below, above, br, tr, tl);
+
+            below = glm::vec3(obj->getModel()*glm::vec4(-0.6, -0.6, 0.2, 1));
+            above = glm::vec3(obj->getModel()*glm::vec4(0.6, -0.6, 0.2, 1));
+            stabbingFace(outModel, below, above, bl, br, tl);
+            stabbingFace(outModel, below, above, br, tr, tl);
+
+            below = glm::vec3(obj->getModel()*glm::vec4(-0.6, 0.6, -0.2, 1));
+            above = glm::vec3(obj->getModel()*glm::vec4(0.6, 0.6, -0.2, 1));
+            stabbingFace(outModel, below, above, bl, br, tl);
+            stabbingFace(outModel, below, above, br, tr, tl);
+
+            below = glm::vec3(obj->getModel()*glm::vec4(-0.6, 0.6, 0.2, 1));
+            above = glm::vec3(obj->getModel()*glm::vec4(0.6, 0.6, 0.2, 1));
+            stabbingFace(outModel, below, above, bl, br, tl);
+            stabbingFace(outModel, below, above, br, tr, tl);
+
+            //y
+            below = glm::vec3(obj->getModel()*glm::vec4(-0.2, -0.6, -0.6, 1));
+            above = glm::vec3(obj->getModel()*glm::vec4(-0.2, 0.6, -0.6, 1));
+            stabbingFace(outModel, below, above, bl, br, tl);
+            stabbingFace(outModel, below, above, br, tr, tl);
+
+            below = glm::vec3(obj->getModel()*glm::vec4(0.2, -0.6, -0.6, 1));
+            above = glm::vec3(obj->getModel()*glm::vec4(0.2, 0.6, -0.6, 1));
+            stabbingFace(outModel, below, above, bl, br, tl);
+            stabbingFace(outModel, below, above, br, tr, tl);
+
+            below = glm::vec3(obj->getModel()*glm::vec4(-0.2, -0.6, 0.6, 1));
+            above = glm::vec3(obj->getModel()*glm::vec4(-0.2, 0.6, 0.6, 1));
+            stabbingFace(outModel, below, above, bl, br, tl);
+            stabbingFace(outModel, below, above, br, tr, tl);
+
+            below = glm::vec3(obj->getModel()*glm::vec4(0.2, -0.6, 0.6, 1));
+            above = glm::vec3(obj->getModel()*glm::vec4(0.2, 0.6, 0.6, 1));
+            stabbingFace(outModel, below, above, bl, br, tl);
+            stabbingFace(outModel, below, above, br, tr, tl);
+
+
+
             //check if any particle is inside the cube
-            //TODO: stupid triangle triangle intersection
             for (auto i : p) {
                 glm::vec3 pos = glm::vec3(outModel*glm::vec4(i->getPosition(), 1));
                 if (C1.x <= pos.x && pos.x <= C2.x && C1.y <= pos.y && pos.y <= C2.y && C1.z <= pos.z &&
@@ -486,7 +695,6 @@ void clothBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
                             }
                         }
                     }
-
                     //let's set the collision force for the particle
                     //since I have no indication what k should be I will wing it
                     i->setCollisionForce(256000.0f*(current-pos));
@@ -494,10 +702,10 @@ void clothBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
             }
 
         } else {
-            if (clothBVH::child0 != nullptr) clothBVH::child0->detectCollisionCube(outModel, obj);
-            if (clothBVH::child1 != nullptr) clothBVH::child1->detectCollisionCube(outModel, obj);
-            if (clothBVH::child2 != nullptr) clothBVH::child2->detectCollisionCube(outModel, obj);
-            if (clothBVH::child3 != nullptr) clothBVH::child3->detectCollisionCube(outModel, obj);
+            if (clothBVH::child0 != nullptr) clothBVH::child0->detectCollisionCube(outModel, obj, gravity);
+            if (clothBVH::child1 != nullptr) clothBVH::child1->detectCollisionCube(outModel, obj, gravity);
+            if (clothBVH::child2 != nullptr) clothBVH::child2->detectCollisionCube(outModel, obj, gravity);
+            if (clothBVH::child3 != nullptr) clothBVH::child3->detectCollisionCube(outModel, obj, gravity);
         }
     }
 }
@@ -507,7 +715,7 @@ void clothBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
 //that has no height, for the sake of the collision detection
 //I am gonna give it an artificial height
 //so basically it is the same as a cube/box
-void clothBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
+void clothBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj, float gravity) {
     //the internal model plus our model give us the position of the sphere
     glm::mat4 internalModel = sphereShown->getModel();
     glm::mat4 actualModel = outModel * internalModel;
@@ -542,14 +750,18 @@ void clothBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
                     trick.y+=0.1;
                     glm::vec3 intersectionPoint = pointPlaneProjection(pos, glm::vec3(0,1,0), trick);
                     i->setCollisionForce(3000.0f*(intersectionPoint-pos));
+
+                    //friction
+                    float friction = 100.0f*i->getMass()*gravity;
+                    i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
                 }
             }
 
         } else {
-            if (clothBVH::child0 != nullptr) clothBVH::child0->detectCollisionPlane(outModel, obj);
-            if (clothBVH::child1 != nullptr) clothBVH::child1->detectCollisionPlane(outModel, obj);
-            if (clothBVH::child2 != nullptr) clothBVH::child2->detectCollisionPlane(outModel, obj);
-            if (clothBVH::child3 != nullptr) clothBVH::child3->detectCollisionPlane(outModel, obj);
+            if (clothBVH::child0 != nullptr) clothBVH::child0->detectCollisionPlane(outModel, obj, gravity);
+            if (clothBVH::child1 != nullptr) clothBVH::child1->detectCollisionPlane(outModel, obj, gravity);
+            if (clothBVH::child2 != nullptr) clothBVH::child2->detectCollisionPlane(outModel, obj, gravity);
+            if (clothBVH::child3 != nullptr) clothBVH::child3->detectCollisionPlane(outModel, obj, gravity);
         }
     }
 }

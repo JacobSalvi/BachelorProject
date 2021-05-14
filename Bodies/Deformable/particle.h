@@ -19,6 +19,8 @@ private:
     glm::vec3 force = glm::vec3(0.0f,0.0f,0.0f);
     //collision force
     glm::vec3 collisionForce =glm::vec3(0.0f, 0.0f,0.0f);
+    //frictional force
+    glm::vec3 frictionForce = glm::vec3(0.0f,0.0f,0.0f);
 public:
 
     particle(glm::vec3 pos, float mass);
@@ -61,7 +63,13 @@ public:
 
     void resetCollisionForce();
 
+    void resetFrictionForce();
+
     const glm::vec3 &getCollisionForce() const;
+
+    const glm::vec3 &getFrictionForce() const;
+
+    void setFrictionForce(const glm::vec3 &newForce);
 };
 
 

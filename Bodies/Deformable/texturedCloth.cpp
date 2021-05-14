@@ -1,8 +1,8 @@
 
 #include "texturedCloth.h"
 
-float tw=5;
-float th=15;
+float tw=2;
+float th=6;
 
 texturedCloth::texturedCloth(float mass, GLuint texture, GLuint textureId, const glm::vec3 &color, float gravity,
                              const glm::mat4 &mod, const glm::vec3 &lPos, GLuint pID) : net(mass, tw+1, th+1, 1, color,

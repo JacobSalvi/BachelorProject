@@ -90,7 +90,7 @@ void defSphereBVH::update() {
     if (defSphereBVH::child3 != nullptr) defSphereBVH::child3->update();
 }
 
-void defSphereBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
+void defSphereBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj, float gravity) {
     //the internal model plus our model give us the position of the sphere
     glm::mat4 internalModel = sphereShown->getModel();
     glm::mat4 actualModel = outModel * internalModel;
@@ -130,15 +130,15 @@ void defSphereBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
             }
         } else {
             //otherwise recursively check the children
-            if (defSphereBVH::child0 != nullptr) defSphereBVH::child0->detectCollisionSphere(outModel, obj);
-            if (defSphereBVH::child1 != nullptr) defSphereBVH::child1->detectCollisionSphere(outModel, obj);
-            if (defSphereBVH::child2 != nullptr) defSphereBVH::child2->detectCollisionSphere(outModel, obj);
-            if (defSphereBVH::child3 != nullptr) defSphereBVH::child3->detectCollisionSphere(outModel, obj);
+            if (defSphereBVH::child0 != nullptr) defSphereBVH::child0->detectCollisionSphere(outModel, obj, gravity);
+            if (defSphereBVH::child1 != nullptr) defSphereBVH::child1->detectCollisionSphere(outModel, obj, gravity);
+            if (defSphereBVH::child2 != nullptr) defSphereBVH::child2->detectCollisionSphere(outModel, obj, gravity);
+            if (defSphereBVH::child3 != nullptr) defSphereBVH::child3->detectCollisionSphere(outModel, obj, gravity);
         }
     }
 }
 
-void defSphereBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
+void defSphereBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj, float gravity) {
     //the internal model plus our model give us the position of the sphere
     glm::mat4 internalModel = sphereShown->getModel();
     glm::mat4 actualModel = outModel * internalModel;
@@ -173,15 +173,15 @@ void defSphereBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
             }
 
         } else {
-            if (defSphereBVH::child0 != nullptr) defSphereBVH::child0->detectCollisionPlane(outModel, obj);
-            if (defSphereBVH::child1 != nullptr) defSphereBVH::child1->detectCollisionPlane(outModel, obj);
-            if (defSphereBVH::child2 != nullptr) defSphereBVH::child2->detectCollisionPlane(outModel, obj);
-            if (defSphereBVH::child3 != nullptr) defSphereBVH::child3->detectCollisionPlane(outModel, obj);
+            if (defSphereBVH::child0 != nullptr) defSphereBVH::child0->detectCollisionPlane(outModel, obj, gravity);
+            if (defSphereBVH::child1 != nullptr) defSphereBVH::child1->detectCollisionPlane(outModel, obj, gravity);
+            if (defSphereBVH::child2 != nullptr) defSphereBVH::child2->detectCollisionPlane(outModel, obj, gravity);
+            if (defSphereBVH::child3 != nullptr) defSphereBVH::child3->detectCollisionPlane(outModel, obj, gravity);
         }
     }
 }
 
-void defSphereBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
+void defSphereBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj, float gravity) {
     //the internal model plus our model give us the position of the sphere
     glm::mat4 internalModel = sphereShown->getModel();
     glm::mat4 actualModel = outModel * internalModel;
@@ -282,10 +282,10 @@ void defSphereBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
             }
 
         } else {
-            if (defSphereBVH::child0 != nullptr) defSphereBVH::child0->detectCollisionCube(outModel, obj);
-            if (defSphereBVH::child1 != nullptr) defSphereBVH::child1->detectCollisionCube(outModel, obj);
-            if (defSphereBVH::child2 != nullptr) defSphereBVH::child2->detectCollisionCube(outModel, obj);
-            if (defSphereBVH::child3 != nullptr) defSphereBVH::child3->detectCollisionCube(outModel, obj);
+            if (defSphereBVH::child0 != nullptr) defSphereBVH::child0->detectCollisionCube(outModel, obj, gravity);
+            if (defSphereBVH::child1 != nullptr) defSphereBVH::child1->detectCollisionCube(outModel, obj, gravity);
+            if (defSphereBVH::child2 != nullptr) defSphereBVH::child2->detectCollisionCube(outModel, obj, gravity);
+            if (defSphereBVH::child3 != nullptr) defSphereBVH::child3->detectCollisionCube(outModel, obj, gravity);
         }
     }
 }

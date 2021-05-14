@@ -35,6 +35,8 @@ private:
     //BVH
     clothBVH * bvh;
 
+    int orientation = 0;
+
 public:
     //assumption:
     //-equal mass particles
@@ -42,6 +44,8 @@ public:
     //-vertical and horizontal springs have the same properties
     //-diagonal springs have the same properties
     net(float mass, int col, int row, int integrator, glm::vec3 color, float gravity,  glm::mat4 mod, glm::vec3 lPos);
+
+    net(int size, glm::mat4 mod, glm::vec3 lPos);
 
     void addWind(const glm::vec3 &windToAdd);
 

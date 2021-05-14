@@ -38,11 +38,11 @@ public:
     //virtual stuff
     virtual void update();
 
-    virtual void detectCollisionSphere(glm::mat4 outModel, collidable * obj);
+    virtual void detectCollisionSphere(glm::mat4 outModel, collidable * obj, float gravity);
 
-    virtual void detectCollisionCube(glm::mat4 outModel, collidable * obj);
+    virtual void detectCollisionCube(glm::mat4 outModel, collidable * obj, float gravity);
 
-    virtual void detectCollisionPlane(glm::mat4 outModel, collidable * obj);
+    virtual void detectCollisionPlane(glm::mat4 outModel, collidable * obj, float gravity);
 
     virtual void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programId, bool wireFrame, glm::mat4 model);
 

@@ -81,6 +81,8 @@ public:
 
     void setGravity(float gravity);
 
+    float getGravity() const;
+
     virtual void render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programID);
 
     virtual void integrate(float timeDelta);

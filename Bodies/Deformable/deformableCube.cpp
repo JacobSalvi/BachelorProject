@@ -11,7 +11,7 @@ deformableCube::~deformableCube() {
 // a cube is a sort of grid of inner smaller cubes
 // also it is a cube of side 1
 deformableCube::deformableCube(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) :
-    size(3), deformableObjects(-5, mod, lPos) {
+    size(4), deformableObjects(-5, mod, lPos) {
     //we have 6 faces, each face has size^2 sub squares in it
     // each sub square is formed by 2 triangle
     deformableCube::vertexBuffer = new float[6*2*9*size*size];
@@ -20,7 +20,7 @@ deformableCube::deformableCube(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) :
 
     float mass = 1.0f;
     int id=0;
-    float compar = 3.0f;
+    float compar = 4.0f;
     //setting up particles
     for(float y=0; y<=compar; ++y){
         for(float x=0; x<=compar; ++x){
@@ -451,14 +451,21 @@ void deformableCube::rungeKutta(float timeDelta) {
 
     for (int i = 0; i < particles.size(); ++i) {
         particles[i]->addForce(particles[i]->getCollisionForce());
+        //a2.push_back(particles[i]->getForce() / particles[i]->getMass());
+    }
+
+    //adding fore due to collision
+    for(int i=0; i<particles.size();++i){
+        particles[i]->addForce(particles[i]->getFrictionForce());
         a2.push_back(particles[i]->getForce() / particles[i]->getMass());
     }
 
     //second evaluation of the forces
     for (int i = 0; i < particles.size(); ++i) {
         particles[i]->setForce(deformableCube::wind + glm::vec3(0.0f, deformableCube::gravity, 0.0f) +
-                               particles[i]->getCollisionForce());
+                               particles[i]->getCollisionForce()+particles[i]->getFrictionForce());
         particles[i]->resetCollisionForce();
+        particles[i]->resetFrictionForce();
     }
 
     for (int i = 0; i < springs.size(); ++i) {
@@ -489,15 +496,15 @@ void deformableCube::detectCollision(collidable *obj) {
     switch(obj->returnType()){
         case 0:
             //collision with sphere
-            deformableCube::bvh->detectCollisionSphere(modelMatrix, obj);
+            deformableCube::bvh->detectCollisionSphere(modelMatrix, obj, gravity);
             break;
         case 1:
             //collision with cube
-            deformableCube::bvh->detectCollisionCube(modelMatrix, obj);
+            deformableCube::bvh->detectCollisionCube(modelMatrix, obj, gravity);
             break;
         case 2:
             //collision with plane
-            deformableCube::bvh->detectCollisionPlane(modelMatrix, obj);
+            deformableCube::bvh->detectCollisionPlane(modelMatrix, obj, gravity);
             break;
         default:
             std::cout<<"something went wrong"<<std::endl;

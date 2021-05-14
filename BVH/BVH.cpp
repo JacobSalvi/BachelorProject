@@ -9,11 +9,11 @@ sphere *BVH::getSphereShown() const {
 
 void BVH::update() {}
 
-void BVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {}
+void BVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj, float gravity) {}
 
-void BVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {}
+void BVH::detectCollisionCube(glm::mat4 outModel, collidable *obj, float gravity) {}
 
-void BVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {}
+void BVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj, float gravity) {}
 
 void BVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programId, bool wireFrame, glm::mat4 model) {}
 

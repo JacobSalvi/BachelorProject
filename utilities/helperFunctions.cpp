@@ -8,8 +8,9 @@ void culture(std::vector<deformableObjects *> *list, GLuint texture, GLuint text
     list->push_back(tmp);
 }
 
-void addCloth(std::vector<deformableObjects *> *list, int col, int row, int in, glm::vec3 colour, glm::mat4 mod, glm::vec3 lPos){
-    net * clothNew = new net(0.2f, col, row, in, colour, -1.0f, mod, lPos);
+void addCloth(std::vector<deformableObjects *> *list, int col, int row, int in, glm::vec3 colour, glm::mat4 mod, glm::vec3 lPos, int orientation){
+    net * clothNew;
+    orientation == 0 ? clothNew =new net(0.2f, col, row, in, colour, -1.0f, mod, lPos) : clothNew = new net(col, mod, lPos);
     list->push_back(clothNew);
 }
 
@@ -46,7 +47,7 @@ void addColl(std::vector<collidable *> * list, int type, glm::vec3 lPos, glm::ve
         case 2:
             glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f,-2.0f,0.0f));
             glm::mat4 modelP = glm::scale(translate, glm::vec3(5.0f,5.0f,5.0f));
-            coll = new plane(3.0f,1.0f, modelP, glm::vec3(0.4f,1.0f,0.6f), lPos);
+            coll = new plane(3.0f,10.0f, modelP, glm::vec3(0.4f,1.0f,0.6f), lPos);
             break;
     }
 
@@ -121,4 +122,19 @@ void printPoint(glm::vec3 point, char * name){
 void setWind(deformableObjects * net, float wind[]){
     //net->addForce(glm::vec3(0.0f,0.0f, -1.0f));
     net->setWind(glm::vec3(wind[0],wind[1], wind[2]));
+}
+
+bool pointInTriangle(glm::vec3 p, glm::vec3 a, glm::vec3 b, glm::vec3 c) {
+    //divide the face in two triangles
+    //first triangle is V1 V2 V4
+    glm::vec3 n=glm::cross((b-a),(c-a));
+    //calculate the 3 signed area for the first triangle
+    glm::vec3 n1= glm::cross((b-p), (c-p));
+    glm::vec3 n2= glm::cross((c-p), (a-p));
+    glm::vec3 n3= glm::cross((a-p), (b-p));
+    //check if the intersection point lays inside the first triangle
+    if(glm::dot(n1,n)>=0&&glm::dot(n2,n)>=0&&glm::dot(n3,n)>=0){
+        return true;
+    }
+    return false;
 }

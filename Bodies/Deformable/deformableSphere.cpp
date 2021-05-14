@@ -375,15 +375,15 @@ void deformableSphere::detectCollision(collidable *obj) {
     switch(obj->returnType()){
         case 0:
             //collision with sphere
-            deformableSphere::bvh->detectCollisionSphere(modelMatrix, obj);
+            deformableSphere::bvh->detectCollisionSphere(modelMatrix, obj, gravity);
             break;
         case 1:
             //collision with cube
-            deformableSphere::bvh->detectCollisionCube(modelMatrix, obj);
+            deformableSphere::bvh->detectCollisionCube(modelMatrix, obj, gravity);
             break;
         case 2:
             //collision with plane
-            deformableSphere::bvh->detectCollisionPlane(modelMatrix, obj);
+            deformableSphere::bvh->detectCollisionPlane(modelMatrix, obj, gravity);
             break;
         default:
             std::cout<<"something went wrong"<<std::endl;

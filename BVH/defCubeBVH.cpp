@@ -90,21 +90,6 @@ void defCubeBVH::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint
     }
 }
 
-bool pointInTriangle(glm::vec3 p, glm::vec3 a, glm::vec3 b, glm::vec3 c) {
-    //divide the face in two triangles
-    //first triangle is V1 V2 V4
-    glm::vec3 n=glm::cross((b-a),(c-a));
-    //calculate the 3 signed area for the first triangle
-    glm::vec3 n1= glm::cross((b-p), (c-p));
-    glm::vec3 n2= glm::cross((c-p), (a-p));
-    glm::vec3 n3= glm::cross((a-p), (b-p));
-    //check if the intersection point lays inside the first triangle
-    if(glm::dot(n1,n)>=0&&glm::dot(n2,n)>=0&&glm::dot(n3,n)>=0){
-        return true;
-    }
-    return false;
-}
-
 helperStruct defCubeBVH::rayIntersect(glm::vec3 origin, glm::vec3 direction, glm::mat4 model) {
     //to make the compiler happy while I code
     helperStruct toReturn;
@@ -227,7 +212,7 @@ void defCubeBVH::update() {
     if (defCubeBVH::child5 != nullptr) defCubeBVH::child5->update();
 }
 
-void defCubeBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
+void defCubeBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj, float gravity) {
     //the internal model plus our model give us the position of the sphere
     glm::mat4 internalModel = sphereShown->getModel();
     glm::mat4 actualModel = outModel * internalModel;
@@ -263,21 +248,26 @@ void defCubeBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj) {
                     //let's set the collision force for the particle
                     //since I have no indication what k should be I will wing it
                     i->setCollisionForce(1000.0f*(intersectionPoint-point));
+
+                    //friction
+                    float cosA = glm::dot(glm::vec3(0,gravity,0), s1-intersectionPoint);
+                    float friction = 10.0f*i->getMass()*gravity*cosA;
+                    i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
                 }
             }
         } else {
             //otherwise recursively check the children
-            if (defCubeBVH::child0 != nullptr) defCubeBVH::child0->detectCollisionSphere(outModel, obj);
-            if (defCubeBVH::child1 != nullptr) defCubeBVH::child1->detectCollisionSphere(outModel, obj);
-            if (defCubeBVH::child2 != nullptr) defCubeBVH::child2->detectCollisionSphere(outModel, obj);
-            if (defCubeBVH::child3 != nullptr) defCubeBVH::child3->detectCollisionSphere(outModel, obj);
-            if (defCubeBVH::child4 != nullptr) defCubeBVH::child4->detectCollisionSphere(outModel, obj);
-            if (defCubeBVH::child5 != nullptr) defCubeBVH::child5->detectCollisionSphere(outModel, obj);
+            if (defCubeBVH::child0 != nullptr) defCubeBVH::child0->detectCollisionSphere(outModel, obj, gravity);
+            if (defCubeBVH::child1 != nullptr) defCubeBVH::child1->detectCollisionSphere(outModel, obj, gravity);
+            if (defCubeBVH::child2 != nullptr) defCubeBVH::child2->detectCollisionSphere(outModel, obj, gravity);
+            if (defCubeBVH::child3 != nullptr) defCubeBVH::child3->detectCollisionSphere(outModel, obj, gravity);
+            if (defCubeBVH::child4 != nullptr) defCubeBVH::child4->detectCollisionSphere(outModel, obj, gravity);
+            if (defCubeBVH::child5 != nullptr) defCubeBVH::child5->detectCollisionSphere(outModel, obj, gravity);
         }
     }
 }
 
-void defCubeBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
+void defCubeBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj, float gravity) {
     //the internal model plus our model give us the position of the sphere
     glm::mat4 internalModel = sphereShown->getModel();
     glm::mat4 actualModel = outModel * internalModel;
@@ -317,6 +307,7 @@ void defCubeBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
                     glm::vec3 cNormal(0,0, 1);
                     glm::vec3 rDir = glm::normalize(-i->getVelocity());
                     glm::vec3 current=pos;
+
                     //checking if the vectors are parallel
                     if(glm::dot(cNormal, rDir)!=0){
                         //front face
@@ -330,6 +321,7 @@ void defCubeBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
                                 //closer?
                                 if(glm::length(pos - back) < glm::length(pos - current)){
                                     current = back;
+                                    cNormal=-cNormal;
                                 }
                             }
                         }
@@ -350,6 +342,7 @@ void defCubeBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
                         if(!(right.z<C1.z || right.z > C2.z || right.y<C1.y || right.y>C2.y)) {
                             if(glm::length(pos-right)<glm::length(pos-current)){
                                 current = right;
+                                cNormal=-cNormal;
                             }
                         }
                     }
@@ -369,6 +362,7 @@ void defCubeBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
                         if(!(bottom.x<C1.x || bottom.x > C2.x || bottom.z<C1.z || bottom.z>C2.z)) {
                             if(glm::length(pos-bottom)<glm::length(pos-current)){
                                 current = bottom;
+                                cNormal=-cNormal;
                             }
                         }
                     }
@@ -376,21 +370,25 @@ void defCubeBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj) {
                     //let's set the collision force for the particle
                     //since I have no indication what k should be I will wing it
                     i->setCollisionForce(10000.0f*(current-pos));
+
+                    //friction
+                    float friction = 10.0f*i->getMass()*gravity;
+                    i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
                 }
             }
 
         } else {
-            if (defCubeBVH::child0 != nullptr) defCubeBVH::child0->detectCollisionCube(outModel, obj);
-            if (defCubeBVH::child1 != nullptr) defCubeBVH::child1->detectCollisionCube(outModel, obj);
-            if (defCubeBVH::child2 != nullptr) defCubeBVH::child2->detectCollisionCube(outModel, obj);
-            if (defCubeBVH::child3 != nullptr) defCubeBVH::child3->detectCollisionCube(outModel, obj);
-            if (defCubeBVH::child4 != nullptr) defCubeBVH::child4->detectCollisionCube(outModel, obj);
-            if (defCubeBVH::child5 != nullptr) defCubeBVH::child5->detectCollisionCube(outModel, obj);
+            if (defCubeBVH::child0 != nullptr) defCubeBVH::child0->detectCollisionCube(outModel, obj, gravity);
+            if (defCubeBVH::child1 != nullptr) defCubeBVH::child1->detectCollisionCube(outModel, obj, gravity);
+            if (defCubeBVH::child2 != nullptr) defCubeBVH::child2->detectCollisionCube(outModel, obj, gravity);
+            if (defCubeBVH::child3 != nullptr) defCubeBVH::child3->detectCollisionCube(outModel, obj, gravity);
+            if (defCubeBVH::child4 != nullptr) defCubeBVH::child4->detectCollisionCube(outModel, obj, gravity);
+            if (defCubeBVH::child5 != nullptr) defCubeBVH::child5->detectCollisionCube(outModel, obj, gravity);
         }
     }
 }
 
-void defCubeBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
+void defCubeBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj, float gravity) {
     //the internal model plus our model give us the position of the sphere
     glm::mat4 internalModel = sphereShown->getModel();
     glm::mat4 actualModel = outModel * internalModel;
@@ -421,16 +419,20 @@ void defCubeBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj) {
                     trick.y+=0.1;
                     glm::vec3 intersectionPoint = pointPlaneProjection(pos, glm::vec3(0,1,0), trick);
                     i->setCollisionForce(10000.0f*(intersectionPoint-pos));
+
+                    //friction
+                    float friction = 10.0f*i->getMass()*gravity;
+                    i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
                 }
             }
 
         } else {
-            if (defCubeBVH::child0 != nullptr) defCubeBVH::child0->detectCollisionPlane(outModel, obj);
-            if (defCubeBVH::child1 != nullptr) defCubeBVH::child1->detectCollisionPlane(outModel, obj);
-            if (defCubeBVH::child2 != nullptr) defCubeBVH::child2->detectCollisionPlane(outModel, obj);
-            if (defCubeBVH::child3 != nullptr) defCubeBVH::child3->detectCollisionPlane(outModel, obj);
-            if (defCubeBVH::child4 != nullptr) defCubeBVH::child4->detectCollisionPlane(outModel, obj);
-            if (defCubeBVH::child5 != nullptr) defCubeBVH::child5->detectCollisionPlane(outModel, obj);
+            if (defCubeBVH::child0 != nullptr) defCubeBVH::child0->detectCollisionPlane(outModel, obj, gravity);
+            if (defCubeBVH::child1 != nullptr) defCubeBVH::child1->detectCollisionPlane(outModel, obj, gravity);
+            if (defCubeBVH::child2 != nullptr) defCubeBVH::child2->detectCollisionPlane(outModel, obj, gravity);
+            if (defCubeBVH::child3 != nullptr) defCubeBVH::child3->detectCollisionPlane(outModel, obj, gravity);
+            if (defCubeBVH::child4 != nullptr) defCubeBVH::child4->detectCollisionPlane(outModel, obj, gravity);
+            if (defCubeBVH::child5 != nullptr) defCubeBVH::child5->detectCollisionPlane(outModel, obj, gravity);
         }
     }
 }

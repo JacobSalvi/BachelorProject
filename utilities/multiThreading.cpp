@@ -26,6 +26,11 @@ void timer_start(unsigned int interval, const std::vector<deformableObjects *> &
                     i->detectCollision(j);
                 }
             }
+//            for(int i=1;i<list.size();++i){
+//                for(int j=i+1; j<list.size();++j){
+//
+//                }
+//            }
             std::this_thread::sleep_for(std::chrono::milliseconds(collInterval));
         }
     });

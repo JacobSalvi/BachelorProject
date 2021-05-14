@@ -40,3 +40,15 @@ const glm::vec3 &particle::getCollisionForce() const {
     return collisionForce;
 }
 
+const glm::vec3 &particle::getFrictionForce() const {
+    return frictionForce;
+}
+
+void particle::resetFrictionForce() {
+    particle::setFrictionForce(glm::vec3(0,0,0));
+}
+
+void particle::setFrictionForce(const glm::vec3 &newForce) {
+    particle::frictionForce = newForce;
+}
+

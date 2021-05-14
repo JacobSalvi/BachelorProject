@@ -1,5 +1,5 @@
-cube collision rework
-friction
+cube collision rework, done kinda
+friction, done kinda
 
 TBN matrix
 

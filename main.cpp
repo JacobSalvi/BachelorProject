@@ -99,33 +99,34 @@ int main() {
     //nvm, it worked
     std::vector<deformableObjects *> objectList;
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::scale(model, glm::vec3(0.3,0.3,0.2));
-    model = glm::translate(model, glm::vec3(0,0,0));
+    model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
+    model = glm::translate(model, glm::vec3(0,5,0));
 
     //standard: 4 5
     //for the cube using a 40 by 50 grid is better but it burns the cpu
-    //addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition);
+    //addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,0);
+    model = glm::mat4(1);
+    model = glm::scale(model, glm::vec3(0.2,0.2,0.2));
+    model = glm::translate(model, glm::vec3(0,5,0));
+    addCloth(&objectList, 15, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,1);
     //addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), model, lightPosition);
     //addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f), lightPosition);
 
     //deformable sphere
     glm::mat4 sMod(1);
-    sMod = glm::translate(sMod, glm::vec3(-3.4, 3, 0));
+    sMod = glm::translate(sMod, glm::vec3(-.4f, 3, 0));
     //addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
-    sMod = glm::translate(sMod, glm::vec3(1,0,0));
+    sMod = glm::translate(sMod, glm::vec3(0,0,0));
     //addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
 
     //deformable cube
     sMod=glm::mat4(1);
-    sMod = glm::translate(sMod, glm::vec3(-0.0,2,0));
-    addDefCube(&objectList, glm::vec3(1,1,1), sMod, lightPosition);
+    sMod = glm::translate(sMod, glm::vec3(-0.4,2,0));
+    //addDefCube(&objectList, glm::vec3(1,1,1), sMod, lightPosition);
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
     glBindVertexArray(VertexArrayID);
-
-    //Triangle
-    GLuint triangleProgramID = LoadShaders("shaders/vert.vertexshader", "shaders/colorFrag.fragmentshader");
 
     //infinite wisdom
     GLuint programId = LoadShaders("shaders/vertexShader.vertexshader", "shaders/fragmentShader.fragmentshader");
@@ -153,9 +154,10 @@ int main() {
     //Collidables
     std::vector<collidable *> collObjects;
     //sphere
-    addColl(&collObjects, 0, lightPosition, glm::vec3(0.5,0,0.5));
+    //addColl(&collObjects, 0, lightPosition, glm::vec3(1.5,0,1.5));
     //cube
-    //addColl(&collObjects,1, lightPosition, glm::vec3(0.5,0,0.5));
+    addColl(&collObjects,1, lightPosition, glm::vec3(1.5,0,1.5));
+    //addColl(&collObjects,1, lightPosition, glm::vec3(1,2,-1));
     //plane
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
     std::cout<<"init successful"<<std::endl;
@@ -280,7 +282,6 @@ int main() {
         glm::mat4 ViewMatrix = getViewMatrix();
 
         //Triangle
-        //glUseProgram(triangleProgramID);
         //to have a double faced surface
         glDisable(GL_CULL_FACE);
 
@@ -310,7 +311,6 @@ int main() {
     std::cout << "while exit" << std::endl;
 
     //clean up triangle
-    glDeleteProgram(triangleProgramID);
     glDeleteProgram(programId);
     glDeleteProgram(lightSysId);
     glDeleteVertexArrays(1, &VertexArrayID);

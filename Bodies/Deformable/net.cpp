@@ -15,45 +15,6 @@ deformableObjects(gravity, mod, lPos), row(row), col(col), integrator(integrator
     colorBuffer = new float[a];
     normalBuffer =  new float[a];
 
-
-    //adding the vertices to the vertex buffer
-    //given in counter clock wise order
-    //helper to push in the array
-    int pos = 0;
-    for(int i=0; i<row-1; ++i){
-        for(int j=0; j<col-1; ++j){
-            //first triangle first vertex
-            vertexBuffer[pos++]=(float)j;
-            vertexBuffer[pos++]=(float)i;
-            vertexBuffer[pos++]=0.0f;
-
-            //first triangle second vertex
-            vertexBuffer[pos++]=(float)j;
-            vertexBuffer[pos++]=(float)(i+1);
-            vertexBuffer[pos++]=0.0f;
-
-            //first triangle third vertex
-            vertexBuffer[pos++]=(float)(j+1);
-            vertexBuffer[pos++]=(float)(i+1);
-            vertexBuffer[pos++]=0.0f;
-
-            //second triangle first vertex
-            vertexBuffer[pos++]=(float)j;
-            vertexBuffer[pos++]=(float)i;
-            vertexBuffer[pos++]=0.0f;
-
-            //second triangle second vertex
-            vertexBuffer[pos++]=(float)(j+1);
-            vertexBuffer[pos++]=(float)(i+1);
-            vertexBuffer[pos++]=0.0f;
-
-            //second triangle third vertex
-            vertexBuffer[pos++]=(float)(j+1);
-            vertexBuffer[pos++]=(float)i;
-            vertexBuffer[pos++]=0.0f;
-        }
-    }
-
     //for now color and vertex buffer are the same
     if(color[0]==2) {
         colorBuffer = vertexBuffer;
@@ -106,9 +67,6 @@ deformableObjects(gravity, mod, lPos), row(row), col(col), integrator(integrator
             }
         }
     }
-//    glm::mat4 model = glm::mat4(1.0f);
-//    model = glm::translate(model, tr);
-//    net::modelMatrix=model;
 
     //bounding volume hierarchy
     net::bvh=new clothBVH(particles, row);
@@ -125,6 +83,86 @@ deformableObjects(gravity, mod, lPos), row(row), col(col), integrator(integrator
 
     //GLuint
     setGLuint();
+
+    updateBuffer();
+}
+
+//orizontal cloth
+net::net(int size, glm::mat4 mod, glm::vec3 lPos) : deformableObjects(-1, mod, lPos), orientation(1), row(size), col(size), integrator(1){
+    int a = (row-1)*(col-1)*18;
+    vertexBuffer = new float[a];
+    colorBuffer = new float[a];
+    normalBuffer =  new float[a];
+
+    //for now color and vertex buffer are the same
+    glm::vec3 color(0,0,1);
+    if(color[0]==2) {
+        colorBuffer = vertexBuffer;
+    }else{
+        for(int i=0; i<(col-1)*(row-1)*18;++i){
+            if(i%3==0){
+                colorBuffer[i]=color[0];
+            }else if(i%3==1){
+                colorBuffer[i]=color[1];
+            }else{
+                colorBuffer[i]=color[2];
+            }
+        }
+    }
+
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            //initial position in a net, equidistant
+            particle * tmp = new particle(glm::vec3(float(j), 0.0f, float(i)), 1);
+            tmp->setId(col*i+j);
+            particles.push_back(tmp);
+
+            //set hanging particles
+            if(i*col+j==col*row-1 || i*col+j== col*(row-1) || i*col+j==0 || i*col+j==col-1){
+                specialParticles.push_back(tmp);
+            }
+
+            //setting up the springs
+            //horizontal springs
+            float coeff= 40.0f;
+            float damping = .95f;
+            if(j-1>=0){
+                spring * toAdd = new spring(1.0f, coeff, damping, particles[i*col+j-1],tmp);
+                springs.push_back(toAdd);
+            }
+            //vertical springs
+            if(i-1>=0){
+                spring * toAdd = new spring(1.0f, coeff, damping, particles[i*col+j-col],tmp);
+                springs.push_back(toAdd);
+            }
+            //diagonal springs
+            if(i>0&&j>0){
+                spring * toAdd = new spring(sqrt(2.0f), coeff, damping, particles[i*col+j-(col+1)], tmp);
+                springs.push_back(toAdd);
+            }
+            //diagonal spring but in the other direction
+            if(i>0&&j<col-1){
+                spring * toAdd = new spring(sqrt(2.0f), coeff, damping, particles[(i-1)*col+j+1], tmp);
+                springs.push_back(toAdd);
+            }
+        }
+    }
+
+    //bounding volume hierarchy
+    net::bvh=new clothBVH(particles, row);
+
+    //normal
+    for(int i=0; i<a;++i){
+        if(i%3==1){
+            normalBuffer[i]=1.0f;
+        }else{
+            normalBuffer[i]=0.0f;
+        }
+    }
+    //GLuint
+    setGLuint();
+
+    updateBuffer();
 }
 
 //update the particles following the
@@ -180,8 +218,6 @@ void net::explicitEuler(float timeDelta) {
 //second order Runge Kutta integrator
 //half the time -> 1/4 the error
 void net::rungeKutta(float timeDelta){
-    //TODO consider whether there is a better way to do this
-
     std::vector<glm::vec3> a1;
     std::vector<glm::vec3> a2;
     //gravity
@@ -199,13 +235,15 @@ void net::rungeKutta(float timeDelta){
 
     for(int i=0; i<particles.size();++i){
         particles[i]->addForce(particles[i]->getCollisionForce());
+        particles[i]->addForce(particles[i]->getFrictionForce());
         a2.push_back(particles[i]->getForce()/particles[i]->getMass());
     }
 
     //second evaluation of the forces
     for(int i =0;i< particles.size();++i){
-        particles[i]->setForce(net::wind+glm::vec3(0.0f,net::gravity, 0.0f)+particles[i]->getCollisionForce());
+        particles[i]->setForce(net::wind+glm::vec3(0.0f,net::gravity, 0.0f)+particles[i]->getCollisionForce() + particles[i]->getFrictionForce());
         particles[i]->resetCollisionForce();
+        particles[i]->resetFrictionForce();
     }
 
     for(int i=0; i<springs.size(); ++i){
@@ -344,7 +382,8 @@ void net::reset() {
     for(int i=0; i<row; ++i){
         for(int j=0; j<col; ++j) {
             //have to rest particle positions and speed
-            particles[i*col+j]->setPosition(glm::vec3(float(j), float(i), 0.0f));
+            orientation == 0 ? particles[i*col+j]->setPosition(glm::vec3(float(j), float(i), 0.0f)) : particles[i*col+j]->setPosition(glm::vec3(float(j), 0.0f, float(i))) ;
+            //particles[i*col+j]->setPosition(glm::vec3(float(j), float(i), 0.0f));
             particles[i*col+j]->setVelocity(glm::vec3(0.0f,0.0f, 0.0f));
             particles[i*col+j]->setForce(glm::vec3(0.0f,0.0f,0.0f));
         }
@@ -353,45 +392,20 @@ void net::reset() {
     //reset hanging particles
     //set hanging particles
     net::emptySpecialParticles();
-    net::setSpecial(net::particles[col*row-1]);
-    net::setSpecial(net::particles[col*(row-1)]);
+    if(orientation==0) {
+        net::setSpecial(net::particles[col * row - 1]);
+        net::setSpecial(net::particles[col * (row - 1)]);
+    }else{
+        net::setSpecial(net::particles[col*row-1]);
+        net::setSpecial(net::particles[col*(row-1)]);
+        net::setSpecial(net::particles[0]);
+        net::setSpecial(net::particles[col-1]);
+    }
 
     net::wind=glm::vec3(0.0f, 0.0f,0.0f);
     net::gravity=-1.0f;
 
-    for(int i=0; i<row-1; ++i){
-        for(int j=0; j<col-1; ++j){
-            //first triangle first vertex
-            vertexBuffer[pos++]=(float)j;
-            vertexBuffer[pos++]=(float)i;
-            vertexBuffer[pos++]=0.0f;
-
-            //first triangle second vertex
-            vertexBuffer[pos++]=(float)j;
-            vertexBuffer[pos++]=(float)(i+1);
-            vertexBuffer[pos++]=0.0f;
-
-            //first triangle third vertex
-            vertexBuffer[pos++]=(float)(j+1);
-            vertexBuffer[pos++]=(float)(i+1);
-            vertexBuffer[pos++]=0.0f;
-
-            //second triangle first vertex
-            vertexBuffer[pos++]=(float)j;
-            vertexBuffer[pos++]=(float)i;
-            vertexBuffer[pos++]=0.0f;
-
-            //second triangle second vertex
-            vertexBuffer[pos++]=(float)(j+1);
-            vertexBuffer[pos++]=(float)(i+1);
-            vertexBuffer[pos++]=0.0f;
-
-            //second triangle third vertex
-            vertexBuffer[pos++]=(float)(j+1);
-            vertexBuffer[pos++]=(float)i;
-            vertexBuffer[pos++]=0.0f;
-        }
-    }
+    updateBuffer();
 
     //reset bvh as well
     getBvh()->update();
@@ -399,10 +413,18 @@ void net::reset() {
     //reset the normal buffer
     int n = (row-1)*(col-1)*18;
     for(int i=0; i<n;++i){
-        if(i%3==2){
-            normalBuffer[i]=1.0f;
-        }else{
-            normalBuffer[i]=0.0f;
+        if(orientation==0){
+            if(i%3==2){
+                normalBuffer[i]=1.0f;
+            }else{
+                normalBuffer[i]=0.0f;
+            }
+        }else {
+            if (i % 3 == 1) {
+                normalBuffer[i] = 1.0f;
+            } else {
+                normalBuffer[i] = 0.0f;
+            }
         }
     }
 
@@ -444,15 +466,15 @@ void net::detectCollision(collidable * obj) {
     switch(obj->returnType()){
         case 0:
             //collision with sphere
-            net::bvh->detectCollisionSphere(modelMatrix, obj);
+            net::bvh->detectCollisionSphere(modelMatrix, obj, gravity);
             break;
         case 1:
             //collision with cube
-            net::bvh->detectCollisionCube(modelMatrix, obj);
+            net::bvh->detectCollisionCube(modelMatrix, obj, gravity);
             break;
         case 2:
             //collision with plane
-            net::bvh->detectCollisionPlane(modelMatrix, obj);
+            net::bvh->detectCollisionPlane(modelMatrix, obj, gravity);
             break;
         default:
             std::cout<<"something went wrong"<<std::endl;
@@ -461,6 +483,7 @@ void net::detectCollision(collidable * obj) {
 }
 
 void net::setGLuint() {
+    deformableObjects::setGLuint();
     GLuint netVertex;
     glGenBuffers(1, &netVertex);
     glBindBuffer(GL_ARRAY_BUFFER, netVertex);
