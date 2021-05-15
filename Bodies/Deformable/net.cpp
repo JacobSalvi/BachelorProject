@@ -321,6 +321,7 @@ void net::updateBuffer() {
     net::updateNormalBuffer();
 }
 
+//TODO: check this
 void net::updateNormalBuffer() {
     int nVert = (row-1)*(col-1)*6;
     std::vector<glm::vec3> helper;

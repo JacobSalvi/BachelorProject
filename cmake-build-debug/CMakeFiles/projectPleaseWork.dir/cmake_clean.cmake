@@ -6,6 +6,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableSphere.cpp.o"
+  "CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/importedModels.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/particle.cpp.o"
   "CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/spring.cpp.o"

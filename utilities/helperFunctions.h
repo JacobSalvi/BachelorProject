@@ -2,7 +2,7 @@
 #define CODE_HELPERFUNCTIONS_H
 
 #include <iostream>
-
+#include <stdio.h>
 
 // Include GLEW
 #include <GL/glew.h>
@@ -48,5 +48,24 @@ bool vectorContains(std::vector<particle *> v, particle * e);
 void printPoint(glm::vec3 point, char * name);
 
 void setWind(deformableObjects * net, float wind[]);
+
+void loadObj(const char * path,
+             std::vector<float> & out_vertices,
+             std::vector<float> & out_uvs,
+             std::vector<float> & out_normals,
+             std::vector<float> & out_Tan,
+             std::vector<float> & out_Bitan,
+             std::vector<unsigned int> & out_tris);
+
+void renderModel( std::vector<float> & out_vertices,
+                  std::vector<float> & out_uvs,
+                  std::vector<float> & out_normals,
+                  std::vector<unsigned int> & out_tris,
+                  GLuint pId,
+                  GLuint t,
+                  GLuint tId,
+                  glm::mat4 ProjectionMatrix,
+                  glm::mat4 ViewMatrix,
+                  glm::mat4 modelMatrix);
 
 #endif //CODE_HELPERFUNCTIONS_H

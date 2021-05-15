@@ -1,6 +1,7 @@
 // Include standard headers
 #include <cstdio>
 #include <iostream>
+#include <unistd.h>
 
 // Include GLEW
 #include <GL/glew.h>
@@ -114,14 +115,14 @@ int main() {
 
     //deformable sphere
     glm::mat4 sMod(1);
-    sMod = glm::translate(sMod, glm::vec3(-.4f, 3, 0));
+    //sMod = glm::translate(sMod, glm::vec3(-.4f, 3, 0));
     //addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
     sMod = glm::translate(sMod, glm::vec3(0,0,0));
     //addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
 
     //deformable cube
     sMod=glm::mat4(1);
-    sMod = glm::translate(sMod, glm::vec3(-0.4,2,0));
+    sMod = glm::translate(sMod, glm::vec3(-0.4,2,-0.2));
     //addDefCube(&objectList, glm::vec3(1,1,1), sMod, lightPosition);
 
     GLuint VertexArrayID;
@@ -129,7 +130,13 @@ int main() {
     glBindVertexArray(VertexArrayID);
 
     //infinite wisdom
-    GLuint programId = LoadShaders("shaders/vertexShader.vertexshader", "shaders/fragmentShader.fragmentshader");
+//    char tmp[256];
+//    getcwd(tmp, 256);
+//    //life is pure pain
+//    std::cout<<"-------------------"<<std::endl;
+//    std::cout << "Current working directory: " << tmp << std::endl;
+//    std::cout<<"-------------------"<<std::endl;
+    GLuint programId = LoadShaders("./shaders/vertexShader.vertexshader", "./shaders/fragmentShader.fragmentshader");
     GLuint texture = loadDDS("shaders/idk.DDS");
     GLuint textureId = glGetUniformLocation(programId, "myTextureSampler");
     GLuint texture2 = loadDDS("shaders/dak2.DDS");
@@ -146,7 +153,7 @@ int main() {
 
 
     //phong lighting system
-    GLuint lightSysId = LoadShaders("shaders/shadowVert.vertexshader", "shaders/shadowFrag.fragmentshader");
+    GLuint lightSysId = LoadShaders("./shaders/shadowVert.vertexshader", "./shaders/shadowFrag.fragmentshader");
 
     //glfwSetKeyCallback(window, key_callback);
     std::cout << "about to enter while loop" << std::endl;
@@ -154,7 +161,7 @@ int main() {
     //Collidables
     std::vector<collidable *> collObjects;
     //sphere
-    //addColl(&collObjects, 0, lightPosition, glm::vec3(1.5,0,1.5));
+    //addColl(&collObjects, 0, lightPosition, glm::vec3(0,0,0));
     //cube
     addColl(&collObjects,1, lightPosition, glm::vec3(1.5,0,1.5));
     //addColl(&collObjects,1, lightPosition, glm::vec3(1,2,-1));
@@ -177,6 +184,19 @@ int main() {
     //skybox
     GLuint skyboxProgramID = LoadShaders("shaders/skybox.vertexshader","shaders/skybox.fragmentshader");
     skybox * sky = new skybox(skyboxProgramID);
+
+
+    //loading a custom model
+    const char * path;
+    std::vector<float>  out_vertices;
+    std::vector<float> out_uvs;
+    std::vector<float> out_normals;
+    std::vector<float> out_tan;
+    std::vector<float> out_bitan;
+    std::vector<unsigned int> out_tris;
+    loadObj("./shaders/sphere.obj", out_vertices, out_uvs, out_normals, out_tan, out_bitan, out_tris);
+
+    glm::mat4 mod(1);
 
     do {
         // Clear the screen
@@ -296,6 +316,9 @@ int main() {
         for(auto i : collObjects){
             i->render(ProjectionMatrix, ViewMatrix, lightSysId, false);
         }
+
+        // please work
+        renderModel(out_vertices, out_uvs, out_normals, out_tris, programId, texture, textureId, ProjectionMatrix, ViewMatrix, mod);
 
         //gui stuff
         ImGui::Render();

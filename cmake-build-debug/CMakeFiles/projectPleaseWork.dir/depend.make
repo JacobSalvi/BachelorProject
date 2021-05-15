@@ -728,6 +728,9 @@ CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableSphere.cpp.o: ../Bo
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableSphere.cpp.o: ../shaders/helperStruct.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableSphere.cpp.o: ../utilities/helperFunctions.h
 
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/importedModels.cpp.o: ../Bodies/Deformable/importedModels.cpp
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/importedModels.cpp.o: ../Bodies/Deformable/importedModels.h
+
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o: ../external/glew-1.13.0/include/GL/glew.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o: ../external/glfw-3.1.2/include/GLFW/glfw3.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/net.cpp.o: ../external/glm-0.9.7.1/glm/common.hpp

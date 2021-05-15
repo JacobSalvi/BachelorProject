@@ -89,6 +89,7 @@ void deformableObjects::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix,
     //normals
     glEnableVertexAttribArray(2);
     glBindBuffer(GL_ARRAY_BUFFER, deformableObjects::normal);
+    //glBufferSubData(GL_ARRAY_BUFFER, 0, getSize(), getNormalBuffer());
     glVertexAttribPointer(
             2,                                // attribute. No particular reason for 1, but must match the layout in the shader.
             3,                                // size

@@ -1738,6 +1738,12 @@
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableSphere.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/importedModels.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/importedModels.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/net.cpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>

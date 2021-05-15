@@ -21,6 +21,9 @@ set(ALL_LIBS
 
 # to make the executable work
 #note for some reason the shaders go in the build folder
+#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/cmake-build-debug)
+#set_target_properties(tutorial09_vbo_indexing PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+#create_target_launcher(tutorial09_vbo_indexing WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 add_executable(projectPleaseWork
         main.cpp
         shaders/shader.hpp
@@ -41,7 +44,7 @@ add_executable(projectPleaseWork
         utilities/skybox.cpp utilities/skybox.h utilities/stb_image.h Bodies/Deformable/deformableSphere.cpp
         Bodies/Deformable/deformableSphere.h Bodies/Deformable/deformableObjects.cpp Bodies/Deformable/deformableObjects.h
         BVH/defSphereBVH.cpp BVH/defSphereBVH.h BVH/BVH.cpp BVH/BVH.h Bodies/Deformable/texturedCloth.cpp Bodies/Deformable/texturedCloth.h
-        Bodies/Deformable/deformableCube.cpp Bodies/Deformable/deformableCube.h BVH/defCubeBVH.cpp BVH/defCubeBVH.h)
+        Bodies/Deformable/deformableCube.cpp Bodies/Deformable/deformableCube.h BVH/defCubeBVH.cpp BVH/defCubeBVH.h Bodies/Deformable/importedModels.cpp Bodies/Deformable/importedModels.h)
 
 target_link_libraries(projectPleaseWork
         ${ALL_LIBS}
@@ -57,7 +60,7 @@ add_definitions(
 
 set(CMAKE_CXX_STANDARD 11)
 # -O3/-O2 for optimization
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 
 #add_executable(code main.cpp)
