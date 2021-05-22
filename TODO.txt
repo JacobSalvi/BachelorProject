@@ -6,6 +6,18 @@ TBN matrix
 //optional but would make the code cleaner
 refactor classes hierarchy and files
 
+//introduce mss before taling about the Hooke law
+talk about BVh after collision
+refere to the figure
+
+introductio
+soft bodies simulation
+collision
+deformable objects
+BVH
+renderong
+User interface
+
 //tool mesh-> tethraedon TetGen
 //libigl
 //tethraedalize.h

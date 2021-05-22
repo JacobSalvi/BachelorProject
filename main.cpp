@@ -1,7 +1,6 @@
 // Include standard headers
 #include <cstdio>
 #include <iostream>
-#include <unistd.h>
 
 // Include GLEW
 #include <GL/glew.h>
@@ -38,6 +37,7 @@ using namespace glm;
 #include "utilities/stb_image.h"
 #include "utilities/skybox.h"
 #include "Bodies/Deformable/deformableSphere.h"
+#include "Bodies/Deformable/importedModels.h"
 
 int main() {
     // Initialise GLFW
@@ -99,6 +99,7 @@ int main() {
     //This is likely not gonna work
     //nvm, it worked
     std::vector<deformableObjects *> objectList;
+    std::vector<collidable *> collObjects;
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
     model = glm::translate(model, glm::vec3(0,5,0));
@@ -109,33 +110,63 @@ int main() {
     model = glm::mat4(1);
     model = glm::scale(model, glm::vec3(0.2,0.2,0.2));
     model = glm::translate(model, glm::vec3(0,5,0));
-    addCloth(&objectList, 15, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,1);
+    //addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,0);
     //addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), model, lightPosition);
     //addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f), lightPosition);
 
-    //deformable sphere
-    glm::mat4 sMod(1);
-    //sMod = glm::translate(sMod, glm::vec3(-.4f, 3, 0));
-    //addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
-    sMod = glm::translate(sMod, glm::vec3(0,0,0));
-    //addDefSphere(&objectList, glm::vec3(1,0.85,0.85), sMod ,lightPosition);
-
+#if 1
+    // horizontal cloth and sphere
+    model = mat4(1);
+    model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
+    model = glm::translate(model, glm::vec3(0,5,0));
+    addCloth(&objectList, 2, 2, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,0);
+    addColl(&collObjects, 0, lightPosition, glm::vec3(1,0,0.5));
+    addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
+#elif 0
+    //cloth falling on cube
+    model = mat4(1);
+    model = glm::scale(model, glm::vec3(0.2,0.2,0.2));
+    model = glm::translate(model, glm::vec3(0,5,0));
+    addCloth(&objectList, 15, 0, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,1);
+    addColl(&collObjects, 1, lightPosition, glm::vec3(1.5,0,1.5));
+    addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
+#elif 0
+    //cube falling on sphere and sliding on plane
     //deformable cube
-    sMod=glm::mat4(1);
-    sMod = glm::translate(sMod, glm::vec3(-0.4,2,-0.2));
-    //addDefCube(&objectList, glm::vec3(1,1,1), sMod, lightPosition);
+    glm::mat4 cMod(1);
+    cMod = glm::translate(cMod, glm::vec3(0,2,0));
+    addDefCube(&objectList, glm::vec3(1,1,1), cMod, lightPosition);
+    addColl(&collObjects, 0, lightPosition, glm::vec3(1,0,1));
+    addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
+#elif 0
+    //cube falling on cube
+    //deformable cube
+    glm::mat4 cMod(1);
+    cMod = glm::translate(cMod, glm::vec3(0,2,0));
+    addDefCube(&objectList, glm::vec3(1,1,1), cMod, lightPosition);
+    addColl(&collObjects, 1, lightPosition, glm::vec3(1,0,1));
+    addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
+#elif 0
+    //sphere falling on sphere
+    glm::mat4 cMod(1);
+    cMod = glm::translate(cMod, glm::vec3(0,2,0));
+    addDefSphere(&objectList, glm::vec3(1,1,1), cMod, lightPosition);
+    addColl(&collObjects, 0, lightPosition, glm::vec3(0.3,0,0));
+    addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
+#elif 0
+    //sphere falling on cube
+    glm::mat4 cMod(1);
+    cMod = glm::translate(cMod, glm::vec3(0,2,0));
+    addDefSphere(&objectList, glm::vec3(1,1,1), cMod, lightPosition);
+    addColl(&collObjects, 1, lightPosition, glm::vec3(0.5,0,0));
+    addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
+#endif
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
     glBindVertexArray(VertexArrayID);
 
     //infinite wisdom
-//    char tmp[256];
-//    getcwd(tmp, 256);
-//    //life is pure pain
-//    std::cout<<"-------------------"<<std::endl;
-//    std::cout << "Current working directory: " << tmp << std::endl;
-//    std::cout<<"-------------------"<<std::endl;
     GLuint programId = LoadShaders("./shaders/vertexShader.vertexshader", "./shaders/fragmentShader.fragmentshader");
     GLuint texture = loadDDS("shaders/idk.DDS");
     GLuint textureId = glGetUniformLocation(programId, "myTextureSampler");
@@ -148,8 +179,6 @@ int main() {
     glm::mat4 cultureMod(1);
     cultureMod = glm::translate(cultureMod, glm::vec3(1, 0,0));
     //culture(&objectList, texture, textureId, cultureMod, lightPosition, programId);
-//    culture(&objectList, glm::vec3(0.0f, 0.0f,0.0f));
-//    culture(&objectList, glm::vec3(8.0f, 0.0f,0.0f));
 
 
     //phong lighting system
@@ -158,15 +187,6 @@ int main() {
     //glfwSetKeyCallback(window, key_callback);
     std::cout << "about to enter while loop" << std::endl;
 
-    //Collidables
-    std::vector<collidable *> collObjects;
-    //sphere
-    //addColl(&collObjects, 0, lightPosition, glm::vec3(0,0,0));
-    //cube
-    addColl(&collObjects,1, lightPosition, glm::vec3(1.5,0,1.5));
-    //addColl(&collObjects,1, lightPosition, glm::vec3(1,2,-1));
-    //plane
-    addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
     std::cout<<"init successful"<<std::endl;
 
     //gui stuff
@@ -194,9 +214,11 @@ int main() {
     std::vector<float> out_tan;
     std::vector<float> out_bitan;
     std::vector<unsigned int> out_tris;
-    loadObj("./shaders/sphere.obj", out_vertices, out_uvs, out_normals, out_tan, out_bitan, out_tris);
+    //loadObj("./shaders/sphere.obj", out_vertices, out_uvs, out_normals, out_tan, out_bitan, out_tris);
 
     glm::mat4 mod(1);
+    importedModels * chonky = new importedModels("./shaders/sphere.obj", mod);
+    importedModels * teapot = new importedModels("./shaders/t2.obj", mod);
 
     do {
         // Clear the screen
@@ -314,11 +336,12 @@ int main() {
         }
 
         for(auto i : collObjects){
-            i->render(ProjectionMatrix, ViewMatrix, lightSysId, false);
+           i->render(ProjectionMatrix, ViewMatrix, lightSysId, false);
         }
 
         // please work
-        renderModel(out_vertices, out_uvs, out_normals, out_tris, programId, texture, textureId, ProjectionMatrix, ViewMatrix, mod);
+        chonky->render(ProjectionMatrix, ViewMatrix, programId, texture3, textureId);
+        //teapot->render(ProjectionMatrix, ViewMatrix, programId, texture, textureId);
 
         //gui stuff
         ImGui::Render();

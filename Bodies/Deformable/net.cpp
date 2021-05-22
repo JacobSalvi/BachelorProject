@@ -163,6 +163,8 @@ net::net(int size, glm::mat4 mod, glm::vec3 lPos) : deformableObjects(-1, mod, l
     setGLuint();
 
     updateBuffer();
+
+    updateNormalBuffer();
 }
 
 //update the particles following the
@@ -321,7 +323,7 @@ void net::updateBuffer() {
     net::updateNormalBuffer();
 }
 
-//TODO: check this
+//TODO: rewrite this
 void net::updateNormalBuffer() {
     int nVert = (row-1)*(col-1)*6;
     std::vector<glm::vec3> helper;
@@ -351,14 +353,18 @@ void net::updateNormalBuffer() {
     }
 
     //we need now to normalize the helper
+    std::cout<<particles.size()<<std::endl;
+    std::cout<<nVert<<std::endl;
     int pos = 0;
     for(int i = 0; i<nVert;++i){
         glm::vec3 tmp = glm::normalize(helper[i]);
+        printPoint(tmp, "normal is: ");
         //and finally we can update the buffer
         normalBuffer[pos++]=tmp[0];
         normalBuffer[pos++]=tmp[1];
         normalBuffer[pos++]=tmp[2];
     }
+
 }
 
 void net::setVertexBuffer(float *vb) {
