@@ -49,4 +49,8 @@ void printPoint(glm::vec3 point, char * name);
 
 void setWind(deformableObjects * net, float wind[]);
 
+void genShadowMap();
+void sm(glm::vec3 lightInvDir, GLuint depthMatrixID);
+void usingSM();
+
 #endif //CODE_HELPERFUNCTIONS_H

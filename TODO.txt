@@ -10,12 +10,12 @@ refactor classes hierarchy and files
 talk about BVh after collision
 refere to the figure
 
-introductio
+introduction
 soft bodies simulation
 collision
 deformable objects
 BVH
-renderong
+rendering
 User interface
 
 //tool mesh-> tethraedon TetGen

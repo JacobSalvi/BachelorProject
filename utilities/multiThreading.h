@@ -5,6 +5,7 @@
 #include "../shaders/helperStruct.h"
 #include "helperFunctions.h"
 #include "../shaders/controls.hpp"
+#include "../Bodies/Deformable/importedModels.h"
 #include <thread>
 
 class collidable;
@@ -18,7 +19,7 @@ extern std::thread dragThread;
 extern bool dragThreadShouldLive;
 extern bool shouldSimulate;
 extern bool threadShouldLive;
-void timer_start(unsigned int interval,  const std::vector<deformableObjects *>& list, const std::vector<collidable *> &collList);
+void timer_start(unsigned int interval,  const std::vector<deformableObjects *>& list, const std::vector<collidable *> &collList, importedModels * a);
 
 void checkCollision();
 

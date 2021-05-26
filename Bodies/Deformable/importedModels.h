@@ -21,8 +21,8 @@ class importedModels {
 private:
     //model matrix
     glm::mat4 modelMatrix;
-    float wind;
-    float gravity;
+    float wind=0.0f;
+    float gravity=-1.0f;
 
     //stuff we get when importing
     std::vector<float> linearVerts;

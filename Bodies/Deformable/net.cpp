@@ -73,18 +73,18 @@ deformableObjects(gravity, mod, lPos), row(row), col(col), integrator(integrator
 
     //normal
     //the cloth are always initially created as vertical planes
-    for(int i=0; i<a;++i){
-        if(i%3==2){
-            normalBuffer[i]=1.0f;
-        }else{
-            normalBuffer[i]=0.0f;
-        }
-    }
+//    for(int i=0; i<a;++i){
+//        if(i%3==2){
+//            normalBuffer[i]=1.0f;
+//        }else{
+//            normalBuffer[i]=0.0f;
+//        }
+//    }
+
+    updateBuffer();
 
     //GLuint
     setGLuint();
-
-    updateBuffer();
 }
 
 //orizontal cloth
@@ -325,46 +325,68 @@ void net::updateBuffer() {
 
 //TODO: rewrite this
 void net::updateNormalBuffer() {
-    int nVert = (row-1)*(col-1)*6;
     std::vector<glm::vec3> helper;
-    //initially of 0 vectors
-    for(int i=0; i<nVert;++i){
-        helper.push_back(glm::vec3(0.0f,0.0f, 0.0f));
+    for(int i=0; i<particles.size();++i){
+        helper.push_back(glm::vec3(0,0,0));
     }
-    //update the normal buffer as well
-    for(int i=0; i<row-1;++i){
-        for(int j=0; j<col-1;++j){
-            //the 4 particles
-            glm::vec3 bottomLeft = particles[col*i+j]->getPosition();
-            glm::vec3 bottomRight = particles[col*i+j+1]->getPosition();
-            glm::vec3 topLeft = particles[col*(i+1)+j]->getPosition();
-            glm::vec3 topRight = particles[col*(i+1)+j+1]->getPosition();
+    int pos =0;
+    for(int i=0; i<row-1;++i) {
+        for (int j = 0; j < col - 1; ++j) {
+            //first triangle first vertex
+            glm::vec3 topLeft = particles[col * i + j]->getPosition();
+            glm::vec3 bottomLeft = particles[col * (i + 1) + j]->getPosition();
+            glm::vec3 bottomRight = particles[col * (i + 1) + j + 1]->getPosition();
+            glm::vec3 topRight = particles[col * i + j + 1]->getPosition();
 
             //let's calculate the normal
-            glm::vec3 topNormal = glm::normalize(glm::cross(bottomLeft-topLeft, bottomLeft-topRight));
-            glm::vec3 bottomNormal = glm::normalize(glm::cross(bottomLeft-topRight, bottomLeft-bottomRight));
+            glm::vec3 topNormal = glm::normalize(glm::cross(bottomLeft - topLeft, bottomLeft - topRight));
+            glm::vec3 bottomNormal = glm::normalize(glm::cross(bottomLeft - topRight, bottomLeft - bottomRight));
 
-            //sum to the corresponding vert the computed normal
-            helper[col*i+j]+=topNormal+bottomNormal;
-            helper[col*i+j+1]+=bottomNormal;
-            helper[col*(i+1)+j]+=topNormal;
-            helper[col*(i+1)+j+1]+=topNormal+bottomNormal;
+            //push the normals
+            helper[col * i + j] += topNormal + bottomNormal;
+            helper[col * (i + 1) + j] += bottomNormal;
+            helper[col * (i + 1) + j + 1] += topNormal + bottomNormal;
+            helper[col * i + j + 1] += topNormal;
         }
     }
 
-    //we need now to normalize the helper
-    std::cout<<particles.size()<<std::endl;
-    std::cout<<nVert<<std::endl;
-    int pos = 0;
-    for(int i = 0; i<nVert;++i){
-        glm::vec3 tmp = glm::normalize(helper[i]);
-        printPoint(tmp, "normal is: ");
-        //and finally we can update the buffer
-        normalBuffer[pos++]=tmp[0];
-        normalBuffer[pos++]=tmp[1];
-        normalBuffer[pos++]=tmp[2];
-    }
+    for(int i=0; i<row-1;++i){
+        for(int j=0; j<col-1;++j) {
+            glm::vec3 topLeft = glm::normalize(helper[col * i + j]);
+            glm::vec3 bottomLeft = glm::normalize(helper[col * (i + 1) + j]);
+            glm::vec3 bottomRight = glm::normalize(helper[col * (i + 1) + j + 1]);
+            glm::vec3 topRight = glm::normalize(helper[col * i + j + 1]);
 
+            normalBuffer[pos++]=topLeft[0];
+            normalBuffer[pos++]=topLeft[1];
+            normalBuffer[pos++]=topLeft[2];
+
+            //first triangle second vertex
+            normalBuffer[pos++]=bottomLeft[0];
+            normalBuffer[pos++]=bottomLeft[1];
+            normalBuffer[pos++]=bottomLeft[2];
+
+            //first triangle third vertex
+            normalBuffer[pos++]=bottomRight[0];
+            normalBuffer[pos++]=bottomRight[1];
+            normalBuffer[pos++]=bottomRight[2];
+
+            //second triangle first vertex
+            normalBuffer[pos++]=topLeft[0];
+            normalBuffer[pos++]=topLeft[1];
+            normalBuffer[pos++]=topLeft[2];
+
+            //second triangle second vertex
+            normalBuffer[pos++]=bottomRight[0];
+            normalBuffer[pos++]=bottomRight[1];
+            normalBuffer[pos++]=bottomRight[2];
+
+            //second triangle third vertex
+            normalBuffer[pos++]=topRight[0];
+            normalBuffer[pos++]=topRight[1];
+            normalBuffer[pos++]=topRight[2];
+        }
+    }
 }
 
 void net::setVertexBuffer(float *vb) {

@@ -1,5 +1,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "collidable.h"
+#include <iostream>
 
 collidable::collidable(glm::vec3 colour, glm::mat4 model, glm::vec3 lPos) : colour(colour), model(model), lightPos(lPos){
 }
@@ -163,5 +164,96 @@ void collidable::move(glm::vec3 mv) {
 
 int collidable::returnType() {
     return -1;
+}
+
+void collidable::renderShadow(glm::mat4 depthP, glm::mat4 depthV, GLuint programID) {
+    //In moment like this I truly believe my iq is negative
+    glUseProgram(programID);
+
+    //Get a handle for all of the uniforms
+    GLuint MVP = glGetUniformLocation(programID, "depthMVP");
+    glm::mat4 tmp = depthP*depthV*getModel();
+
+    //set the uniforms
+    glUniformMatrix4fv(MVP, 1, GL_FALSE, &tmp[0][0]);
+
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, getCollVertex());
+    glBufferSubData(GL_ARRAY_BUFFER, 0, getSize(), getVertexBuffer());
+    glVertexAttribPointer(
+            0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
+            3,                  // size
+            GL_FLOAT,           // type
+            GL_FALSE,           // normalized?
+            0,                  // stride
+            (void *) nullptr            // array buffer offset
+    );
+
+    glDrawArrays(GL_TRIANGLES, 0, getNumberOfVertices());
+
+    glDisableVertexAttribArray(0);
+}
+
+void collidable::renderShadow(glm::mat4 pr, glm::mat4 viw, glm::mat4 bias, GLuint programID) {
+    glUseProgram(programID);
+    //Get a handle for all of the uniforms
+    GLuint MatrixID = glGetUniformLocation(programID, "MVP");
+    GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
+    GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
+    GLuint DepthBiasID = glGetUniformLocation(programID, "DepthBiasMVP");
+    GLuint ShadowMapID = glGetUniformLocation(programID, "shadowMap");
+
+    // Get a handle for our "LightPosition" uniform
+    GLuint lightInvDirID = glGetUniformLocation(programID, "LightInvDirection_worldspace");
+
+    glm::mat4 MVP = pr*viw*getModel();
+
+    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+    glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &getModel()[0][0]);
+    glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &viw[0][0]);
+    glUniformMatrix4fv(DepthBiasID, 1, GL_FALSE, &(bias*getModel())[0][0]);
+    glUniform1i(ShadowMapID, 0);
+
+    glUniform3f(lightInvDirID, lightPos.x, lightPos.y, lightPos.z);
+
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, getCollVertex());
+    glBufferSubData(GL_ARRAY_BUFFER, 0, getSize(), getVertexBuffer());
+    glVertexAttribPointer(
+            0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
+            3,                  // size
+            GL_FLOAT,           // type
+            GL_FALSE,           // normalized?
+            0,                  // stride
+            (void *) nullptr            // array buffer offset
+    );
+
+    glEnableVertexAttribArray(2);
+    glBindBuffer(GL_ARRAY_BUFFER, getCollNormal());
+    glVertexAttribPointer(
+            2,                  // attribute. No particular reason for 0, but must match the layout in the shader.
+            3,                  // size
+            GL_FLOAT,           // type
+            GL_FALSE,           // normalized?
+            0,                  // stride
+            (void *) nullptr            // array buffer offset
+    );
+
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, getCollColour());
+    glVertexAttribPointer(
+            1,                  // attribute. No particular reason for 0, but must match the layout in the shader.
+            3,                  // size
+            GL_FLOAT,           // type
+            GL_FALSE,           // normalized?
+            0,                  // stride
+            (void *) nullptr            // array buffer offset
+    );
+
+    glDrawArrays(GL_TRIANGLES, 0, getNumberOfVertices());
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
 }
 

@@ -15,8 +15,10 @@ std::thread updateBuffers;
 
 std::thread dragThread;
 
+std::thread otherThread;
 
-void timer_start(unsigned int interval, const std::vector<deformableObjects *> &list, const std::vector<collidable *> &collList) {
+
+void timer_start(unsigned int interval, const std::vector<deformableObjects *> &list, const std::vector<collidable *> &collList, importedModels * a) {
     unsigned int collInterval = 8 * interval;
     //thread that checks collision
     collThread = std::thread([collInterval, list, collList]() {
@@ -26,11 +28,6 @@ void timer_start(unsigned int interval, const std::vector<deformableObjects *> &
                     i->detectCollision(j);
                 }
             }
-//            for(int i=1;i<list.size();++i){
-//                for(int j=i+1; j<list.size();++j){
-//
-//                }
-//            }
             std::this_thread::sleep_for(std::chrono::milliseconds(collInterval));
         }
     });
@@ -73,6 +70,20 @@ void timer_start(unsigned int interval, const std::vector<deformableObjects *> &
         std::cout << "The thread should be dead now" << std::endl;
     });
     sim.detach();
+
+    static int robe = 0;
+    otherThread = std::thread([a](){
+        while(threadShouldLive){
+            a->rungeKutta(0.001f);
+            robe++;
+            if(robe==1){
+                robe=0;
+                a->updateBuffer();
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        }
+    });
+    otherThread.detach();
 }
 
 

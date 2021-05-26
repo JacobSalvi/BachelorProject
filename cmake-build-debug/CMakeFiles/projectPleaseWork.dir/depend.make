@@ -2019,11 +2019,13 @@ CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../external/glm
 CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../external/glm-0.9.7.1/glm/vector_relational.hpp
 CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../imgui/imconfig.h
 CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../imgui/imgui.h
+CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../utilities/helperFunctions.h
 CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../BVH/BVH.h
 CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../BVH/clothBVH.h
 CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../Bodies/Deformable/deformableCube.h
 CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../Bodies/Deformable/deformableObjects.h
 CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../Bodies/Deformable/deformableSphere.h
+CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../Bodies/Deformable/importedModels.h
 CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../Bodies/Deformable/net.h
 CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../Bodies/Deformable/particle.h
 CMakeFiles/projectPleaseWork.dir/utilities/multiThreading.cpp.o: ../Bodies/Deformable/spring.hpp

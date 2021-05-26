@@ -93,8 +93,8 @@ int main() {
     // Cull triangles which normal is not towards the camera
     //glEnable(GL_CULL_FACE);
 
-    glm::vec3 lightPosition(-4.0f, 10.0f, 5.0f);
-    //glm::vec3 lightPosition(0.0f, 10.0f, 0.0f);
+    //glm::vec3 lightPosition(-4.0f, 10.0f, 5.0f);
+    glm::vec3 lightPosition(1.0f, 6.0f, 1.0f);
 
     //This is likely not gonna work
     //nvm, it worked
@@ -114,12 +114,13 @@ int main() {
     //addCloth(&objectList, 5,8, 0, glm::vec3(2.0f,0.0f,0.0f), model, lightPosition);
     //addCloth(&objectList, 5,3, 1, glm::vec3(2.0f,0.0f,0.0f), glm::vec3(6.0f,0.0f,0.0f), lightPosition);
 
-#if 1
+#if 0
     // horizontal cloth and sphere
     model = mat4(1);
     model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
     model = glm::translate(model, glm::vec3(0,5,0));
-    addCloth(&objectList, 2, 2, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,0);
+    //12 15
+    addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,1);
     addColl(&collObjects, 0, lightPosition, glm::vec3(1,0,0.5));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
 #elif 0
@@ -159,6 +160,11 @@ int main() {
     cMod = glm::translate(cMod, glm::vec3(0,2,0));
     addDefSphere(&objectList, glm::vec3(1,1,1), cMod, lightPosition);
     addColl(&collObjects, 1, lightPosition, glm::vec3(0.5,0,0));
+    addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
+#elif 1
+    //shadow map test
+    //addColl(&collObjects, 1, lightPosition, glm::vec3(0.5,0,0));
+    addColl(&collObjects, 1, lightPosition, glm::vec3(0.5,2,0));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
 #endif
 
@@ -214,13 +220,68 @@ int main() {
     std::vector<float> out_tan;
     std::vector<float> out_bitan;
     std::vector<unsigned int> out_tris;
-    //loadObj("./shaders/sphere.obj", out_vertices, out_uvs, out_normals, out_tan, out_bitan, out_tris);
 
     glm::mat4 mod(1);
-    importedModels * chonky = new importedModels("./shaders/sphere.obj", mod);
-    importedModels * teapot = new importedModels("./shaders/t2.obj", mod);
+    importedModels * chonky = new importedModels("./shaders/s.obj", mod);
+    //importedModels * teapot = new importedModels("./shaders/t2.obj", mod);
 
+    //shadowMap
+    GLuint depthId = LoadShaders("./shaders/sm.vert", "./shaders/sm.frag");
+    GLuint idkID = LoadShaders("./shaders/idk.vert", "./shaders/idk.frag");
+
+    GLuint FramebufferName = 0;
+    glGenFramebuffers(1, &FramebufferName);
+    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
+
+    // Depth texture. Slower than a depth buffer, but you can sample it later in your shader
+    GLuint depthTexture;
+    glGenTextures(1, &depthTexture);
+    glBindTexture(GL_TEXTURE_2D, depthTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, 1024, 1024, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexture, 0);
+    glDrawBuffer(GL_NONE);
+
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        return false;
+
+//    double lastTime = glfwGetTime();
+//    int nbFrames=0;
+//    double toPrint=0;
     do {
+        glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
+        glViewport(0,0,1024,1024);
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glm::mat4 depthProjectionMatrix = glm::ortho<float>(-10,10,-10,10,-10,20);
+        glm::mat4 depthViewMatrix = glm::lookAt(lightPosition, glm::vec3(0,0,0), glm::vec3(0,1,0));
+
+        for(auto i: collObjects){
+            i->renderShadow(depthProjectionMatrix, depthViewMatrix, depthId);
+        }
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glViewport(0,0, 2048, 1539);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, depthTexture);
+
+        glm::mat4 biasMatrix(
+                0.5, 0.0, 0.0, 0.0,
+                0.0, 0.5, 0.0, 0.0,
+                0.0, 0.0, 0.5, 0.0,
+                0.5, 0.5, 0.5, 1.0
+        );
+        glm::mat4 depthBiasMVP = biasMatrix*depthProjectionMatrix*depthViewMatrix;
+
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -239,11 +300,19 @@ int main() {
             ImGui::InputFloat("Mass", &mass);
             ImGui::InputFloat("Spring stiffness", &ks);
             ImGui::InputFloat("Gravity", &gravity);
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+//            //frame rate
+//            double currentTime = glfwGetTime();
+//            nbFrames++;
+//            if(currentTime-lastTime >= 1.0){
+//                toPrint= 1000.0/double(nbFrames);
+//                nbFrames = 0;
+//                lastTime+=1.0;
+//            }
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f/ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             if(ImGui::Button("Begin Simulation") && shouldSimulate){
                 threadShouldLive=true;
                 shouldSimulate=false;
-                timer_start(1, objectList, collObjects);
+                timer_start(1, objectList, collObjects, chonky);
             }
             if(ImGui::Button("Drop")){
                 for(auto i: objectList){
@@ -296,7 +365,7 @@ int main() {
                     //start the other thread
                     threadShouldLive=true;
                     shouldSimulate=false;
-                    timer_start(1, objectList, collObjects);
+                    timer_start(1, objectList, collObjects, chonky);
                 }
                 dragMouse(tmpColl);
             }else if(tmp.isMouseOver && tmpColl.isMouseOver){
@@ -308,7 +377,7 @@ int main() {
                         //start the other thread
                         threadShouldLive=true;
                         shouldSimulate=false;
-                        timer_start(1, objectList, collObjects);
+                        timer_start(1, objectList, collObjects, chonky);
                     }
                     dragMouse(tmpColl);
                 }
@@ -328,7 +397,7 @@ int main() {
         glDisable(GL_CULL_FACE);
 
         //I am not sure why rendering it first fixes everything but it does
-        sky->render(ProjectionMatrix, ViewMatrix);
+        //sky->render(ProjectionMatrix, ViewMatrix);
 
         //drawing all of the objects
         for(int i=0; i<objectList.size();++i){
@@ -336,11 +405,12 @@ int main() {
         }
 
         for(auto i : collObjects){
-           i->render(ProjectionMatrix, ViewMatrix, lightSysId, false);
+            //i->render(ProjectionMatrix, ViewMatrix, lightSysId, false);
+           i->renderShadow(ProjectionMatrix, ViewMatrix, depthBiasMVP , idkID);
         }
 
         // please work
-        chonky->render(ProjectionMatrix, ViewMatrix, programId, texture3, textureId);
+        //chonky->render(ProjectionMatrix, ViewMatrix, programId, texture3, textureId);
         //teapot->render(ProjectionMatrix, ViewMatrix, programId, texture, textureId);
 
         //gui stuff

@@ -170,7 +170,7 @@ void importedModels::render(glm::mat4 pm, glm::mat4 vm, GLuint pi, GLuint t, GLu
     GLuint v;
     glGenBuffers(1, &v);
     glBindBuffer(GL_ARRAY_BUFFER, v);
-    glBufferData(GL_ARRAY_BUFFER, linearVerts.size()*sizeof(float), &linearVerts[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, linearVerts.size()*sizeof(float), &linearVerts[0], GL_DYNAMIC_DRAW);
 
     GLuint uv;
     glGenBuffers(1, &uv);
@@ -185,7 +185,7 @@ void importedModels::render(glm::mat4 pm, glm::mat4 vm, GLuint pi, GLuint t, GLu
     GLuint n;
     glGenBuffers(1, &n);
     glBindBuffer(GL_ARRAY_BUFFER, n);
-    glBufferData(GL_ARRAY_BUFFER, linearNormals.size(), &linearNormals[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, linearNormals.size()*sizeof(float), &linearNormals[0], GL_STATIC_DRAW);
 
     glUseProgram(pi);
     GLuint matrixID = glGetUniformLocation(pi, "MVP");
@@ -201,6 +201,7 @@ void importedModels::render(glm::mat4 pm, glm::mat4 vm, GLuint pi, GLuint t, GLu
     // 1rst attribute buffer : vertices
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, v);
+    glBufferSubData(GL_ARRAY_BUFFER, 0,  linearVerts.size()*sizeof(float), &linearVerts[0]);
     glVertexAttribPointer(
             0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
             3,                  // size
@@ -231,13 +232,11 @@ void importedModels::render(glm::mat4 pm, glm::mat4 vm, GLuint pi, GLuint t, GLu
 }
 
 void importedModels::meshToTethrahedon() {
-
-    //igl::copyleft::tetgen::tetrahedralize();
-
 }
 
 void importedModels::generateMSS() {
     //create particles
+    int pId=0;
     for(int i =0; i<linearVerts.size()-2; i+=3){
         glm::vec3 tmp(linearVerts[i], linearVerts[i+1], linearVerts[i+2]);
         //vert number i/3
@@ -254,6 +253,7 @@ void importedModels::generateMSS() {
             it++;
         }
         if(!alreadyIn){
+            toAdd->setId(pId++);
             particles.push_back(toAdd);
             p[toAdd] = std::vector<int>{id};
         }
@@ -266,24 +266,27 @@ void importedModels::generateMSS() {
         while(j!=p.end()){
             particle * p1=it->first;
             particle * p2=j->first;
-            spring * toAdd = new spring(glm::length(p1->getPosition()-p2->getPosition()), 40, 0.90f, p1, p2);
+            spring * toAdd = new spring(glm::length(p1->getPosition()-p2->getPosition()), 1, 0.90f, p1, p2);
             springs.push_back(toAdd);
             j++;
         }
         it++;
     }
+
+    //special part
+    specialParticles.push_back(particles[0]);
 }
 
 void importedModels::updateBuffer() {
-   auto it = p.begin();
-   while(it!=p.end()){
+    auto it = p.begin();
+    while(it!=p.end()){
        for(int i=0; i<it->second.size();++i){
            linearVerts[3*it->second[i]] = it->first->getPosition().x;
            linearVerts[3*it->second[i]+1] = it->first->getPosition().y;
            linearVerts[3*it->second[i]+2] = it->first->getPosition().z;
        }
        it++;
-   }
+    }
 }
 
 //second order Runge Kutta integrator
