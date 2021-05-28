@@ -81,6 +81,9 @@ deformableCube::deformableCube(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) :
     //bvh
     //making the bvh
     bvh = new defCubeBVH(particles, sqrt(3.0f/4.0f), glm::vec3(0.5f,0.5f,0.5f));
+
+    std::cout<<"p: "<<particles.size()<<std::endl;
+    std::cout<<"s: "<<springs.size()<<std::endl;
 }
 
 void deformableCube::setGLuint() {
@@ -430,7 +433,7 @@ void deformableCube::reset() {
 }
 
 void deformableCube::integrate(float timeDelta) {
-    deformableCube::rungeKutta(timeDelta);
+    deformableCube::rungeKutta4(timeDelta);
 }
 
 void deformableCube::rungeKutta(float timeDelta) {
@@ -519,6 +522,16 @@ BVH *deformableCube::getBvh() const {
 helperStruct deformableCube::isHovered(glm::vec3 origin, glm::vec3 direction) {
     helperStruct toReturn = deformableCube::bvh->rayIntersect(origin, direction, modelMatrix);
     return toReturn;
+}
+
+void deformableCube::renderShadow(glm::mat4 depthP, glm::mat4 depthV, GLuint programId) {
+    setCullFace(GL_FRONT);
+    deformableObjects::renderShadow(depthP, depthV, programId);
+}
+
+void deformableCube::renderShadow(glm::mat4 pr, glm::mat4 viw, glm::mat4 bias, GLuint programID) {
+    setCullFace(GL_BACK);
+    deformableObjects::renderShadow(pr, viw, bias, programID);
 }
 
 

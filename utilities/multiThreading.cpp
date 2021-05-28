@@ -57,15 +57,19 @@ void timer_start(unsigned int interval, const std::vector<deformableObjects *> &
     updateBuffers.detach();
 
     //main animation thread
-    sim = std::thread([interval, list, collList]() {
+    unsigned int mInt = interval;
+    sim = std::thread([mInt, list, collList]() {
         static int counter = 0;
         while (threadShouldLive) {
+            auto start = std::chrono::high_resolution_clock::now();
             for (auto i : list) {
-                i->integrate((float) (interval) / 1000.0f);
+                i->integrate((float) mInt/ 1000.0f);
             }
-
+            auto stop = std::chrono::high_resolution_clock::now();
+            auto duration = duration_cast<std::chrono::microseconds>(stop - start);
+            std::cout<<"duration is: "<<duration.count()<<std::endl;
             counter++;
-            std::this_thread::sleep_for(std::chrono::milliseconds(interval));
+            std::this_thread::sleep_for(std::chrono::milliseconds(mInt));
         }
         std::cout << "The thread should be dead now" << std::endl;
     });

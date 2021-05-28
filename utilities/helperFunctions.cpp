@@ -142,46 +142,38 @@ bool pointInTriangle(glm::vec3 p, glm::vec3 a, glm::vec3 b, glm::vec3 c) {
     return false;
 }
 
-void genShadowMap(){
-//    GLuint FramebufferName = 0;
-//    glGenFramebuffers(1, &FramebufferName);
-//    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
+void setShadowMap(GLuint & t){
+    glGenTextures(1, &t);
+    glBindTexture(GL_TEXTURE_2D, t);
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, 1024, 1024, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
 
-    // Depth texture. Slower than a depth buffer, but you can sample it later in your shader
-//    GLuint depthTexture;
-//    glGenTextures(1, &depthTexture);
-//    glBindTexture(GL_TEXTURE_2D, depthTexture);
-//    glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, 1024, 1024, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-   // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-    //glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexture, 0);
-
-    //glDrawBuffer(GL_NONE);
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, t, 0);
+    glDrawBuffer(GL_NONE);
 }
 
-void sm(glm::vec3 lightInvDir, GLuint depthMatrixID){
-    // Compute the MVP matrix from the light's point of view
-    glm::mat4 depthProjectionMatrix = glm::ortho<float>(-10,10,-10,10,-10,20);
-    glm::mat4 depthViewMatrix = glm::lookAt(lightInvDir, glm::vec3(0,0,0), glm::vec3(0,1,0));
-    glm::mat4 depthModelMatrix = glm::mat4(1.0);
-    glm::mat4 depthMVP = depthProjectionMatrix * depthViewMatrix * depthModelMatrix;
+void useShaowMap(std::vector<collidable *> * list, std::vector<deformableObjects *> * defList, GLuint fb, GLuint t, GLuint pID, glm::mat4 pm, glm::mat4 vm){
+    glBindFramebuffer(GL_FRAMEBUFFER, fb);
+    glViewport(0,0,1024,1024);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Send our transformation to the currently bound shader,
-    // in the "MVP" uniform
-    glUniformMatrix4fv(depthMatrixID, 1, GL_FALSE, &depthMVP[0][0]);
+    for(auto i: *defList){
+        i->renderShadow(pm, vm, pID);
+    }
+    for(auto i: *list){
+        i->renderShadow(pm, vm, pID);
+    }
 
-    glm::mat4 biasMatrix(
-            0.5, 0.0, 0.0, 0.0,
-            0.0, 0.5, 0.0, 0.0,
-            0.0, 0.0, 0.5, 0.0,
-            0.5, 0.5, 0.5, 1.0
-    );
-    glm::mat4 depthBiasMVP = biasMatrix*depthMVP;
-}
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(0,0, 2048, 1539);
 
-void usingSM(){
-
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, t);
 }

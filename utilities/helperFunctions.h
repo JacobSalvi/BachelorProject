@@ -49,8 +49,7 @@ void printPoint(glm::vec3 point, char * name);
 
 void setWind(deformableObjects * net, float wind[]);
 
-void genShadowMap();
-void sm(glm::vec3 lightInvDir, GLuint depthMatrixID);
-void usingSM();
+void setShadowMap(GLuint & t);
 
+void useShaowMap(std::vector<collidable *> * list, std::vector<deformableObjects *> * defList, GLuint fb, GLuint t, GLuint pID, glm::mat4 pm, glm::mat4 vm);
 #endif //CODE_HELPERFUNCTIONS_H

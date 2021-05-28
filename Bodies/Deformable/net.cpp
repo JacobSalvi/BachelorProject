@@ -323,7 +323,6 @@ void net::updateBuffer() {
     net::updateNormalBuffer();
 }
 
-//TODO: rewrite this
 void net::updateNormalBuffer() {
     std::vector<glm::vec3> helper;
     for(int i=0; i<particles.size();++i){
@@ -540,4 +539,14 @@ int net::getSize() {
 
 int net::getNumberOfVertices() {
     return (row-1)*(col-1)*6;
+}
+
+void net::renderShadow(glm::mat4 depthP, glm::mat4 depthV, GLuint programId) {
+    setCullFace(GL_BACK);
+    deformableObjects::renderShadow(depthP, depthV, programId);
+}
+
+void net::renderShadow(glm::mat4 pr, glm::mat4 viw, glm::mat4 bias, GLuint programID) {
+    deformableObjects::renderShadow(pr, viw, bias, programID);
+    setCullFace(GL_BACK);
 }

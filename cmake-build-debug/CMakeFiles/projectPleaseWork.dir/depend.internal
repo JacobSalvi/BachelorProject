@@ -526,6 +526,16 @@ CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.o
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o
+ ../BVH/BVH.h
+ ../BVH/clothBVH.h
+ ../Bodies/Deformable/deformableCube.h
+ ../Bodies/Deformable/deformableSphere.h
+ ../Bodies/Deformable/net.h
+ ../Bodies/Deformable/texturedCloth.h
+ ../Bodies/Solid/Sphere.h
+ ../Bodies/Solid/collidable.h
+ ../Bodies/Solid/cube.h
+ ../Bodies/Solid/plane.h
  ../external/glew-1.13.0/include/GL/glew.h
  ../external/glfw-3.1.2/include/GLFW/glfw3.h
  ../external/glm-0.9.7.1/glm/common.hpp
@@ -613,12 +623,13 @@ CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o
  ../external/glm-0.9.7.1/glm/vector_relational.hpp
  ../imgui/imconfig.h
  ../imgui/imgui.h
+ ../shaders/helperStruct.h
+ ../utilities/helperFunctions.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/BVH.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.cpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableObjects.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/particle.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/spring.hpp
- /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h

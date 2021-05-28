@@ -525,6 +525,16 @@ CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.o: ../Bodi
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.o: ../Bodies/Solid/mouseIntersectStruct.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableCube.cpp.o: ../shaders/helperStruct.h
 
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../BVH/BVH.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../BVH/clothBVH.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Deformable/deformableCube.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Deformable/deformableSphere.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Deformable/net.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Deformable/texturedCloth.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Solid/Sphere.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Solid/collidable.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Solid/cube.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Solid/plane.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../external/glew-1.13.0/include/GL/glew.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../external/glfw-3.1.2/include/GLFW/glfw3.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../external/glm-0.9.7.1/glm/common.hpp
@@ -612,12 +622,13 @@ CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../e
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../external/glm-0.9.7.1/glm/vector_relational.hpp
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../imgui/imconfig.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../imgui/imgui.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../shaders/helperStruct.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../utilities/helperFunctions.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../BVH/BVH.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Deformable/deformableObjects.cpp
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Deformable/deformableObjects.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Deformable/particle.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Deformable/spring.hpp
-CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Solid/Sphere.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Solid/collidable.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../Bodies/Solid/mouseIntersectStruct.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/deformableObjects.cpp.o: ../shaders/helperStruct.h

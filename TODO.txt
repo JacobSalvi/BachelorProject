@@ -1,10 +1,4 @@
-cube collision rework, done kinda
-friction, done kinda
-
-TBN matrix
-
-//optional but would make the code cleaner
-refactor classes hierarchy and files
+Optimize the code as much as possible
 
 //introduce mss before taling about the Hooke law
 talk about BVh after collision

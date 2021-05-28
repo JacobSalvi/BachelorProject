@@ -38,6 +38,9 @@ public:
     void reset() override;
 
     void detectCollision(collidable * obj) override;
+    void renderShadow(glm::mat4 depthP, glm::mat4 depthV,  GLuint programId) override;
+    void renderShadow(glm::mat4 pr, glm::mat4 viw, glm::mat4 bias, GLuint programID) override;
+
 };
 
 

@@ -88,7 +88,10 @@ public:
         }
     }
 
-    void integrate(float timeDelta) override{!integrator ? explicitEuler(timeDelta) : rungeKutta(timeDelta);}
+    void integrate(float timeDelta) override{!integrator ? explicitEuler(timeDelta) : rungeKutta4(timeDelta);}
+//    void integrate(float timeDelta) override{
+//        rungeKutta4(timeDelta);
+//    }
 
     void reset() override;
 
@@ -114,6 +117,8 @@ public:
 
     void setGLuint() override;
 
+    void renderShadow(glm::mat4 depthP, glm::mat4 depthV,  GLuint programId) override;
+    void renderShadow(glm::mat4 pr, glm::mat4 viw, glm::mat4 bias, GLuint programID) override;
 };
 
 

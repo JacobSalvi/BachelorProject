@@ -179,7 +179,9 @@ helperStruct deformableSphere::isHovered(glm::vec3 origin, glm::vec3 direction) 
 }
 
 void deformableSphere::integrate(float timeDelta) {
-    deformableSphere::rungeKutta(timeDelta);
+    //deformableObjects::exEuler(timeDelta);
+    //deformableSphere::rungeKutta(timeDelta);
+    deformableSphere::rungeKutta4(timeDelta);
 }
 
 BVH *deformableSphere::getBvh() const {
@@ -389,4 +391,14 @@ void deformableSphere::detectCollision(collidable *obj) {
             std::cout<<"something went wrong"<<std::endl;
             break;
     }
+}
+
+void deformableSphere::renderShadow(glm::mat4 depthP, glm::mat4 depthV, GLuint programId) {
+    setCullFace(GL_FRONT);
+    deformableObjects::renderShadow(depthP, depthV, programId);
+}
+
+void deformableSphere::renderShadow(glm::mat4 pr, glm::mat4 viw, glm::mat4 bias, GLuint programID) {
+    setCullFace(GL_BACK);
+    deformableObjects::renderShadow(pr, viw, bias, programID);
 }
