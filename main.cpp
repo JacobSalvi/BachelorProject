@@ -130,12 +130,12 @@ int main() {
     addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,0);
     addColl(&collObjects, 0, lightPosition, glm::vec3(1.5,3,-0.8));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
-#elif 0
+#elif 1
     //cloth falling on cube
     model = mat4(1);
     model = glm::scale(model, glm::vec3(0.2,0.2,0.2));
     model = glm::translate(model, glm::vec3(0,5,0));
-    lightPosition = glm::vec3(1,6,4);
+    lightPosition = glm::vec3(1,9,2);
     addCloth(&objectList, 15, 0, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,1);
     addColl(&collObjects, 1, lightPosition, glm::vec3(1.5,0,1.5));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
@@ -155,7 +155,7 @@ int main() {
     addDefCube(&objectList, glm::vec3(1,1,1), cMod, lightPosition);
     addColl(&collObjects, 1, lightPosition, glm::vec3(1,0,1));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
-#elif 1
+#elif 0
     //sphere falling on sphere
     glm::mat4 cMod(1);
     cMod = glm::translate(cMod, glm::vec3(0,2,0));

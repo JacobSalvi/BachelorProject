@@ -21,8 +21,8 @@ deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPo
                                                                                                        lPos), size(10) {
     //I fear that a too detailed sphere might
     //burn my cpu, so for now it will have size <10
-    vertexBuffer = new float[size * size * 18];
-    colorBuffer = new float[size * size * 18];
+    vertexBuffer = new float[size * (size) * 18];
+    colorBuffer = new float[size * (size) * 18];
 
     //helper needed to avoid pushing multiple times
     //the same vertex in the particles
@@ -121,14 +121,22 @@ deformableSphere::deformableSphere(glm::mat4 mod, glm::vec3 color, glm::vec3 lPo
     for (int i = 0; i < particles.size(); ++i) {
         for (int j = i + 1; j < particles.size(); ++j) {
             float dist = glm::length(particles[i]->getPosition() - particles[j]->getPosition());
-            springs.push_back(new spring(dist, 50, .2, particles[i], particles[j]));
+            spring * toADD =new spring(dist, 50, .2, particles[i], particles[j]);
+            springs.push_back(toADD);
+            //springs.push_back(new spring(dist, 50, .2, particles[i], particles[j]));
         }
     }
+
+    normalBuffer = new float[size*(size)*18];
 
     updateBuffer();
 
     //normals are the same as the vertex
-    normalBuffer = vertexBuffer;
+
+    //normalBuffer= vertexBuffer;
+    for(int i=0; i<size*(size)*18;++i){
+        normalBuffer[i]=vertexBuffer[i];
+    }
 
     setGLuint();
 
@@ -151,7 +159,7 @@ void deformableSphere::setGLuint() {
     GLuint deformableSphereNormal;
     glGenBuffers(1, &deformableSphereNormal);
     glBindBuffer(GL_ARRAY_BUFFER, deformableSphereNormal);
-    glBufferData(GL_ARRAY_BUFFER, deformableSphere::getSize(), deformableSphere::getNormalBuffer(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, deformableSphere::getSize(), deformableSphere::getNormalBuffer(), GL_DYNAMIC_DRAW);
 
     deformableSphere::setVertex(deformableSphereVertex);
     deformableSphere::setColour(deformableSphereColor);
@@ -246,6 +254,11 @@ void deformableSphere::rungeKutta(float timeDelta) {
 void deformableSphere::updateBuffer() {
     int currPart = 0;
     int pos = 0;
+
+    //compute center
+    glm::vec3 center = particles[0]->getPosition()+0.5f*(glm::normalize(particles[particles.size()-1]->getPosition()-particles[0]->getPosition()));
+    int posN = 0;
+
     while (currPart < particles.size()) {
         //top point
         if (currPart == 0) {
@@ -271,6 +284,19 @@ void deformableSphere::updateBuffer() {
                 vertexBuffer[pos++] = r.x;
                 vertexBuffer[pos++] = r.y;
                 vertexBuffer[pos++] = r.z;
+
+                //update normal
+                normalBuffer[posN++]=top.x-center.x;
+                normalBuffer[posN++]=top.y-center.y;
+                normalBuffer[posN++]=top.z-center.z;
+
+                normalBuffer[posN++]=l.x -center.x;
+                normalBuffer[posN++]=l.y -center.y;
+                normalBuffer[posN++]=l.z -center.z;
+
+                normalBuffer[posN++]=r.x -center.x;
+                normalBuffer[posN++]=r.y -center.y;
+                normalBuffer[posN++]=r.z -center.z;
             }
             currPart++;
         } else if (currPart == particles.size() - 1 - size) {
@@ -297,6 +323,19 @@ void deformableSphere::updateBuffer() {
                 vertexBuffer[pos++] = r.x;
                 vertexBuffer[pos++] = r.y;
                 vertexBuffer[pos++] = r.z;
+
+                //update normal
+                normalBuffer[posN++]=l.x -center.x;
+                normalBuffer[posN++]=l.y -center.y;
+                normalBuffer[posN++]=l.z -center.z;
+
+                normalBuffer[posN++]=bottom.x -center.x;
+                normalBuffer[posN++]=bottom.y -center.y;
+                normalBuffer[posN++]=bottom.z -center.z;
+
+                normalBuffer[posN++]=r.x -center.x;
+                normalBuffer[posN++]=r.y -center.y;
+                normalBuffer[posN++]=r.z -center.z;
             }
             break;
         } else {
@@ -341,9 +380,35 @@ void deformableSphere::updateBuffer() {
             vertexBuffer[pos++] = br.x;
             vertexBuffer[pos++] = br.y;
             vertexBuffer[pos++] = br.z;
+
+            //update normal
+            normalBuffer[posN++]=tl.x -center.x;
+            normalBuffer[posN++]=tl.y -center.y;
+            normalBuffer[posN++]=tl.z -center.z;
+
+            normalBuffer[posN++]=bl.x -center.x;
+            normalBuffer[posN++]=bl.y -center.y;
+            normalBuffer[posN++]=bl.z -center.z;
+
+            normalBuffer[posN++]=tr.x -center.x;
+            normalBuffer[posN++]=tr.y -center.y;
+            normalBuffer[posN++]=tr.z -center.z;
+
+            normalBuffer[posN++]=tr.x -center.x;
+            normalBuffer[posN++]=tr.y -center.y;
+            normalBuffer[posN++]=tr.z -center.z;
+
+            normalBuffer[posN++]=bl.x -center.x;
+            normalBuffer[posN++]=bl.y -center.y;
+            normalBuffer[posN++]=bl.z -center.z;
+
+            normalBuffer[posN++]=br.x -center.x;
+            normalBuffer[posN++]=br.y -center.y;
+            normalBuffer[posN++]=br.z -center.z;
             currPart++;
         }
     }
+
 }
 
 void deformableSphere::reset() {

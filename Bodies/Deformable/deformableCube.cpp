@@ -98,7 +98,7 @@ void deformableCube::setGLuint() {
     GLuint deformableCubeNormal;
     glGenBuffers(1, &deformableCubeNormal);
     glBindBuffer(GL_ARRAY_BUFFER, deformableCubeNormal);
-    glBufferData(GL_ARRAY_BUFFER, deformableCube::getSize(), deformableCube::getNormalBuffer(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, deformableCube::getSize(), deformableCube::getNormalBuffer(), GL_DYNAMIC_DRAW);
 
     deformableCube::setVertex(deformableCubeVertex);
     deformableCube::setColour(deformableCubeColor);

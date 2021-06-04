@@ -116,7 +116,7 @@ net::net(int size, glm::mat4 mod, glm::vec3 lPos) : deformableObjects(-1, mod, l
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < col; j++) {
             //initial position in a net, equidistant
-            particle * tmp = new particle(glm::vec3(float(j), 0.0f, float(i)), 1);
+            particle * tmp = new particle(glm::vec3(float(i), 0.0f, float(j)), 1);
             tmp->setId(col*i+j);
             particles.push_back(tmp);
 
@@ -155,19 +155,20 @@ net::net(int size, glm::mat4 mod, glm::vec3 lPos) : deformableObjects(-1, mod, l
     net::bvh=new clothBVH(particles, row);
 
     //normal
-    for(int i=0; i<a;++i){
-        if(i%3==1){
-            normalBuffer[i]=1.0f;
-        }else{
-            normalBuffer[i]=0.0f;
-        }
-    }
-    //GLuint
-    setGLuint();
+//    for(int i=0; i<a;++i){
+//        if(i%3==1){
+//            normalBuffer[i]=1.0f;
+//        }else{
+//            normalBuffer[i]=0.0f;
+//        }
+//    }
 
     updateBuffer();
 
-    updateNormalBuffer();
+    //GLuint
+    setGLuint();
+
+    //updateNormalBuffer();
 }
 
 //update the particles following the
@@ -529,7 +530,7 @@ void net::setGLuint() {
     GLuint netNormal;
     glGenBuffers(1, &netNormal);
     glBindBuffer(GL_ARRAY_BUFFER, netNormal);
-    glBufferData(GL_ARRAY_BUFFER, net::getSize(), net::getNormalBuffer(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, net::getSize(), net::getNormalBuffer(), GL_DYNAMIC_DRAW);
 
     net::setVertex(netVertex);
     net::setColour(netColor);
@@ -545,7 +546,7 @@ int net::getNumberOfVertices() {
 }
 
 void net::renderShadow(glm::mat4 depthP, glm::mat4 depthV, GLuint programId) {
-    setCullFace(GL_BACK);
+    setCullFace(GL_FRONT);
     deformableObjects::renderShadow(depthP, depthV, programId);
 }
 
