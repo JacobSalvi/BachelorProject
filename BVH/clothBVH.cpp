@@ -506,7 +506,7 @@ void clothBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj, float gr
     }
 
     if (dmin <= distSquared) {
-        //cube intersect sphere
+        //cube intersect cube
         if (child0 == nullptr) {
             particle * bl=p[0];
             particle * br=p[1];
@@ -749,11 +749,14 @@ void clothBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj, float g
                     glm::vec3 trick = C2;
                     trick.y+=0.1;
                     glm::vec3 intersectionPoint = pointPlaneProjection(pos, glm::vec3(0,1,0), trick);
-                    i->setCollisionForce(3000.0f*(intersectionPoint-pos));
+                    //i->setCollisionForce(3000.0f*(intersectionPoint-pos));
 
                     //friction
                     float friction = 100.0f*i->getMass()*gravity;
-                    i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
+                    //i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
+
+                    //friction + collision
+                    i->setCollisionForce(3000.0f*(intersectionPoint-pos)+friction*glm::normalize(i->getVelocity()));
                 }
             }
 

@@ -61,17 +61,3 @@
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/glfw-3.1.2/tests/CMakeFiles/sharing.dir
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/glfw-3.1.2/tests/CMakeFiles/msaa.dir
 /Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/glfw-3.1.2/tests/CMakeFiles/clipboard.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/contrib/zlib/CMakeFiles/install/local.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/contrib/zlib/CMakeFiles/install/strip.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/contrib/zlib/CMakeFiles/zlib.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/contrib/zlib/CMakeFiles/install.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/contrib/zlib/CMakeFiles/list_install_components.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/contrib/zlib/CMakeFiles/rebuild_cache.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/contrib/zlib/CMakeFiles/edit_cache.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/code/CMakeFiles/install/local.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/code/CMakeFiles/install/strip.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/code/CMakeFiles/install.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/code/CMakeFiles/assimp.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/code/CMakeFiles/list_install_components.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/code/CMakeFiles/rebuild_cache.dir
-/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/assimp-3.0.1270/code/CMakeFiles/edit_cache.dir

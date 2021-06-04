@@ -114,7 +114,7 @@ install/fast: preinstall/fast
 
 # Special rule for the target list_install_components
 list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\" \"libassimp3.0-r1270-OGLtuts\""
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
 .PHONY : list_install_components
 
 # Special rule for the target list_install_components
@@ -526,32 +526,6 @@ clipboard: cmake_check_build_system
 clipboard/fast:
 	$(MAKE) $(MAKESILENT) -f external/glfw-3.1.2/tests/CMakeFiles/clipboard.dir/build.make external/glfw-3.1.2/tests/CMakeFiles/clipboard.dir/build
 .PHONY : clipboard/fast
-
-#=============================================================================
-# Target rules for targets named zlib
-
-# Build rule for target.
-zlib: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 zlib
-.PHONY : zlib
-
-# fast build rule for target.
-zlib/fast:
-	$(MAKE) $(MAKESILENT) -f external/assimp-3.0.1270/contrib/zlib/CMakeFiles/zlib.dir/build.make external/assimp-3.0.1270/contrib/zlib/CMakeFiles/zlib.dir/build
-.PHONY : zlib/fast
-
-#=============================================================================
-# Target rules for targets named assimp
-
-# Build rule for target.
-assimp: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 assimp
-.PHONY : assimp
-
-# fast build rule for target.
-assimp/fast:
-	$(MAKE) $(MAKESILENT) -f external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/build.make external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/build
-.PHONY : assimp/fast
 
 BVH/BVH.o: BVH/BVH.cpp.o
 
@@ -1323,7 +1297,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... uninstall"
 	@echo "... GLEW_1130"
-	@echo "... assimp"
 	@echo "... boing"
 	@echo "... clipboard"
 	@echo "... cursor"
@@ -1349,7 +1322,6 @@ help:
 	@echo "... title"
 	@echo "... wave"
 	@echo "... windows"
-	@echo "... zlib"
 	@echo "... BVH/BVH.o"
 	@echo "... BVH/BVH.i"
 	@echo "... BVH/BVH.s"

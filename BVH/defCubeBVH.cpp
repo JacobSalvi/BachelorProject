@@ -247,12 +247,14 @@ void defCubeBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj, floa
 
                     //let's set the collision force for the particle
                     //since I have no indication what k should be I will wing it
-                    i->setCollisionForce(1000.0f*(intersectionPoint-point));
+                    //i->setCollisionForce(1000.0f*(intersectionPoint-point));
 
                     //friction
                     float cosA = glm::dot(glm::vec3(0,gravity,0), s1-intersectionPoint);
                     float friction = 10.0f*i->getMass()*gravity*cosA;
-                    i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
+                    //i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
+                    // collision + friction force
+                    i->setCollisionForce(1000.0f*(intersectionPoint-point)+friction*glm::normalize(i->getVelocity()));
                 }
             }
         } else {
@@ -369,11 +371,14 @@ void defCubeBVH::detectCollisionCube(glm::mat4 outModel, collidable *obj, float 
 
                     //let's set the collision force for the particle
                     //since I have no indication what k should be I will wing it
-                    i->setCollisionForce(10000.0f*(current-pos));
+                    //i->setCollisionForce(10000.0f*(current-pos));
 
                     //friction
                     float friction = 10.0f*i->getMass()*gravity;
-                    i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
+                    //i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
+
+                    //collision + frictio
+                    i->setCollisionForce(10000.0f*(current-pos)+friction*glm::normalize(i->getVelocity()));
                 }
             }
 
@@ -418,11 +423,14 @@ void defCubeBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj, float
                     glm::vec3 trick = C2;
                     trick.y+=0.1;
                     glm::vec3 intersectionPoint = pointPlaneProjection(pos, glm::vec3(0,1,0), trick);
-                    i->setCollisionForce(10000.0f*(intersectionPoint-pos));
+                    //i->setCollisionForce(10000.0f*(intersectionPoint-pos));
 
                     //friction
                     float friction = 10.0f*i->getMass()*gravity;
-                    i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
+                    //i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
+
+                    //friction + collision
+                    i->setCollisionForce(10000.0f*(intersectionPoint-pos)+friction*glm::normalize(i->getVelocity()));
                 }
             }
 

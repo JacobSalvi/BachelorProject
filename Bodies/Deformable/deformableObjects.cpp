@@ -276,7 +276,7 @@ void deformableObjects::rungeKutta4(float timeDelta) {
 
     for(int i=0; i<particles.size();++i){
         particles[i]->addForce(particles[i]->getCollisionForce());
-        particles[i]->addForce(particles[i]->getFrictionForce());
+        //particles[i]->addForce(particles[i]->getFrictionForce());
         a2.push_back(particles[i]->getForce()/particles[i]->getMass());
     }
 
@@ -285,7 +285,7 @@ void deformableObjects::rungeKutta4(float timeDelta) {
         b1.push_back(particles[i]->getVelocity()+(timeDelta/2.0f)*a2[i]);
         particles[i]->setForce(deformableObjects::wind+glm::vec3(0.0f,deformableObjects::gravity, 0.0f));
         particles[i]->addForce(particles[i]->getCollisionForce());
-        particles[i]->addForce(particles[i]->getFrictionForce());
+        //particles[i]->addForce(particles[i]->getFrictionForce());
     }
 
     for(int i=0; i<springs.size(); ++i){
@@ -306,7 +306,7 @@ void deformableObjects::rungeKutta4(float timeDelta) {
         c1.push_back(particles[i]->getVelocity()+(timeDelta/2.0f)*b2[i]);
         particles[i]->setForce(deformableObjects::wind+glm::vec3(0.0f,deformableObjects::gravity, 0.0f));
         particles[i]->addForce(particles[i]->getCollisionForce());
-        particles[i]->addForce(particles[i]->getFrictionForce());
+       // particles[i]->addForce(particles[i]->getFrictionForce());
     }
 
     for(int i=0; i<springs.size(); ++i){
@@ -326,7 +326,7 @@ void deformableObjects::rungeKutta4(float timeDelta) {
         d1.push_back(particles[i]->getVelocity()+(timeDelta)*c2[i]);
         particles[i]->setForce(deformableObjects::wind+glm::vec3(0.0f,deformableObjects::gravity, 0.0f));
         particles[i]->addForce(particles[i]->getCollisionForce());
-        particles[i]->addForce(particles[i]->getFrictionForce());
+        //particles[i]->addForce(particles[i]->getFrictionForce());
     }
 
     for(int i=0; i<springs.size(); ++i){
@@ -339,7 +339,7 @@ void deformableObjects::rungeKutta4(float timeDelta) {
 
     for(int i=0; i<particles.size(); ++i){
         d2.push_back(particles[i]->getForce()/particles[i]->getMass());
-        particles[i]->resetFrictionForce();
+        //particles[i]->resetFrictionForce();
         particles[i]->resetCollisionForce();
     }
 
@@ -375,10 +375,10 @@ void deformableObjects::exEuler(float timeDelta) {
     //must add collision force
     for(int i=0; i<particles.size();++i){
         particles[i]->addForce(particles[i]->getCollisionForce());
-        particles[i]->addForce(particles[i]->getFrictionForce());
+        //particles[i]->addForce(particles[i]->getFrictionForce());
         //once we added it we can reset it to 0
         particles[i]->resetCollisionForce();
-        particles[i]->resetFrictionForce();
+        //particles[i]->resetFrictionForce();
     }
 
     //update velocity

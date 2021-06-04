@@ -5,7 +5,7 @@
 		<Option title="GLFW"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\external\;CMake Files\external\glfw-3.1.2\;CMake Files\external\glfw-3.1.2\src\;CMake Files\external\glfw-3.1.2\docs\;CMake Files\external\glfw-3.1.2\examples\;CMake Files\external\glfw-3.1.2\CMake\;CMake Files\external\glfw-3.1.2\tests\;CMake Files\external\assimp-3.0.1270\;CMake Files\external\assimp-3.0.1270\contrib\;CMake Files\external\assimp-3.0.1270\contrib\zlib\;CMake Files\external\assimp-3.0.1270\code\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\external\;CMake Files\external\glfw-3.1.2\;CMake Files\external\glfw-3.1.2\src\;CMake Files\external\glfw-3.1.2\docs\;CMake Files\external\glfw-3.1.2\examples\;CMake Files\external\glfw-3.1.2\CMake\;CMake Files\external\glfw-3.1.2\tests\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/cmake-build-debug/external/glfw-3.1.2"/>
@@ -1576,12 +1576,6 @@
 		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/external/glfw-3.1.2/tests/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\external\glfw-3.1.2\tests\"/>
-		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/external/assimp-3.0.1270/contrib/zlib/CMakeLists.txt">
-			<Option virtualFolder="CMake Files\external\assimp-3.0.1270\contrib\zlib\"/>
-		</Unit>
-		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/external/assimp-3.0.1270/code/CMakeLists.txt">
-			<Option virtualFolder="CMake Files\external\assimp-3.0.1270\code\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

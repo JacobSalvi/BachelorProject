@@ -52,8 +52,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.17.5/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.17.5/CMakeSystem.cmake"
   "../external/CMakeLists.txt"
-  "../external/assimp-3.0.1270/code/CMakeLists.txt"
-  "../external/assimp-3.0.1270/contrib/zlib/CMakeLists.txt"
   "../external/glfw-3.1.2/CMake/MacOSXBundleInfo.plist.in"
   "../external/glfw-3.1.2/CMakeLists.txt"
   "../external/glfw-3.1.2/cmake_uninstall.cmake.in"
@@ -80,8 +78,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "external/glfw-3.1.2/src/CMakeFiles/CMakeDirectoryInformation.cmake"
   "external/glfw-3.1.2/examples/CMakeFiles/CMakeDirectoryInformation.cmake"
   "external/glfw-3.1.2/tests/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "external/assimp-3.0.1270/contrib/zlib/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "external/assimp-3.0.1270/code/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -113,6 +109,4 @@ set(CMAKE_DEPEND_INFO_FILES
   "external/glfw-3.1.2/tests/CMakeFiles/sharing.dir/DependInfo.cmake"
   "external/glfw-3.1.2/tests/CMakeFiles/msaa.dir/DependInfo.cmake"
   "external/glfw-3.1.2/tests/CMakeFiles/clipboard.dir/DependInfo.cmake"
-  "external/assimp-3.0.1270/contrib/zlib/CMakeFiles/zlib.dir/DependInfo.cmake"
-  "external/assimp-3.0.1270/code/CMakeFiles/assimp.dir/DependInfo.cmake"
   )

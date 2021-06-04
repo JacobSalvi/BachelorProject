@@ -240,15 +240,15 @@ void net::rungeKutta(float timeDelta){
 
     for(int i=0; i<particles.size();++i){
         particles[i]->addForce(particles[i]->getCollisionForce());
-        particles[i]->addForce(particles[i]->getFrictionForce());
+        //particles[i]->addForce(particles[i]->getFrictionForce());
         a2.push_back(particles[i]->getForce()/particles[i]->getMass());
     }
 
     //second evaluation of the forces
     for(int i =0;i< particles.size();++i){
-        particles[i]->setForce(net::wind+glm::vec3(0.0f,net::gravity, 0.0f)+particles[i]->getCollisionForce() + particles[i]->getFrictionForce());
+        particles[i]->setForce(net::wind+glm::vec3(0.0f,net::gravity, 0.0f)+particles[i]->getCollisionForce());
         particles[i]->resetCollisionForce();
-        particles[i]->resetFrictionForce();
+        //particles[i]->resetFrictionForce();
     }
 
     for(int i=0; i<springs.size(); ++i){

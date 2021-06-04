@@ -72,7 +72,7 @@ void imBVH::detectCollisionPlane(glm::mat4 outModel, collidable *obj, float grav
 
                     //friction
                     float friction = 100.0f*i->getMass()*gravity;
-                    i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
+                    //i->setFrictionForce(friction*glm::normalize(i->getVelocity()));
                 }
             }
 

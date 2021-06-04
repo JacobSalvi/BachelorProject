@@ -135,6 +135,7 @@ int main() {
     model = mat4(1);
     model = glm::scale(model, glm::vec3(0.2,0.2,0.2));
     model = glm::translate(model, glm::vec3(0,5,0));
+    lightPosition = glm::vec3(1,6,4);
     addCloth(&objectList, 15, 0, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,1);
     addColl(&collObjects, 1, lightPosition, glm::vec3(1.5,0,1.5));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
@@ -154,7 +155,7 @@ int main() {
     addDefCube(&objectList, glm::vec3(1,1,1), cMod, lightPosition);
     addColl(&collObjects, 1, lightPosition, glm::vec3(1,0,1));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
-#elif 0
+#elif 1
     //sphere falling on sphere
     glm::mat4 cMod(1);
     cMod = glm::translate(cMod, glm::vec3(0,2,0));
@@ -235,12 +236,13 @@ int main() {
     importedModels * toAnimate = NULL;
 
     //setting up the scene for the imported model
-#if 1
+#if 0
     model = mat4(1);
     model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
     model = glm::translate(model, glm::vec3(-4,6,-4));
     //addCloth(&objectList, 10, 0, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,1);
     toAnimate = teapot;
+    addColl(&collObjects, 0, lightPosition, glm::vec3(0.7,-1,0));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
 #endif
 
@@ -271,9 +273,7 @@ int main() {
     glm::mat4 depthViewMatrix = glm::lookAt(lightPosition, glm::vec3(0,0,0), glm::vec3(0,1,0));
 
     glm::mat4 depthBiasMVP = biasMatrix*depthProjectionMatrix*depthViewMatrix;
-//    double lastTime = glfwGetTime();
-//    int nbFrames=0;
-//    double toPrint=0;
+
     do {
         useShaowMap(&collObjects, &objectList, FramebufferName, depthTexture, depthId, depthProjectionMatrix, depthViewMatrix);
 
@@ -295,14 +295,6 @@ int main() {
             ImGui::InputFloat("Mass", &mass);
             ImGui::InputFloat("Spring stiffness", &ks);
             ImGui::InputFloat("Gravity", &gravity);
-//            //frame rate
-//            double currentTime = glfwGetTime();
-//            nbFrames++;
-//            if(currentTime-lastTime >= 1.0){
-//                toPrint= 1000.0/double(nbFrames);
-//                nbFrames = 0;
-//                lastTime+=1.0;
-//            }
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f/ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             if(ImGui::Button("Begin Simulation") && shouldSimulate){
                 threadShouldLive=true;
@@ -425,8 +417,6 @@ int main() {
     while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
            glfwWindowShouldClose(window) == 0);
 
-    std::cout << "while exit" << std::endl;
-
     //clean up triangle
     glDeleteProgram(programId);
     glDeleteProgram(lightSysId);
@@ -450,7 +440,8 @@ int main() {
         delete(i);
     }
 
-    std::cout << "i don't even know" << std::endl;
+    delete(toAnimate);
+
     // Close OpenGL window and terminate GLFW
     ImGui_ImplGlfwGL3_Shutdown();
     ImGui::DestroyContext();
