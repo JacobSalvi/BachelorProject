@@ -20,7 +20,7 @@ deformableCube::deformableCube(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) :
 
     float mass = 1.0f;
     int id=0;
-    float compar = 4.0f;
+    float compar = float(size);
     //setting up particles
     for(float y=0; y<=compar; ++y){
         for(float x=0; x<=compar; ++x){
@@ -81,9 +81,6 @@ deformableCube::deformableCube(glm::mat4 mod, glm::vec3 color, glm::vec3 lPos) :
     //bvh
     //making the bvh
     bvh = new defCubeBVH(particles, sqrt(3.0f/4.0f), glm::vec3(0.5f,0.5f,0.5f));
-
-    std::cout<<"p: "<<particles.size()<<std::endl;
-    std::cout<<"s: "<<springs.size()<<std::endl;
 }
 
 void deformableCube::setGLuint() {

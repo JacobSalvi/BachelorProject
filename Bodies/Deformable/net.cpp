@@ -85,6 +85,9 @@ deformableObjects(gravity, mod, lPos), row(row), col(col), integrator(integrator
 
     //GLuint
     setGLuint();
+
+    std::cout<<"p: "<<particles.size()<<std::endl;
+    std::cout<<"s: "<<springs.size()<<std::endl;
 }
 
 //orizontal cloth

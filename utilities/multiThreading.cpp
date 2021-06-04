@@ -18,7 +18,8 @@ std::thread dragThread;
 std::thread otherThread;
 
 
-void timer_start(unsigned int interval, const std::vector<deformableObjects *> &list, const std::vector<collidable *> &collList, importedModels * a) {
+void timer_start(unsigned int interval, const std::vector<deformableObjects *> &list,
+                 const std::vector<collidable *> &collList, importedModels *a) {
     unsigned int collInterval = 8 * interval;
     //thread that checks collision
     collThread = std::thread([collInterval, list, collList]() {
@@ -61,13 +62,13 @@ void timer_start(unsigned int interval, const std::vector<deformableObjects *> &
     sim = std::thread([mInt, list, collList]() {
         static int counter = 0;
         while (threadShouldLive) {
-            auto start = std::chrono::high_resolution_clock::now();
+            //auto start = std::chrono::high_resolution_clock::now();
             for (auto i : list) {
-                i->integrate((float) mInt/ 1000.0f);
+                i->integrate((float) mInt / 1000.0f);
             }
-            auto stop = std::chrono::high_resolution_clock::now();
-            auto duration = duration_cast<std::chrono::microseconds>(stop - start);
-            std::cout<<"duration is: "<<duration.count()<<std::endl;
+//            auto stop = std::chrono::high_resolution_clock::now();
+//            auto duration = duration_cast<std::chrono::microseconds>(stop - start);
+//            std::cout<<"duration is: "<<duration.count()<<std::endl;
             counter++;
             std::this_thread::sleep_for(std::chrono::milliseconds(mInt));
         }
@@ -75,19 +76,26 @@ void timer_start(unsigned int interval, const std::vector<deformableObjects *> &
     });
     sim.detach();
 
-    static int robe = 0;
-    otherThread = std::thread([a](){
-        while(threadShouldLive){
-            a->rungeKutta(0.001f);
-            robe++;
-            if(robe==1){
-                robe=0;
-                a->updateBuffer();
+    if (a != NULL) {
+        static int robe = 0;
+        otherThread = std::thread([a, collList, list]() {
+            while (threadShouldLive) {
+                a->rungeKutta(0.001f);
+                robe++;
+                for (auto i: collList) {
+                   a->detectCollision(i);
+                }
+                //a->detectCollision(list[0]);
+                if (robe == 16) {
+                    robe = 0;
+                    a->updateBuffer();
+                    a->getBvh()->update();
+                }
+                std::this_thread::sleep_for(std::chrono::milliseconds(1));
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
-        }
-    });
-    otherThread.detach();
+        });
+        otherThread.detach();
+    }
 }
 
 

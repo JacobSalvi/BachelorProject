@@ -16,13 +16,14 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "particle.h"
 #include "spring.hpp"
+#include "../../BVH/imBVH.h"
 
 class importedModels {
 private:
     //model matrix
     glm::mat4 modelMatrix;
     float wind=0.0f;
-    float gravity=-1.0f;
+    float gravity=-4.0f;
 
     //stuff we get when importing
     std::vector<float> linearVerts;
@@ -37,6 +38,9 @@ private:
     std::vector<particle *> particles;
     std::vector<particle *> specialParticles;
     std::vector<spring *> springs;
+
+    //bvh
+    imBVH * bvh;
 public:
     importedModels(const char * path, glm::mat4 mod);
 
@@ -49,6 +53,14 @@ public:
     void updateBuffer();
 
     void rungeKutta(float timeDelta);
+
+    void drop();
+
+    void detectCollision(collidable * obj);
+
+    void detectCollision(deformableObjects * obj);
+
+    imBVH *getBvh() const;
 
 };
 

@@ -121,10 +121,11 @@ int main() {
     addColl(&collObjects, 0, lightPosition, glm::vec3(1,0,0.5));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
 #elif 0
+    lightPosition = glm::vec3(1, 6, 5);
     //vertical cloth and sphere
-     model = mat4(1);
+    model = mat4(1);
     model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
-    model = glm::translate(model, glm::vec3(0,5,0));
+    //model = glm::translate(model, glm::vec3(0,5,0));
     //12 15
     addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,0);
     addColl(&collObjects, 0, lightPosition, glm::vec3(1.5,3,-0.8));
@@ -145,14 +146,14 @@ int main() {
     addDefCube(&objectList, glm::vec3(1,1,1), cMod, lightPosition);
     addColl(&collObjects, 0, lightPosition, glm::vec3(1,0,1));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
-#elif 1
+#elif 0
     //cube falling on cube
     //deformable cube
     glm::mat4 cMod(1);
     cMod = glm::translate(cMod, glm::vec3(0,2,0));
     addDefCube(&objectList, glm::vec3(1,1,1), cMod, lightPosition);
-    //addColl(&collObjects, 1, lightPosition, glm::vec3(1,0,1));
-    //addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
+    addColl(&collObjects, 1, lightPosition, glm::vec3(1,0,1));
+    addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
 #elif 0
     //sphere falling on sphere
     glm::mat4 cMod(1);
@@ -228,8 +229,21 @@ int main() {
     std::vector<unsigned int> out_tris;
 
     glm::mat4 mod(1);
-    importedModels * chonky = new importedModels("./shaders/s.obj", mod);
-    //importedModels * teapot = new importedModels("./shaders/t2.obj", mod);
+    mod = glm::scale(mod, glm::vec3(0.2,0.2,0.2));
+    //importedModels * chonky = new importedModels("./shaders/s.obj", mod);
+    importedModels * teapot = new importedModels("./shaders/t3.obj", mod);
+    importedModels * toAnimate = NULL;
+
+    //setting up the scene for the imported model
+#if 1
+    model = mat4(1);
+    model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
+    model = glm::translate(model, glm::vec3(-4,6,-4));
+    //addCloth(&objectList, 10, 0, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,1);
+    toAnimate = teapot;
+    addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
+#endif
+
 
     //shadowMap
     GLuint depthId = LoadShaders("./shaders/sm.vert", "./shaders/sm.frag");
@@ -293,11 +307,15 @@ int main() {
             if(ImGui::Button("Begin Simulation") && shouldSimulate){
                 threadShouldLive=true;
                 shouldSimulate=false;
-                timer_start(1, objectList, collObjects, chonky);
+                timer_start(1, objectList, collObjects, toAnimate);
             }
             if(ImGui::Button("Drop")){
                 for(auto i: objectList){
                     i->emptySpecialParticles();
+                }
+                //must drop the imported model as well
+                if(toAnimate!=NULL){
+                    toAnimate->drop();
                 }
             }
             if(ImGui::Button("Set wind")){
@@ -346,7 +364,7 @@ int main() {
                     //start the other thread
                     threadShouldLive=true;
                     shouldSimulate=false;
-                    timer_start(1, objectList, collObjects, chonky);
+                    timer_start(1, objectList, collObjects, toAnimate);
                 }
                 dragMouse(tmpColl);
             }else if(tmp.isMouseOver && tmpColl.isMouseOver){
@@ -358,7 +376,7 @@ int main() {
                         //start the other thread
                         threadShouldLive=true;
                         shouldSimulate=false;
-                        timer_start(1, objectList, collObjects, chonky);
+                        timer_start(1, objectList, collObjects, toAnimate);
                     }
                     dragMouse(tmpColl);
                 }
@@ -392,8 +410,9 @@ int main() {
         }
 
         // please work
-        //chonky->render(ProjectionMatrix, ViewMatrix, programId, texture3, textureId);
-        //teapot->render(ProjectionMatrix, ViewMatrix, programId, texture, textureId);
+        if(toAnimate!=NULL){
+            toAnimate->render(ProjectionMatrix, ViewMatrix, programId, texture2, textureId);
+        }
 
         //gui stuff
         ImGui::Render();

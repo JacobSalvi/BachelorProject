@@ -1720,6 +1720,12 @@
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/defSphereBVH.h">
 			<Option target="projectPleaseWork"/>
 		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/imBVH.cpp">
+			<Option target="projectPleaseWork"/>
+		</Unit>
+		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/BVH/imBVH.h">
+			<Option target="projectPleaseWork"/>
+		</Unit>
 		<Unit filename="/Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Deformable/deformableCube.cpp">
 			<Option target="projectPleaseWork"/>
 		</Unit>

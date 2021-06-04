@@ -661,6 +661,33 @@ BVH/defSphereBVH.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/defSphereBVH.cpp.s
 .PHONY : BVH/defSphereBVH.cpp.s
 
+BVH/imBVH.o: BVH/imBVH.cpp.o
+
+.PHONY : BVH/imBVH.o
+
+# target to build an object file
+BVH/imBVH.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/imBVH.cpp.o
+.PHONY : BVH/imBVH.cpp.o
+
+BVH/imBVH.i: BVH/imBVH.cpp.i
+
+.PHONY : BVH/imBVH.i
+
+# target to preprocess a source file
+BVH/imBVH.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/imBVH.cpp.i
+.PHONY : BVH/imBVH.cpp.i
+
+BVH/imBVH.s: BVH/imBVH.cpp.s
+
+.PHONY : BVH/imBVH.s
+
+# target to generate assembly for a file
+BVH/imBVH.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projectPleaseWork.dir/build.make CMakeFiles/projectPleaseWork.dir/BVH/imBVH.cpp.s
+.PHONY : BVH/imBVH.cpp.s
+
 Bodies/Deformable/deformableCube.o: Bodies/Deformable/deformableCube.cpp.o
 
 .PHONY : Bodies/Deformable/deformableCube.o
@@ -1335,6 +1362,9 @@ help:
 	@echo "... BVH/defSphereBVH.o"
 	@echo "... BVH/defSphereBVH.i"
 	@echo "... BVH/defSphereBVH.s"
+	@echo "... BVH/imBVH.o"
+	@echo "... BVH/imBVH.i"
+	@echo "... BVH/imBVH.s"
 	@echo "... Bodies/Deformable/deformableCube.o"
 	@echo "... Bodies/Deformable/deformableCube.i"
 	@echo "... Bodies/Deformable/deformableCube.s"

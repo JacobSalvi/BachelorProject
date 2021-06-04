@@ -229,6 +229,10 @@ void importedModels::render(glm::mat4 pm, glm::mat4 vm, GLuint pi, GLuint t, GLu
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+
+#if 0
+    bvh->render(pm, vm, pi, true, modelMatrix);
+#endif
 }
 
 void importedModels::meshToTethrahedon() {
@@ -266,15 +270,22 @@ void importedModels::generateMSS() {
         while(j!=p.end()){
             particle * p1=it->first;
             particle * p2=j->first;
-            spring * toAdd = new spring(glm::length(p1->getPosition()-p2->getPosition()), 1, 0.90f, p1, p2);
+            spring * toAdd = new spring(glm::length(p1->getPosition()-p2->getPosition()), 1, 0.3f, p1, p2);
             springs.push_back(toAdd);
+
             j++;
         }
         it++;
     }
 
     //special part
-    specialParticles.push_back(particles[0]);
+    particle * h = particles[0];
+    for(auto i: particles){
+        if(i->getPosition().y>h->getPosition().y) h = i;
+    }
+    specialParticles.push_back(h);
+
+    bvh = new imBVH(particles);
 }
 
 void importedModels::updateBuffer() {
@@ -342,4 +353,36 @@ void importedModels::rungeKutta(float timeDelta){
             particles[i]->setVelocity(vel);
         }
     }
+}
+
+void importedModels::drop() {
+    specialParticles.clear();
+}
+
+void importedModels::detectCollision(collidable *obj) {
+    switch(obj->returnType()){
+        case 0:
+            //collision with sphere
+            bvh->detectCollisionSphere(modelMatrix, obj, gravity);
+            break;
+        case 1:
+            //collision with cube
+            bvh->detectCollisionCube(modelMatrix, obj, gravity);
+            break;
+        case 2:
+            //collision with plane
+            bvh->detectCollisionPlane(modelMatrix, obj, gravity);
+            break;
+        default:
+            std::cout<<"something went wrong"<<std::endl;
+            break;
+    }
+}
+
+imBVH *importedModels::getBvh() const {
+    return bvh;
+}
+
+void importedModels::detectCollision(deformableObjects *obj) {
+
 }
