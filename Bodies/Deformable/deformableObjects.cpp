@@ -47,7 +47,7 @@ void deformableObjects::setSpecial(particle *p) {
     deformableObjects::specialParticles.push_back(p);
 }
 
-deformableObjects::~deformableObjects() {}
+deformableObjects::~deformableObjects() = default;
 
 void deformableObjects::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint programID) {
     //just to be safe
@@ -123,8 +123,8 @@ BVH *deformableObjects::getBvh() const {
     return nullptr;
 }
 
-void deformableObjects::setWind(const glm::vec3 &wind) {
-    deformableObjects::wind = wind;
+void deformableObjects::setWind(const glm::vec3 &w) {
+    deformableObjects::wind = w;
 }
 
 void deformableObjects::setMass(float mass) {
@@ -139,8 +139,8 @@ void deformableObjects::setStiffness(float stiffness){
     }
 }
 
-void deformableObjects::setGravity(float gravity) {
-    deformableObjects::gravity = gravity;
+void deformableObjects::setGravity(float g) {
+    deformableObjects::gravity = g;
 }
 
 void deformableObjects::reset() {}

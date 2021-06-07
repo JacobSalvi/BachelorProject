@@ -270,7 +270,7 @@ void importedModels::generateMSS() {
         while(j!=p.end()){
             particle * p1=it->first;
             particle * p2=j->first;
-            spring * toAdd = new spring(glm::length(p1->getPosition()-p2->getPosition()), 1, 0.3f, p1, p2);
+            spring * toAdd = new spring(glm::length(p1->getPosition()-p2->getPosition()), 20, 0.3f, p1, p2);
             springs.push_back(toAdd);
 
             j++;

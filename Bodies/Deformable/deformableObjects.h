@@ -101,7 +101,7 @@ public:
     virtual void renderShadow(glm::mat4 depthP, glm::mat4 depthV,  GLuint programId);
     virtual void renderShadow(glm::mat4 pr, glm::mat4 viw, glm::mat4 bias, GLuint programID);
 
-    void setCullFace(GLuint in);
+    static void setCullFace(GLuint in);
 
     void rungeKutta4(float timeDelta);
 

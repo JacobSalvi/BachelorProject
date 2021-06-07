@@ -126,7 +126,7 @@ void imBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj, float gra
     float r2 = obj->getModel()[0][0] / 2.0f;
 
     //cheating a little
-    r2+=0.05;
+    r2+=0.02;
 
     if (glm::length(s1 - s2) <= r1 + r2) {
         //we are intersecting the BVH, potentially intersecting the cloth
@@ -150,7 +150,7 @@ void imBVH::detectCollisionSphere(glm::mat4 outModel, collidable *obj, float gra
 
                     //let's set the collision force for the particle
                     //since I have no indication what k should be I will wing it
-                    i->setCollisionForce(4000.0f*(intersectionPoint-point));
+                    i->setCollisionForce(1000.0f*(intersectionPoint-point));
                 }
             }
         } else {

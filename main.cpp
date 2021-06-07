@@ -130,7 +130,7 @@ int main() {
     addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,0);
     addColl(&collObjects, 0, lightPosition, glm::vec3(1.5,3,-0.8));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
-#elif 1
+#elif 0
     //cloth falling on cube
     model = mat4(1);
     model = glm::scale(model, glm::vec3(0.2,0.2,0.2));
@@ -181,19 +181,25 @@ int main() {
     glBindVertexArray(VertexArrayID);
 
     //infinite wisdom
+    GLuint textureProgramId = LoadShaders("./shaders/texturedCloth.vert","./shaders/texturedCloth.frag");
     GLuint programId = LoadShaders("./shaders/vertexShader.vertexshader", "./shaders/fragmentShader.fragmentshader");
     GLuint texture = loadDDS("shaders/idk.DDS");
-    GLuint textureId = glGetUniformLocation(programId, "myTextureSampler");
+//    GLuint textureId = glGetUniformLocation(programId, "myTextureSampler");
+    GLuint textureId = glGetUniformLocation(textureProgramId, "myTextureSampler");
     GLuint texture2 = loadDDS("shaders/dak2.DDS");
-    GLuint textureId2 = glGetUniformLocation(programId, "myTextureSampler");
     GLuint texture3 = loadDDS("shaders/dak3.DDS");
-    GLuint textureId3 = glGetUniformLocation(programId, "myTextureSampler");
+    GLuint clothTx = loadDDS("./shaders/clothTx.DDS");
 
-    std::vector<helperStruct *> cultureList;
-    glm::mat4 cultureMod(1);
-    cultureMod = glm::translate(cultureMod, glm::vec3(1, 0,0));
-    //culture(&objectList, texture, textureId, cultureMod, lightPosition, programId);
-
+#if 1
+    //textured cloth falling on cube
+    model = mat4(1);
+    model = glm::scale(model, glm::vec3(0.2,0.2,0.2));
+    model = glm::translate(model, glm::vec3(0,5,0));
+    lightPosition = glm::vec3(1,9,2);
+    culture(&objectList, clothTx, textureId, model, lightPosition, textureProgramId);
+    addColl(&collObjects, 1, lightPosition, glm::vec3(1.5,0,1.5));
+    addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
+#endif
 
     //phong lighting system
     GLuint lightSysId = LoadShaders("./shaders/shadowVert.vertexshader", "./shaders/shadowFrag.fragmentshader");
@@ -219,7 +225,6 @@ int main() {
     GLuint skyboxProgramID = LoadShaders("shaders/skybox.vertexshader","shaders/skybox.fragmentshader");
     skybox * sky = new skybox(skyboxProgramID);
 
-
     //loading a custom model
     const char * path;
     std::vector<float>  out_vertices;
@@ -230,8 +235,8 @@ int main() {
     std::vector<unsigned int> out_tris;
 
     glm::mat4 mod(1);
-    mod = glm::scale(mod, glm::vec3(0.2,0.2,0.2));
-    //importedModels * chonky = new importedModels("./shaders/s.obj", mod);
+    //mod = glm::scale(mod, glm::vec3(0.2,0.2,0.2));
+    importedModels * chonky = new importedModels("./shaders/s.obj", mod);
     importedModels * teapot = new importedModels("./shaders/t3.obj", mod);
     importedModels * toAnimate = NULL;
 
@@ -241,7 +246,7 @@ int main() {
     model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
     model = glm::translate(model, glm::vec3(-4,6,-4));
     //addCloth(&objectList, 10, 0, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,1);
-    toAnimate = teapot;
+    toAnimate = chonky;
     addColl(&collObjects, 0, lightPosition, glm::vec3(0.7,-1,0));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
 #endif
