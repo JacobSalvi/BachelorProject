@@ -31,8 +31,6 @@ public:
 
     BVH * getBvh() const override;
 
-    void rungeKutta(float timeDelta);
-
     void updateBuffer() override;
 
     void reset() override;

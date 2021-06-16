@@ -2,6 +2,7 @@
 #include "texturedCloth.h"
 #include "../../shaders/controls.hpp"
 #include "../../shaders/texture.hpp"
+#include "../../shaders/shader.hpp"
 
 float tw=14;
 float th=14;
@@ -50,6 +51,7 @@ texturedCloth::texturedCloth(float mass, GLuint texture, GLuint textureId, const
     ntId = glGetUniformLocation(programID, "normalMap");
     nt = loadDDS("shaders/normalMap.DDS");
     computeTangents();
+    programID = LoadShaders("shaders/texture.vert","shaders/texture.frag");
 }
 
 void texturedCloth::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint pID) {
@@ -99,101 +101,167 @@ void texturedCloth::render(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLu
 }
 
 void texturedCloth::renderShadow(glm::mat4 pr, glm::mat4 viw, glm::mat4 bias, GLuint pID) {
-    glUseProgram(programID);
-    //glCullFace(GL_BACK);
-    //Get a handle for all of the uniforms
-    GLuint MatrixID = glGetUniformLocation(programID, "MVP");
-    GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
-    GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
-    GLuint DepthBiasID = glGetUniformLocation(programID, "DepthBiasMVP");
-    GLuint ShadowMapID = glGetUniformLocation(programID, "shadowMap");
+    if(true){
+        glUseProgram(programID);
+        GLuint MatrixID = glGetUniformLocation(programID, "MVP");
+        GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
+        GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
+        GLuint DepthBiasID = glGetUniformLocation(programID, "DepthBiasMVP");
+        GLuint ShadowMapID = glGetUniformLocation(programID, "shadowMap");
 
-    // Get a handle for our "LightPosition" uniform
-    GLuint lightInvDirID = glGetUniformLocation(programID, "LightInvDirection_worldspace");
+        // Get a handle for our "LightPosition" uniform
+        GLuint lightInvDirID = glGetUniformLocation(programID, "LightInvDirection_worldspace");
 
-    glm::mat4 MVP = pr*viw*modelMatrix;
+        glm::mat4 MVP = pr * viw * modelMatrix;
 
-    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-    glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &modelMatrix[0][0]);
-    glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &viw[0][0]);
-    glUniformMatrix4fv(DepthBiasID, 1, GL_FALSE, &(bias*modelMatrix)[0][0]);
-    glUniform1i(ShadowMapID, 0);
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glUniform1i(textureId, 1);
+        glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+        glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &modelMatrix[0][0]);
+        glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &viw[0][0]);
+        glUniformMatrix4fv(DepthBiasID, 1, GL_FALSE, &(bias * modelMatrix)[0][0]);
+        glUniform1i(ShadowMapID, 0);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glUniform1i(textureId, 1);
 
-    //normal texture
-    glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, nt);
-    glUniform1i(ntId, 2);
+        glUniform3f(lightInvDirID, lightPos.x, lightPos.y, lightPos.z);
 
-    glUniform3f(lightInvDirID, lightPos.x, lightPos.y, lightPos.z);
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, vertex);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, getSize(), getVertexBuffer());
+        glVertexAttribPointer(
+                0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
+                3,                  // size
+                GL_FLOAT,           // type
+                GL_FALSE,           // normalized?
+                0,                  // stride
+                (void *) nullptr            // array buffer offset
+        );
 
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vertex);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, getSize(), getVertexBuffer());
-    glVertexAttribPointer(
-            0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void *) nullptr            // array buffer offset
-    );
+        glEnableVertexAttribArray(2);
+        glBindBuffer(GL_ARRAY_BUFFER, normal);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, getSize(), getNormalBuffer());
+        glVertexAttribPointer(
+                2,                  // attribute. No particular reason for 0, but must match the layout in the shader.
+                3,                  // size
+                GL_FLOAT,           // type
+                GL_FALSE,           // normalized?
+                0,                  // stride
+                (void *) nullptr            // array buffer offset
+        );
 
-    glEnableVertexAttribArray(2);
-    glBindBuffer(GL_ARRAY_BUFFER, normal);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, getSize(), getNormalBuffer());
-    glVertexAttribPointer(
-            2,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void *) nullptr            // array buffer offset
-    );
+        glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER, colour);
+        glVertexAttribPointer(
+                1,                  // attribute. No particular reason for 0, but must match the layout in the shader.
+                2,                  // size
+                GL_FLOAT,           // type
+                GL_FALSE,           // normalized?
+                0,                  // stride
+                (void *) nullptr            // array buffer offset
+        );
 
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, colour);
-    glVertexAttribPointer(
-            1,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-            2,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void *) nullptr            // array buffer offset
-    );
+        glDrawArrays(GL_TRIANGLES, 0, getNumberOfVertices());
 
-    //tangent
-    GLuint tan;
-    glGenBuffers(1, &tan);
-    glBindBuffer(GL_ARRAY_BUFFER, tan);
-    glBufferData(GL_ARRAY_BUFFER, tangent.size()*sizeof(glm::vec3), &tangent[0], GL_DYNAMIC_DRAW);
-    GLuint bitan;
-    glGenBuffers(1, &bitan);
-    glBindBuffer(GL_ARRAY_BUFFER, bitan);
-    glBufferData(GL_ARRAY_BUFFER, bitangent.size()*sizeof(glm::vec3), &bitangent[0], GL_DYNAMIC_DRAW);
+        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(2);
+    }else {
+        glUseProgram(programID);
+        //glCullFace(GL_BACK);
+        //Get a handle for all of the uniforms
+        GLuint MatrixID = glGetUniformLocation(programID, "MVP");
+        GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
+        GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
+        GLuint DepthBiasID = glGetUniformLocation(programID, "DepthBiasMVP");
+        GLuint ShadowMapID = glGetUniformLocation(programID, "shadowMap");
 
-    glEnableVertexAttribArray(3);
-    glBindBuffer(GL_ARRAY_BUFFER, tan);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, tangent.size()*sizeof(glm::vec3), &tangent[0]);
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
+        // Get a handle for our "LightPosition" uniform
+        GLuint lightInvDirID = glGetUniformLocation(programID, "LightInvDirection_worldspace");
 
-    glEnableVertexAttribArray(4);
-    glBindBuffer(GL_ARRAY_BUFFER, tan);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, bitangent.size()*sizeof(glm::vec3), &bitangent[0]);
-    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
+        glm::mat4 MVP = pr * viw * modelMatrix;
+
+        glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+        glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &modelMatrix[0][0]);
+        glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &viw[0][0]);
+        glUniformMatrix4fv(DepthBiasID, 1, GL_FALSE, &(bias * modelMatrix)[0][0]);
+        glUniform1i(ShadowMapID, 0);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glUniform1i(textureId, 1);
+
+        //normal texture
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, nt);
+        glUniform1i(ntId, 2);
+
+        glUniform3f(lightInvDirID, lightPos.x, lightPos.y, lightPos.z);
+
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, vertex);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, getSize(), getVertexBuffer());
+        glVertexAttribPointer(
+                0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
+                3,                  // size
+                GL_FLOAT,           // type
+                GL_FALSE,           // normalized?
+                0,                  // stride
+                (void *) nullptr            // array buffer offset
+        );
+
+        glEnableVertexAttribArray(2);
+        glBindBuffer(GL_ARRAY_BUFFER, normal);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, getSize(), getNormalBuffer());
+        glVertexAttribPointer(
+                2,                  // attribute. No particular reason for 0, but must match the layout in the shader.
+                3,                  // size
+                GL_FLOAT,           // type
+                GL_FALSE,           // normalized?
+                0,                  // stride
+                (void *) nullptr            // array buffer offset
+        );
+
+        glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER, colour);
+        glVertexAttribPointer(
+                1,                  // attribute. No particular reason for 0, but must match the layout in the shader.
+                2,                  // size
+                GL_FLOAT,           // type
+                GL_FALSE,           // normalized?
+                0,                  // stride
+                (void *) nullptr            // array buffer offset
+        );
+
+        //tangent
+        GLuint tan;
+        glGenBuffers(1, &tan);
+        glBindBuffer(GL_ARRAY_BUFFER, tan);
+        glBufferData(GL_ARRAY_BUFFER, tangent.size() * sizeof(glm::vec3), &tangent[0], GL_DYNAMIC_DRAW);
+        GLuint bitan;
+        glGenBuffers(1, &bitan);
+        glBindBuffer(GL_ARRAY_BUFFER, bitan);
+        glBufferData(GL_ARRAY_BUFFER, bitangent.size() * sizeof(glm::vec3), &bitangent[0], GL_DYNAMIC_DRAW);
+
+        glEnableVertexAttribArray(3);
+        glBindBuffer(GL_ARRAY_BUFFER, tan);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, tangent.size() * sizeof(glm::vec3), &tangent[0]);
+        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
+
+        glEnableVertexAttribArray(4);
+        glBindBuffer(GL_ARRAY_BUFFER, tan);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, bitangent.size() * sizeof(glm::vec3), &bitangent[0]);
+        glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
 
 
-    glDrawArrays(GL_TRIANGLES, 0, getNumberOfVertices());
+        glDrawArrays(GL_TRIANGLES, 0, getNumberOfVertices());
 
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(2);
-    glDisableVertexAttribArray(3);
-    glDisableVertexAttribArray(4);
+        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(2);
+        glDisableVertexAttribArray(3);
+        glDisableVertexAttribArray(4);
 
-    glUniform1i(ShadowMapID, 0);
+        //glUniform1i(ShadowMapID, 0);
+    }
 }
 
 void texturedCloth::computeTangents() {

@@ -1343,7 +1343,10 @@ CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o: ../Bodie
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o: ../Bodies/Solid/Sphere.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o: ../Bodies/Solid/collidable.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o: ../Bodies/Solid/mouseIntersectStruct.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o: ../shaders/controls.hpp
 CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o: ../shaders/helperStruct.h
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o: ../shaders/shader.hpp
+CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o: ../shaders/texture.hpp
 
 CMakeFiles/projectPleaseWork.dir/Bodies/Solid/Sphere.cpp.o: ../external/glew-1.13.0/include/GL/glew.h
 CMakeFiles/projectPleaseWork.dir/Bodies/Solid/Sphere.cpp.o: ../external/glm-0.9.7.1/glm/common.hpp

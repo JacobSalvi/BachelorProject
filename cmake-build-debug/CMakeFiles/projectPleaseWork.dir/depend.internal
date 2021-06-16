@@ -1344,7 +1344,10 @@ CMakeFiles/projectPleaseWork.dir/Bodies/Deformable/texturedCloth.cpp.o
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/Sphere.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/collidable.h
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/Bodies/Solid/mouseIntersectStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/controls.hpp
  /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/helperStruct.h
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/shader.hpp
+ /Users/jacobsalvi/Desktop/BachelorProject/Project/code/shaders/texture.hpp
 CMakeFiles/projectPleaseWork.dir/Bodies/Solid/Sphere.cpp.o
  ../external/glew-1.13.0/include/GL/glew.h
  ../external/glm-0.9.7.1/glm/common.hpp

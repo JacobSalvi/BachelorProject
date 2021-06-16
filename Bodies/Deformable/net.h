@@ -49,26 +49,6 @@ public:
 
     void addWind(const glm::vec3 &windToAdd);
 
-    //integrators
-    void explicitEuler(float timeDelta);
-    void rungeKutta(float timeDelta);
-
-    //testing that the initialization went well
-    void printStuff(){
-        for(int i=0; i<(row-1)*(col-1)*18; ++i){
-            if(i%3==0){
-                std::cout<<"vertex: "<<std::endl;
-                std::cout<<vertexBuffer[i]<<", ";
-            }
-            if(i%3==1){
-                std::cout<<vertexBuffer[i]<<", ";
-            }
-            if(i%3==2){
-                std::cout<<vertexBuffer[i]<<std::endl;
-            }
-        }
-    }
-
     virtual ~net();
 
     void setVertexBuffer(float *vertexBuffer);
@@ -88,10 +68,7 @@ public:
         }
     }
 
-    void integrate(float timeDelta) override{!integrator ? explicitEuler(timeDelta) : rungeKutta4(timeDelta);}
-//    void integrate(float timeDelta) override{
-//        rungeKutta4(timeDelta);
-//    }
+    void integrate(float timeDelta) override{!integrator ? exEuler(timeDelta) : rungeKutta4(timeDelta);}
 
     void reset() override;
 

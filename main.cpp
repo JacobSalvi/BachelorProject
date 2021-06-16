@@ -127,7 +127,7 @@ int main() {
     model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
     //model = glm::translate(model, glm::vec3(0,5,0));
     //12 15
-    addCloth(&objectList, 12, 15, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,0);
+    addCloth(&objectList, 12, 15, 1, glm::vec3(0.0f,0.0f,1.0f), model, lightPosition,0);
     addColl(&collObjects, 0, lightPosition, glm::vec3(1.5,3,-0.8));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
 #elif 0
@@ -184,13 +184,14 @@ int main() {
     GLuint textureProgramId = LoadShaders("./shaders/texturedCloth.vert","./shaders/texturedCloth.frag");
     GLuint programId = LoadShaders("./shaders/vertexShader.vertexshader", "./shaders/fragmentShader.fragmentshader");
     GLuint texture = loadDDS("shaders/idk.DDS");
-//    GLuint textureId = glGetUniformLocation(programId, "myTextureSampler");
     GLuint textureId = glGetUniformLocation(textureProgramId, "myTextureSampler");
     GLuint texture2 = loadDDS("shaders/dak2.DDS");
     GLuint texture3 = loadDDS("shaders/dak3.DDS");
+    GLuint teapotT = loadDDS("shaders/teapotT.DDS");
     GLuint clothTx = loadDDS("./shaders/clothTx.DDS");
+    GLuint nonWTexture = loadDDS("./shaders/uvtemplate.DDS");
 
-#if 1
+#if 0
     //textured cloth falling on cube
     model = mat4(1);
     model = glm::scale(model, glm::vec3(0.2,0.2,0.2));
@@ -235,19 +236,19 @@ int main() {
     std::vector<unsigned int> out_tris;
 
     glm::mat4 mod(1);
-    //mod = glm::scale(mod, glm::vec3(0.2,0.2,0.2));
+    mod = glm::scale(mod, glm::vec3(0.2,0.2,0.2));
     importedModels * chonky = new importedModels("./shaders/s.obj", mod);
     importedModels * teapot = new importedModels("./shaders/t3.obj", mod);
     importedModels * toAnimate = NULL;
 
     //setting up the scene for the imported model
-#if 0
+#if 1
     model = mat4(1);
     model = glm::scale(model, glm::vec3(0.3,0.3,0.3));
     model = glm::translate(model, glm::vec3(-4,6,-4));
     //addCloth(&objectList, 10, 0, 1, glm::vec3(1.0f,0.0f,0.0f), model, lightPosition,1);
-    toAnimate = chonky;
-    addColl(&collObjects, 0, lightPosition, glm::vec3(0.7,-1,0));
+    toAnimate = teapot;
+    addColl(&collObjects, 0, lightPosition, glm::vec3(0.5,-1,0));
     addColl(&collObjects, 2, lightPosition, glm::vec3(0,0,0));
 #endif
 
@@ -408,7 +409,7 @@ int main() {
 
         // please work
         if(toAnimate!=NULL){
-            toAnimate->render(ProjectionMatrix, ViewMatrix, programId, texture2, textureId);
+            toAnimate->render(ProjectionMatrix, ViewMatrix, programId, teapotT, textureId);
         }
 
         //gui stuff

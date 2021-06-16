@@ -103,6 +103,9 @@ public:
 
     static void setCullFace(GLuint in);
 
+    //integrators
+    void rungeKutta2(float timeDelta);
+
     void rungeKutta4(float timeDelta);
 
     void exEuler(float timeDelta);

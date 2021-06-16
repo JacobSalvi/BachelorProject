@@ -196,58 +196,6 @@ BVH *deformableSphere::getBvh() const {
     return bvh;
 }
 
-void deformableSphere::rungeKutta(float timeDelta) {
-    std::vector<glm::vec3> a1;
-    std::vector<glm::vec3> a2;
-    //gravity
-    for (int i = 0; i < particles.size(); ++i) {
-        a1.push_back(particles[i]->getVelocity());
-        particles[i]->setForce(deformableSphere::wind + glm::vec3(0.0f, deformableSphere::gravity, 0.0f));
-    }
-
-    //iterating through the springs to add the force due to
-    //springs elongation/compression
-    for (int i = 0; i < springs.size(); ++i) {
-        //update both particles
-        springs[i]->updateParticlesForce();
-    }
-
-    for (int i = 0; i < particles.size(); ++i) {
-        particles[i]->addForce(particles[i]->getCollisionForce());
-        a2.push_back(particles[i]->getForce() / particles[i]->getMass());
-    }
-
-    //second evaluation of the forces
-    for (int i = 0; i < particles.size(); ++i) {
-        particles[i]->setForce(deformableSphere::wind + glm::vec3(0.0f, deformableSphere::gravity, 0.0f) +
-                               particles[i]->getCollisionForce());
-        particles[i]->resetCollisionForce();
-    }
-
-    for (int i = 0; i < springs.size(); ++i) {
-        //indices of the particles
-        int part1 = springs[i]->getPart1Id();
-        int part2 = springs[i]->getPart2Id();
-        springs[i]->rungeKuttaHelper((timeDelta / 2.0f) * a1[part1], (timeDelta / 2.0f) * a1[part2],
-                                     (timeDelta / 2.0f) * a2[part1], (timeDelta / 2.0f) * a2[part2]);
-    }
-
-    for (int i = 0; i < particles.size(); ++i) {
-        if (!vectorContains(specialParticles, particles[i])) {
-            glm::vec3 vel = particles[i]->getVelocity();
-
-            //updating position
-            glm::vec3 pos = particles[i]->getPosition();
-            pos += timeDelta * (vel + (timeDelta / 2.0f) * a2[particles[i]->getId()]);
-            particles[i]->setPosition(pos);
-
-            //updating velocity
-            vel += timeDelta * (particles[i]->getForce() / particles[i]->getMass());
-            particles[i]->setVelocity(vel);
-        }
-    }
-}
-
 // total number of particles
 // 2 + size*(size-1)
 //number of triangles (size^2)*2
